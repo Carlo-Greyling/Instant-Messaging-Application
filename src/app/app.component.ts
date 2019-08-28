@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'instant-messaging-app';
+
+  videoCalling() {
+    window.location.href = 'https://youtu.be/-HrPr6IQNac?t=25';
+  }
 }
