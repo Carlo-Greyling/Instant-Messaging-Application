@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {Users} from './shared/users.model';
+// import { FirebaseApp } from '@angular/fire';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +28,10 @@ export class AppComponent {
   videoCalling() {
     window.location.href = 'https://youtu.be/-HrPr6IQNac?t=25';
   }
+
+  /*constructor(public app: FirebaseApp) {
+
+  }*/
 
   enlargeImg() {
     this.modal.style.display = 'Block';

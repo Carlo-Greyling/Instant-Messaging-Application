@@ -1,0 +1,7 @@
+<div>
+  <video id="device" controls autoplay #remote>
+  </video>
+  <video id="me" controls autoplay #me></video>
+</div>
+<button mat-raised-button color="primary" (click)="showRemote()" [disabled]="callActive" class="btn btn-primary">Connect</button>
+<button mat-raised-button color="warn" (click)="hangup()" [disabled]="!callActive" class="btn btn-primary">Disconnect</button>
