@@ -21,13 +21,12 @@
       </div>
       <div class="card-body contacts_body">
         <ul class="contacts">
-
           <li class="active">
-            <div class="d-flex bd-highlight">
+            <div class="d-flex bd-highlight" *ngFor="let i of users">
               <div class="img_cont">
                 <img
                   id="profile-picture"
-                  src="https://scontent-jnb1-1.xx.fbcdn.net/v/t1.0-9/60937380_2227964937285183_6900601698239119360_n.jpg?_nc_cat=106&_nc_oc=AQmjhYtcyLXTRQ9EjwQGp70e3OYU16x3YMCc7ODLc-uvgPqj_BBvs-T6p5EsgzeoTho&_nc_ht=scontent-jnb1-1.xx&oh=9c51d38a12ea4a82dc6aeea28465c637&oe=5E10F323"
+                  src= "{{ i.profilePicture }}"
                   class="rounded-circle user_img"
                   (click)="enlargeImg()">
                 <span class="online_icon"></span>
@@ -43,64 +42,11 @@
 
               <!-- Footer containing online status  -->
               <div class="user_info">
-                <span>Keanu Jooste</span>
-                <p>Keanu is online</p>
+                <span>{{ i.name }}</span>
+                <p>{{ i.name + " is "}}{{ i.status }}</p>
               </div>
             </div>
           </li>
-
-          <li>
-            <div class="d-flex bd-highlight">
-              <div class="img_cont">
-                <img src="https://scontent-jnb1-1.xx.fbcdn.net/v/t1.0-9/19904938_1911186905828058_7381270267279841437_n.jpg?_nc_cat=100&_nc_oc=AQk0FJdBM1FmI9KAtrOOyLOxmKXV8rzdBkoERbDf-yk-LBsac1A5ldVwbLej1TZAI3k&_nc_ht=scontent-jnb1-1.xx&oh=37bebc49635c6f06cbdf814f9a1ad4ae&oe=5E0C581E" class="rounded-circle user_img">
-                <span class="online_icon offline"></span>
-              </div>
-              <div class="user_info">
-                <span>Jeandre Pretorius</span>
-                <p>Jeandre left 7 mins ago</p>
-              </div>
-            </div>
-          </li>
-
-          <li>
-            <div class="d-flex bd-highlight">
-              <div class="img_cont">
-                <img src="https://scontent-jnb1-1.xx.fbcdn.net/v/t1.0-9/16938651_1420230568048345_476885994405757357_n.jpg?_nc_cat=108&_nc_oc=AQlqb8ODhECeR4rP0EjCsIOLNEdv22u9fS3CAUDaTtj0tM_UVTBxp8rb8PBAYbPcm-U&_nc_ht=scontent-jnb1-1.xx&oh=8735366cef0719e77c8139048879ee0e&oe=5E04B854" class="rounded-circle user_img">
-                <span class="online_icon"></span>
-              </div>
-              <div class="user_info">
-                <span>Stiaan Bouwer</span>
-                <p>Stiaan is online</p>
-              </div>
-            </div>
-          </li>
-
-          <li>
-            <div class="d-flex bd-highlight">
-              <div class="img_cont">
-                <img src="https://scontent-jnb1-1.xx.fbcdn.net/v/t1.0-9/41215967_2073383522693329_4417942590620434432_n.jpg?_nc_cat=104&_nc_oc=AQk_-RsprR49AV__tXA09KVzvb3g3V-Du7r_9ZsFp5I5QXvU64IYEo05WbvQ1aO9gGc&_nc_ht=scontent-jnb1-1.xx&oh=7289a5f55c7c797e0814554f0aa82b60&oe=5E0F949B" class="rounded-circle user_img">
-                <span class="online_icon offline"></span>
-              </div>
-              <div class="user_info">
-                <span>Eduan Naude</span>
-                <p>Eduan left 30 mins ago</p>
-              </div>
-            </div>
-          </li>
-
-          <li>
-            <div class="d-flex bd-highlight">
-              <div class="img_cont">
-                <img src="https://scontent-jnb1-1.xx.fbcdn.net/v/t1.0-9/41991171_2204128929876901_2659512653843529728_n.jpg?_nc_cat=100&_nc_oc=AQmfXWDIka8j7Ylz30Uokz0190eIjvShDDT2fZw2eC-TF-S2C7CODkxED5wqjtiRNsk&_nc_ht=scontent-jnb1-1.xx&oh=ada48dbae40d52ef629194f7d068adea&oe=5E03C633" class="rounded-circle user_img">
-                <span class="online_icon offline"></span>
-              </div>
-              <div class="user_info">
-                <span>Ernst Blignaut</span>
-                <p>Ernst left 50 mins ago</p>
-              </div>
-            </div>
-          </li>
-
         </ul>
       </div>
       <div class="card-footer"></div>
