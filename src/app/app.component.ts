@@ -11,6 +11,7 @@ export class AppComponent {
   modal = document.getElementById('myModal') as HTMLImageElement;
   img = document.getElementById('profile-picture') as HTMLImageElement;
   modalImg = document.getElementById('img01') as HTMLImageElement;
+  input; filter; ul; li; a; i; txtValue;
 
   users: Users[] = [
     new Users('Keanu Jooste', 'online', 'https://scontent-jnb1-1.xx.fbcdn.net/v/t1.0-9/60937380_2227964937285183_6900601698239119360_n.jpg?_nc_cat=106&_nc_oc=AQmjhYtcyLXTRQ9EjwQGp70e3OYU16x3YMCc7ODLc-uvgPqj_BBvs-T6p5EsgzeoTho&_nc_ht=scontent-jnb1-1.xx&oh=9c51d38a12ea4a82dc6aeea28465c637&oe=5E10F323'),
@@ -35,5 +36,22 @@ export class AppComponent {
 // When the user clicks on <span> (x), close the modal
   closeModal() {
     this.modal.style.display = 'none';
+  }
+
+  searchContacts() {
+    this.input = document.getElementById('searchID');
+    this.filter = this.input.value.toUpperCase();
+    this.ul = document.getElementById('contactsUL');
+    this.li = this.ul.getElementsByTagName('li');
+
+    for (this.i = 0; this.i < this.li.length; this.i++) {
+      this.a = this.li[this.i].getElementsByTagName('a')[0];
+      this.txtValue = this.a.textContent || this.a.innerText;
+      if (this.txtValue.toUpperCase().indexOf(this.filter) > -1) {
+        this.li[this.i].style.display = '';
+      } else {
+        this.li[this.i].style.display = 'none';
+      }
+    }
   }
 }

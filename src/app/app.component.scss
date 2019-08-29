@@ -199,7 +199,7 @@ body,html{
   margin-bottom: auto;
   margin-left: 10px;
   border-radius: 25px;
-  background-color: #82ccdd;
+  background-color: #82c;
   padding: 10px;
   position: relative;
 }
@@ -208,7 +208,7 @@ body,html{
   margin-bottom: auto;
   margin-right: 10px;
   border-radius: 25px;
-  background-color: #78e08f;
+  background-color: deepskyblue;
   padding: 10px;
   position: relative;
 }
@@ -270,4 +270,12 @@ body,html{
   .contacts_card{
     margin-bottom: 15px !important;
   }
+}
+
+.d-flex.bd-highlight {
+  margin-bottom: 10px;
+}
+
+.end-of-chat {
+  margin: 1px;
 }
