@@ -20,7 +20,6 @@ export class AppComponent {
     new Users('Stiaan Bouwer', 'online', 'https://scontent-jnb1-1.xx.fbcdn.net/v/t1.0-9/16938651_1420230568048345_476885994405757357_n.jpg?_nc_cat=108&_nc_oc=AQlqb8ODhECeR4rP0EjCsIOLNEdv22u9fS3CAUDaTtj0tM_UVTBxp8rb8PBAYbPcm-U&_nc_ht=scontent-jnb1-1.xx&oh=8735366cef0719e77c8139048879ee0e&oe=5E04B854'),
     new Users('Eduan Naude', 'left 30 mins ago', 'https://scontent-jnb1-1.xx.fbcdn.net/v/t1.0-9/41215967_2073383522693329_4417942590620434432_n.jpg?_nc_cat=104&_nc_oc=AQk_-RsprR49AV__tXA09KVzvb3g3V-Du7r_9ZsFp5I5QXvU64IYEo05WbvQ1aO9gGc&_nc_ht=scontent-jnb1-1.xx&oh=7289a5f55c7c797e0814554f0aa82b60&oe=5E0F949B'),
     new Users('Ernst Blignaut', 'online', 'https://scontent-jnb1-1.xx.fbcdn.net/v/t1.0-9/41991171_2204128929876901_2659512653843529728_n.jpg?_nc_cat=100&_nc_oc=AQmfXWDIka8j7Ylz30Uokz0190eIjvShDDT2fZw2eC-TF-S2C7CODkxED5wqjtiRNsk&_nc_ht=scontent-jnb1-1.xx&oh=ada48dbae40d52ef629194f7d068adea&oe=5E03C633'),
-    new Users('Stephy Bear', 'online', 'https://scontent-jnb1-1.xx.fbcdn.net/v/t1.0-9/57170701_2259762567447436_7941882369869348864_n.jpg?_nc_cat=111&_nc_oc=AQk25mLzheB1kXL7zlAfSaNDoWHX2jWXlDqlZN7T3FcwFZI5jp6t9M_6rMZhi45MMok&_nc_ht=scontent-jnb1-1.xx&oh=8425f63cedfce04b2b01da170f1fb78e&oe=5DD03F06')
   ];
 
   // Get the <span> element that closes the modal
