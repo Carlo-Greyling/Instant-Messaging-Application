@@ -28,13 +28,16 @@
                   id="profile-picture"
                   src= "{{ i.profilePicture }}"
                   class="rounded-circle user_img"
-                  (click)="enlargeImg()">
-                <span class="online_icon"></span>
+                  >
+                <!-- img src="" alt="" (click)="enlargeImg()" -->
+
+                <span class="{{ i.onlineIcon }}"></span>
 
                 <!--  HTML for Modal image  -->
                 <div id="myModal" class="modal">
                   <!-- The Close Button -->
-                  <span class="close" (click)="closeModal()">&times;</span>
+                  <!-- span class="close" (click)="closeModal()">&times;</span -->
+                  <span class="close">&times;</span>
                   <!-- Modal Content (The Image) -->
                   <img class="modal-content" id="img01">
                 </div>
@@ -43,7 +46,7 @@
               <!-- Footer containing online status  -->
               <div class="user_info">
                 <span>{{ i.name }}</span>
-                <p>{{ i.name + " is "}}{{ i.status }}</p>
+                <p>{{ i.status }}</p>
               </div>
             </div>
           </li>
@@ -85,13 +88,6 @@
           <div class="d-flex justify-content-start mb-4">
             <div class="msg_cotainer">
               Message 1
-              <span class="msg_time">8:40 AM, Today</span>
-            </div>
-          </div>
-
-          <div class="d-flex justify-content-start mb-4">
-            <div class="msg_cotainer">
-              Message 1.1
               <span class="msg_time">8:40 AM, Today</span>
             </div>
           </div>

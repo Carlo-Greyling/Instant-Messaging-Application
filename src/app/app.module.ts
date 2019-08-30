@@ -3,12 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { VideoCallComponent } from './video-call/video-call.component';
+import { VideoCallingComponent } from './video-calling/video-calling.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    VideoCallComponent
+    VideoCallingComponent,
   ],
   imports: [
     BrowserModule,
