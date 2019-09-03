@@ -3,6 +3,8 @@ import {Users} from 'src/app/shared/users.model';
 import { Messages } from '../shared/messages.model';
 import { FirebaseApp } from '@angular/fire';
 import {Message} from '@angular/compiler/src/i18n/i18n_ast';
+import { MatDialog } from '@angular/material';
+import { MultimediaComponent } from '../multimedia/multimedia.component';
 
 @Component({
   selector: 'app-chat-window',
@@ -34,6 +36,8 @@ export class ChatWindowComponent implements OnInit {
 
   // Get the <span> element that closes the modal
   span = document.getElementsByClassName('close')[0];
+
+  constructor(private dialog: MatDialog) { }
 
   videoCalling() {
     window.location.href = 'https://youtu.be/-HrPr6IQNac?t=25';
@@ -70,7 +74,22 @@ export class ChatWindowComponent implements OnInit {
     }
   }
 
-  constructor() { }
+  // Opening the multimedia popup
+  OpenMultiMedia() {
+    console.log('Opening the Multi-Media Component');
+    const dialogRef = this.dialog.open(MultimediaComponent, {
+      // This is onlty if we wish to send parameters to the popup component
+      data: {
+        UserId: 0,
+        ContactId: 0
+      }
+    });
+
+    // If wish to apply a action after popup close
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('Multi-Media Component popup has closed');
+    });
+  }
 
   ngOnInit() {
   }
