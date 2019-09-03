@@ -85,52 +85,13 @@
         </div>
         <div class="card-body msg_card_body">
 
-          <div class="d-flex justify-content-start mb-4">
-            <div class="msg_cotainer">
-              Message 1
-              <span class="msg_time">8:40 AM, Today</span>
-            </div>
-          </div>
-
-          <div class="d-flex justify-content-end mb-4">
-            <div class="msg_cotainer_send">
-              Message 2
-              <span class="msg_time_send">8:55 AM, Today</span>
-            </div>
-          </div>
-
-          <div class="d-flex justify-content-start mb-4">
-            <div class="msg_cotainer">
-              Message 3
-              <span class="msg_time">9:00 AM, Today</span>
-            </div>
-          </div>
-
-          <div class="d-flex justify-content-end mb-4">
-            <div class="msg_cotainer_send">
-              Message 4
-              <span class="msg_time_send">9:05 AM, Today</span>
-            </div>
-          </div>
-
-          <div class="d-flex justify-content-start mb-4">
-            <div class="msg_cotainer">
-              Message 5
-              <span class="msg_time">9:07 AM, Today</span>
-            </div>
-          </div>
-
-          <div class="d-flex justify-content-end mb-4">
-            <div class="msg_cotainer_send">
-              Message 6
-              <span class="msg_time_send">9:10 AM, Today</span>
-            </div>
-          </div>
-
-          <div class="d-flex justify-content-start mb-4">
-            <div class="msg_cotainer">
-              Message 7
-              <span class="msg_time">9:12 AM, Today</span>
+          <div class="d-flex justify-content-start mb-4"
+          *ngFor="let i of message">
+            <div [ngClass]="{ 'msg_cotainer': i.msgID === i.msgID, 'msg_cotainer_send': i.msgID !== i.msgID }">
+              {{ i.msgContents }}
+              <span
+                [ngClass]="{ 'msg_time': i.msgID === i.msgID, 'msg_time_send': i.msgID !== i.msgID }"
+                >8:40 AM, Today</span>
             </div>
           </div>
 

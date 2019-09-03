@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Users} from 'src/app/shared/users.model';
+import { Messages } from '../shared/messages.model';
 import { FirebaseApp } from '@angular/fire';
+import {Message} from '@angular/compiler/src/i18n/i18n_ast';
 
 @Component({
   selector: 'app-chat-window',
@@ -8,6 +10,7 @@ import { FirebaseApp } from '@angular/fire';
   styleUrls: ['./chat-window.component.scss']
 })
 export class ChatWindowComponent implements OnInit {
+  thisUserID = 1234;
   title = 'instant-messaging-app';
   modal = document.getElementById('myModal') as HTMLImageElement;
   img = document.getElementById('profile-picture') as HTMLImageElement;
@@ -20,6 +23,13 @@ export class ChatWindowComponent implements OnInit {
     new Users('0731102348', 'Stiaan Bouwer', 'online', 'https://scontent-jnb1-1.xx.fbcdn.net/v/t1.0-9/16938651_1420230568048345_476885994405757357_n.jpg?_nc_cat=108&_nc_oc=AQlqb8ODhECeR4rP0EjCsIOLNEdv22u9fS3CAUDaTtj0tM_UVTBxp8rb8PBAYbPcm-U&_nc_ht=scontent-jnb1-1.xx&oh=8735366cef0719e77c8139048879ee0e&oe=5E04B854', 'online_icon'),
     new Users('0815817200', 'Eduan Naude', 'left 30 mins ago', 'https://scontent-jnb1-1.xx.fbcdn.net/v/t1.0-9/41215967_2073383522693329_4417942590620434432_n.jpg?_nc_cat=104&_nc_oc=AQk_-RsprR49AV__tXA09KVzvb3g3V-Du7r_9ZsFp5I5QXvU64IYEo05WbvQ1aO9gGc&_nc_ht=scontent-jnb1-1.xx&oh=7289a5f55c7c797e0814554f0aa82b60&oe=5E0F949B', 'online_icon offline'),
     new Users('0824189002', 'Ernst Blignaut', 'online', 'https://scontent-jnb1-1.xx.fbcdn.net/v/t1.0-9/41991171_2204128929876901_2659512653843529728_n.jpg?_nc_cat=100&_nc_oc=AQmfXWDIka8j7Ylz30Uokz0190eIjvShDDT2fZw2eC-TF-S2C7CODkxED5wqjtiRNsk&_nc_ht=scontent-jnb1-1.xx&oh=ada48dbae40d52ef629194f7d068adea&oe=5E03C633', 'online_icon'),
+  ];
+
+  message: Messages[] = [
+    new Messages(1234, 'Hello', 'msgText'),
+    new Messages(1234, 'Hello', 'msgText'),
+    new Messages(1234, 'Hello', 'msgText'),
+    new Messages(1234, 'Hello', 'msgText'),
   ];
 
   // Get the <span> element that closes the modal
