@@ -3,7 +3,7 @@ import {Users} from 'src/app/shared/users.model';
 import { Messages } from '../shared/messages.model';
 import { FirebaseApp } from '@angular/fire';
 import {Message} from '@angular/compiler/src/i18n/i18n_ast';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { MultimediaComponent } from '../multimedia/multimedia.component';
 
 @Component({
@@ -37,7 +37,14 @@ export class ChatWindowComponent implements OnInit {
   // Get the <span> element that closes the modal
   span = document.getElementsByClassName('close')[0];
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private snackBar: MatSnackBar) { }
+
+  // Just to give info the application user
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
 
   videoCalling() {
     window.location.href = 'https://youtu.be/-HrPr6IQNac?t=25';
@@ -92,6 +99,7 @@ export class ChatWindowComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.openSnackBar('Application started', 'close');
   }
 
 }
