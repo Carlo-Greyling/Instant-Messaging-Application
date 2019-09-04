@@ -26,5 +26,5 @@ export class FirebaseService {
       });
   }
   // TODO: Sing up
-  createUser(value, avatar) {}
+  createUser() {}
 }
