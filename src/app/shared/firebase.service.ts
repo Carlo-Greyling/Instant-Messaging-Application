@@ -25,6 +25,9 @@ export class FirebaseService {
         console.log('Error', err); // add toastr notification
       });
   }
-  // TODO: Sing up
-  createUser() {}
+  // TODO: Sign up
+  createUser(data) {
+    const usersRef = this.db.collection('users').doc(data.userId);
+    usersRef.set(data);
+  }
 }

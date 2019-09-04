@@ -87,11 +87,13 @@
 
           <div class="d-flex justify-content-start mb-4"
           *ngFor="let i of message">
-            <div [ngClass]="{ 'msg_cotainer': i.msgID === i.msgID, 'msg_cotainer_send': i.msgID !== i.msgID }">
+            <div
+              [ngClass]="{ 'msg_container_send': i.msgID === thisUserID, 'msg_container': i.msgID !== thisUserID }">
               {{ i.msgContents }}
               <span
-                [ngClass]="{ 'msg_time': i.msgID === i.msgID, 'msg_time_send': i.msgID !== i.msgID }"
-                >8:40 AM, Today</span>
+                [ngClass]="{ 'msg_time_send': i.msgID === thisUserID, 'msg_time': i.msgID !== thisUserID }">
+                {{ i.arrivalTime }}
+              </span>
             </div>
           </div>
 
@@ -101,9 +103,9 @@
             <div class="input-group-append">
               <span class="input-group-text attach_btn"><a id="attachment" (click)="OpenMultiMedia()" class="fas fa-paperclip"></a></span>
             </div>
-            <textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+            <input type="text" class="form-control type_msg" placeholder="Type your message..." [(ngModel)]="newMessage">
             <div class="input-group-append">
-              <span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
+              <span class="input-group-text send_btn" (click)="onGenerateNewMessage()"><i class="fas fa-location-arrow"></i></span>
             </div>
           </div>
         </div>
