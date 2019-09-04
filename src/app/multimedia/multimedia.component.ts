@@ -19,6 +19,10 @@ export class MultimediaComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  OpenMedia() {
+    console.log('Open Media clicked');
+  }
+
   testSnackBar() {
     this.openSnackBar('Keep calm and Code', 'Close');
   }

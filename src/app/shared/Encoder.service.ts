@@ -6,5 +6,11 @@ import { Injectable } from "@angular/core";
 export class EncoderService {
   constructor() {}
 
+//Convert to base54 a media file
+//Decode from base64
+
+//Encrypt Make research on a encryption method (SHA-256)
+
+//Decrypt the Encrypted File
 
 }
