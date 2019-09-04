@@ -12,6 +12,7 @@ body,html{
 }
 .card{
   height: 657px;
+  width: auto;
   border-radius: 15px !important;
   background-color: rgba(0,0,0,0.4) !important;
 }
@@ -194,7 +195,7 @@ body,html{
   cursor: pointer;
   margin-right: 20px;
 }
-.msg_cotainer{
+.msg_container{
   margin-top: auto;
   margin-bottom: auto;
   margin-left: 10px;
@@ -203,10 +204,11 @@ body,html{
   padding: 10px;
   position: relative;
 }
-.msg_cotainer_send{
+
+.msg_container_send{
   margin-top: auto;
   margin-bottom: auto;
-  margin-right: 10px;
+  margin-left: auto;
   border-radius: 25px;
   background-color: deepskyblue;
   padding: 10px;
@@ -215,15 +217,15 @@ body,html{
 .msg_time{
   position: absolute;
   left: 0;
-  bottom: -15px;
-  color: rgba(255,255,255,0.5);
+  bottom: -30px;
+  color: white;
   font-size: 10px;
 }
 .msg_time_send{
   position: absolute;
   right:0;
-  bottom: -15px;
-  color: rgba(255,255,255,0.5);
+  bottom: -30px;
+  color: white;
   font-size: 10px;
 }
 .msg_head{
@@ -237,6 +239,16 @@ body,html{
   cursor: pointer;
   font-size: 20px;
 }
+
+#action_menu_btn2 {
+  position: absolute;
+  right: -12px;
+  top: 4px;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+}
+
 .action_menu{
   z-index: 1;
   position: absolute;

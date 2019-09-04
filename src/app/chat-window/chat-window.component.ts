@@ -16,6 +16,8 @@ export class ChatWindowComponent implements OnInit {
   img = document.getElementById('profile-picture') as HTMLImageElement;
   modalImg = document.getElementById('img01') as HTMLImageElement;
   input; filter; ul; li; a; i; txtValue;
+  newMessage: string;
+  public msgTime: Date = new Date();
 
   users: Users[] = [
     new Users('0765843028', 'Keanu Jooste', 'online', 'https://scontent-jnb1-1.xx.fbcdn.net/v/t1.0-9/60937380_2227964937285183_6900601698239119360_n.jpg?_nc_cat=106&_nc_oc=AQmjhYtcyLXTRQ9EjwQGp70e3OYU16x3YMCc7ODLc-uvgPqj_BBvs-T6p5EsgzeoTho&_nc_ht=scontent-jnb1-1.xx&oh=9c51d38a12ea4a82dc6aeea28465c637&oe=5E10F323', 'online_icon'),
@@ -26,10 +28,10 @@ export class ChatWindowComponent implements OnInit {
   ];
 
   message: Messages[] = [
-    new Messages(1234, 'Hello', 'msgText'),
-    new Messages(1234, 'Hello', 'msgText'),
-    new Messages(1234, 'Hello', 'msgText'),
-    new Messages(1234, 'Hello', 'msgText'),
+    new Messages(1234, 'msg1', 'msgText', '14:29'),
+    new Messages(2222, 'msg2', 'msgText', '14:29'),
+    new Messages(1234, 'msg3', 'msgText', '14:30'),
+    new Messages(3211, 'msg4', 'msgText', '14:30'),
   ];
 
   // Get the <span> element that closes the modal
@@ -68,6 +70,10 @@ export class ChatWindowComponent implements OnInit {
         this.li[this.i].style.display = 'none';
       }
     }
+  }
+
+  onGenerateNewMessage() {
+    this.message.push(new Messages(this.thisUserID, this.newMessage, '', '14:47'));
   }
 
   constructor() { }

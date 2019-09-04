@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { VideoCallingComponent } from './video-calling/video-calling.component';
 import { MultimediaComponent } from './multimedia/multimedia.component';
 import { ChatWindowComponent } from './chat-window/chat-window.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ChatWindowComponent } from './chat-window/chat-window.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
