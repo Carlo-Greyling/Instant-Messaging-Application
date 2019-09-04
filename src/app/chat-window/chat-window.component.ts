@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {Users} from 'src/app/shared/users.model';
 import { Messages } from '../shared/messages.model';
 import { FirebaseApp } from '@angular/fire';
@@ -83,13 +83,20 @@ export class ChatWindowComponent implements OnInit {
 
   // Opening the multimedia popup
   OpenMultiMedia() {
+    console.log(document.getElementById('attachment').offsetTop);
     console.log('Opening the Multi-Media Component');
+    const bodyRect = document.body.getBoundingClientRect();
+    const elemRect = document.getElementById('attachment').getBoundingClientRect();
+    const right = bodyRect.right - elemRect.right;
+    const top = elemRect.top - bodyRect.top;
     const dialogRef = this.dialog.open(MultimediaComponent, {
       // This is onlty if we wish to send parameters to the popup component
       data: {
         UserId: 0,
         ContactId: 0
-      }
+      },
+      panelClass: 'MultimediaCSS',
+      position: { right: right - 350 + 'px', top: top - 120 + 'px' }
     });
 
     // If wish to apply a action after popup close
