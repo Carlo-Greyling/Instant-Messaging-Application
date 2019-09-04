@@ -1,6 +1,7 @@
 import {NgForm} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Component, OnInit} from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -10,11 +11,17 @@ import {Component, OnInit} from '@angular/core';
 export class LoginComponent implements OnInit {
   signInMessage: any;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,  private snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
 
+// Just to give info the application user
+openSnackBar(message: string, action: string) {
+  this.snackBar.open(message, action, {
+    duration: 2000,
+  });
+}
   // DONT EDIT!!!
   LogIn(form: NgForm) {
     const value = form.value;
@@ -22,6 +29,7 @@ export class LoginComponent implements OnInit {
       this.router.navigateByUrl('chatWindow');
     } else {
       this.signInMessage = 'Username / Password is incorrect, please try again.';
+      this.openSnackBar('Username / Password is incorrect, please try again.', 'Try again');
     }
     /*const value = form.value;
     // console.log(value.username, value.password);

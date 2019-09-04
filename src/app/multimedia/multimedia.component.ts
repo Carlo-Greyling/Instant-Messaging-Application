@@ -19,17 +19,26 @@ export class MultimediaComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  OpenImage() {
+  OpenImage(event: any) {
+    // The file are in this event
+    console.log(event);
+
     // Code here
 
     this.openSnackBar('Image Send', 'Close');
   }
-  OpenVideo() {
+  OpenVideo(event: any) {
+    // The file are in this event
+    console.log(event);
+
     // Code here
 
     this.openSnackBar('Video file send', 'Close');
   }
-  OpenAudio() {
+  OpenAudio(event: any) {
+    // The file are in this event
+    console.log(event);
+
     // Code here
 
     this.openSnackBar('Audio file send', 'Close');

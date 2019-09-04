@@ -83,7 +83,6 @@ export class ChatWindowComponent implements OnInit {
 
   // Opening the multimedia popup
   OpenMultiMedia() {
-    console.log(document.getElementById('attachment').offsetTop);
     console.log('Opening the Multi-Media Component');
     const bodyRect = document.body.getBoundingClientRect();
     const elemRect = document.getElementById('attachment').getBoundingClientRect();
@@ -106,7 +105,7 @@ export class ChatWindowComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.openSnackBar('Application started', 'close');
+    this.openSnackBar('Login Successful', 'close');
   }
 
 }
