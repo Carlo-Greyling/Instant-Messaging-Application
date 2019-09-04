@@ -26,8 +26,20 @@ export class FirebaseService {
       });
   }
   // TODO: Sign up
-  createUser(data) {
+  /*createUser(data) {
     const usersRef = this.db.collection('users').doc(data.userId);
+    usersRef.set(data);
+  }*/
+  createUser(userId, name, password) {
+    const data = {
+      name,
+      status: 'null',
+      profilePicture: 'null',
+      onlineIcon: 'null',
+      userId,
+      password
+    };
+    const usersRef = this.db.collection('users').doc(userId);
     usersRef.set(data);
   }
 }
