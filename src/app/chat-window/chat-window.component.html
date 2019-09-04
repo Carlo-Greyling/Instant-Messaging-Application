@@ -17,18 +17,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
           </div>
-
-          <span id="action_menu_btn2"><i class="fas fa-ellipsis-v"></i></span>
-          <div class="action_menu">
-            <ul>
-              <li><i class="fas fa-user-circle"></i> View profile</li>
-              <li><i class="fas fa-users"></i> Add to close friends</li>
-              <li><i class="fas fa-plus"></i> Add to group</li>
-              <li><i class="fas fa-ban"></i> Block</li>
-            </ul>
-          </div>
         </div>
-
       </div>
       <div class="card-body contacts_body">
         <ul class="contacts" id="contactsUL">
@@ -97,7 +86,7 @@
         <div class="card-body msg_card_body">
 
           <div class="d-flex justify-content-start mb-4"
-            *ngFor="let i of message">
+          *ngFor="let i of message">
             <div
               [ngClass]="{ 'msg_container_send': i.msgID === thisUserID, 'msg_container': i.msgID !== thisUserID }">
               {{ i.msgContents }}
@@ -112,9 +101,8 @@
         <div class="card-footer">
           <div class="input-group">
             <div class="input-group-append">
-              <span class="input-group-text attach_btn" (click)="videoCalling()"><i class="fas fa-paperclip"></i></span>
+              <span class="input-group-text attach_btn"><a id="attachment" (click)="OpenMultiMedia()" class="fas fa-paperclip"></a></span>
             </div>
-            <!--textarea id="messageBox" class="form-control type_msg" placeholder="Type your message..."></textarea-->
             <input type="text" class="form-control type_msg" placeholder="Type your message..." [(ngModel)]="newMessage">
             <div class="input-group-append">
               <span class="input-group-text send_btn" (click)="onGenerateNewMessage()"><i class="fas fa-location-arrow"></i></span>

@@ -1,1 +1,14 @@
-<p>multimedia works!</p>
+
+
+    <button mat-button (click)="ImageFile.click()"><mat-icon class="IconStyle">perm_media</mat-icon></button>
+    <input hidden type="file" accept="image/gif, image/jpeg, image/png" id="Image" #ImageFile (change)="OpenImage($event)">
+
+    <button mat-button (click)="VideoFile.click()"><mat-icon class="IconStyle">movie</mat-icon></button>
+    <input hidden type="file" accept="video/mp4,video/x-m4v,video/*" id="Video" #VideoFile (change)="OpenVideo($event)">
+
+    <button mat-button (click)="AudioFile.click()"><mat-icon class="IconStyle">queue_music</mat-icon></button>
+    <input hidden type="file" accept="audio/*" id="Audio"#AudioFile (change)="OpenAudio($event)">
+
+
+
+

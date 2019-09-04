@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {Users} from 'src/app/shared/users.model';
 import { Messages } from '../shared/messages.model';
 import { FirebaseApp } from '@angular/fire';
 import {Message} from '@angular/compiler/src/i18n/i18n_ast';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { MultimediaComponent } from '../multimedia/multimedia.component';
 
 @Component({
   selector: 'app-chat-window',
@@ -36,6 +38,15 @@ export class ChatWindowComponent implements OnInit {
 
   // Get the <span> element that closes the modal
   span = document.getElementsByClassName('close')[0];
+
+  constructor(private dialog: MatDialog, private snackBar: MatSnackBar) { }
+
+  // Just to give info the application user
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
 
   videoCalling() {
     window.location.href = 'https://youtu.be/-HrPr6IQNac?t=25';
@@ -72,13 +83,35 @@ export class ChatWindowComponent implements OnInit {
     }
   }
 
-  onGenerateNewMessage() {
-    this.message.push(new Messages(this.thisUserID, this.newMessage, '', '14:47'));
+  // Opening the multimedia popup
+  OpenMultiMedia() {
+    console.log('Opening the Multi-Media Component');
+    const bodyRect = document.body.getBoundingClientRect();
+    const elemRect = document.getElementById('attachment').getBoundingClientRect();
+    const right = bodyRect.right - elemRect.right;
+    const top = elemRect.top - bodyRect.top;
+    const dialogRef = this.dialog.open(MultimediaComponent, {
+      // This is onlty if we wish to send parameters to the popup component
+      data: {
+        UserId: 0,
+        ContactId: 0
+      },
+      panelClass: 'MultimediaCSS',
+      position: { right: right - 350 + 'px', top: top - 120 + 'px' }
+    });
+
+    // If wish to apply a action after popup close
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('Multi-Media Component popup has closed');
+    });
   }
 
-  constructor() { }
-
   ngOnInit() {
+    this.openSnackBar('Login Successful', 'close');
+  }
+
+  onGenerateNewMessage() {
+    this.message.push(new Messages(this.thisUserID, this.newMessage, '', '14:47'));
   }
 
 }
