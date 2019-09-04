@@ -11,6 +11,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { AngularFireModule } from '@angular/fire';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
+import { environment } from "../environments/environment";
 
 @NgModule({
   declarations: [
@@ -27,7 +30,9 @@ import { SignupComponent } from './signup/signup.component';
     BrowserAnimationsModule,
     MatSnackBarModule,
     AppRoutingModule,
-    //This shared module contains angular material modules (In one module for more cleaner code)
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    // This shared module contains angular material modules (In one module for more cleaner code)
     SharedModule
   ],
   providers: [],
