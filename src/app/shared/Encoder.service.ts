@@ -7,12 +7,14 @@ import { FileSystem } from '@angular/compiler-cli/src/ngtsc/file_system';
 export class EncoderService {
   constructor(private fs: FileSystem) {}
 
-// Convert to base54 a media file
+  // Convert to base54 a media file
+  // To use: const base64str = base64Encode('file.jpg');
   base64Encode(filePath) {
     const bitmap = this.fs.readFile(filePath);
     return new Buffer(bitmap).toString('base64');
   }
-// Decode from base64
+  // Decode from base64
+  // To use: const base64str = base64EDecode(base64String, 'file.jpg');
   base64Decode(base64Str, filePath) {
     const bitmap = new Buffer(base64Str, 'base64');
     return this.fs.writeFile(filePath, bitmap.toString());
