@@ -14,7 +14,7 @@ export class EncoderService {
     return new Buffer(bitmap).toString('base64');
   }
   // Decode from base64
-  // To use: const base64str = base64EDecode(base64String, 'file.jpg');
+  // To use: const file = base64EDecode(base64String, 'file.jpg');
   base64Decode(base64Str, filePath) {
     const bitmap = new Buffer(base64Str, 'base64');
     return this.fs.writeFile(filePath, bitmap.toString());
