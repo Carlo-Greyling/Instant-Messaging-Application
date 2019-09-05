@@ -13,7 +13,8 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { AngularFireModule } from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
-import { environment } from "../environments/environment";
+import { environment } from '../environments/environment';
+import {EncoderService} from './shared/Encoder.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { environment } from "../environments/environment";
     // This shared module contains angular material modules (In one module for more cleaner code)
     SharedModule
   ],
-  providers: [],
+  providers: [EncoderService],
   entryComponents: [
     MultimediaComponent
   ],

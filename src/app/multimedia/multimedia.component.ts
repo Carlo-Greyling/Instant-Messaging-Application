@@ -10,8 +10,7 @@ import { EncoderService } from '../shared/Encoder.service';
 export class MultimediaComponent implements OnInit {
 
   constructor(private snackBar: MatSnackBar, private dialogRef: MatDialogRef<MultimediaComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any,
-              private encoderService: EncoderService) { }
+              @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
   }
@@ -24,7 +23,7 @@ export class MultimediaComponent implements OnInit {
     // The file are in this event
     console.log(event);
     // TO ENCODE (Send image file) : const base64str = this.encoderService.base64Encode('file.jpg');
-    // TO DECODE (Send base64 string and image file) : const file = this.encoderService.base64EDecode(base64String, 'file.jpg');
+    // TO DECODE (Send base64 string and image file) : const file = this.encoderService.base64Decode(base64String, 'file.jpg');
     // Code here
 
     this.openSnackBar('Image Send', 'Close');
