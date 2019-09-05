@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { FileSystem } from '@angular/compiler-cli/src/ngtsc/file_system';
 import * as CryptoJS from 'crypto-js';
+import { FirebaseService } from './firebase.service';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -9,20 +12,48 @@ import * as CryptoJS from 'crypto-js';
 // and to encrypt and decrypt anything
 export class EncoderService {
   EncryptionPassword = 'CodingWizard';
-  constructor() {}
+  constructor(private firebaseService: FirebaseService) {}
 
-  // Convert to base54 a media file
-  // To use: const base64str = base64Encode('file.jpg');
-  /*base64Encode(filePath) {
-    const bitmap = this.fs.readFile(filePath);
-    return new Buffer(bitmap).toString('base64');
-  }*/
-  // Decode from base64
-  // To use: const file = base64EDecode(base64String, 'file.jpg');
-  /*base64Decode(base64Str, filePath) {
-    const bitmap = new Buffer(base64Str, 'base64');
-    return this.fs.writeFile(filePath, bitmap.toString());
-  }*/
+  // Encode Image to base64 and upload
+  Base64EncodeImage(theFile: any, fileName: any, UserId: any, ContactId: any) {
+    const reader = new FileReader();
+    reader.readAsDataURL(theFile);
+    let result;
+    reader.onload = (e) => {
+      result = reader.result;
+      console.log(result);
+      this.firebaseService.uploadImage(UserId, ContactId, result, fileName);
+    };
+  }
+
+  // Encode Video to base64 and upload
+  Base64EncodeVideo(theFile: any, fileName: any, UserId: any, ContactId: any) {
+    const reader = new FileReader();
+    reader.readAsDataURL(theFile);
+    let result;
+    reader.onload = (e) => {
+      result = reader.result;
+      console.log(result);
+      this.firebaseService.uploadVideo(UserId, ContactId, result, fileName);
+    };
+  }
+
+  // Encode Audio to base64 and upload
+  Base64EncodeAudio(theFile: any, fileName: any, UserId: any, ContactId: any) {
+    const reader = new FileReader();
+    reader.readAsDataURL(theFile);
+    let result;
+    reader.onload = (e) => {
+      result = reader.result;
+      console.log(result);
+      this.firebaseService.uploadAudio(UserId, ContactId, result, fileName);
+    };
+  }
+
+   // Base64 Decoder
+   // Het dit nie nodig nie want ons kan dit direk display op HTML van base64
+   // bv: <img id="myImage" src="base64String">
+
 
 // Encrypt Make research on a encryption method (SHA-256 is a one way hashing)
 EncryptTextMessage(message: any): any {

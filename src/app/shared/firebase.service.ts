@@ -42,4 +42,16 @@ export class FirebaseService {
     const usersRef = this.db.collection('users').doc(userId);
     usersRef.set(data);
   }
+
+  uploadImage(userId, contactId, Base64String, Filename) {
+    // Upload Image
+  }
+
+  uploadVideo(userId, contactId, Base64String, Filename) {
+    // Upload Video
+  }
+
+  uploadAudio(userId, contactId, Base64String, Filename) {
+    // Upload Audio
+  }
 }
