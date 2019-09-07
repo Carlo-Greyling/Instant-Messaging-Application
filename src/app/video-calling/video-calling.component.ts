@@ -95,5 +95,4 @@ export class VideoCallingComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }
