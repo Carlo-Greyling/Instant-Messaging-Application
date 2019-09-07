@@ -13,7 +13,12 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { AngularFireModule } from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
-import { environment } from "../environments/environment";
+import { environment } from '../environments/environment';
+import { AngularAgoraRtcModule, AgoraConfig } from 'angular-agora-rtc';
+
+const agoraConfig: AgoraConfig = {
+  AppID: 'c67eefb21d494c1787c7fe20b83dc5b6',
+};
 
 @NgModule({
   declarations: [
@@ -24,6 +29,7 @@ import { environment } from "../environments/environment";
     LoginComponent,
     SignupComponent,
   ],
+
   imports: [
     BrowserModule,
     FormsModule,
@@ -33,7 +39,8 @@ import { environment } from "../environments/environment";
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     // This shared module contains angular material modules (In one module for more cleaner code)
-    SharedModule
+    SharedModule,
+    AngularAgoraRtcModule.forRoot(agoraConfig)
   ],
   providers: [],
   entryComponents: [

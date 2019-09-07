@@ -5,6 +5,7 @@ import { FirebaseApp } from '@angular/fire';
 import {Message} from '@angular/compiler/src/i18n/i18n_ast';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { MultimediaComponent } from '../multimedia/multimedia.component';
+import {VideoCallingComponent} from '../video-calling/video-calling.component';
 
 @Component({
   selector: 'app-chat-window',
@@ -49,7 +50,21 @@ export class ChatWindowComponent implements OnInit {
   }
 
   videoCalling() {
-    window.location.href = 'https://youtu.be/-HrPr6IQNac?t=25';
+    // window.location.href = 'https://youtu.be/-HrPr6IQNac?t=25';
+    console.log('Opening the Video-Calling Component');
+    const bodyRect = document.body.getBoundingClientRect();
+    const elemRect = document.getElementById('video-call').getBoundingClientRect();
+    const right = bodyRect.right - elemRect.right;
+    const top = elemRect.top - bodyRect.top;
+
+    const dialogRef = this.dialog.open(VideoCallingComponent, {
+      data: {
+        UserId: 0,
+        ContactId: 0
+      },
+      // panelClass: 'src/app/video-calling/video-calling.component.scss',
+      position: { right: right - 350 + 'px', top: top - 120 + 'px' }
+    });
   }
 
   /*constructor(public app: FirebaseApp) {

@@ -10,7 +10,7 @@ import {MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 export class MultimediaComponent implements OnInit {
 
   constructor(private snackBar: MatSnackBar, private dialogRef: MatDialogRef<MultimediaComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+              @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
   }
