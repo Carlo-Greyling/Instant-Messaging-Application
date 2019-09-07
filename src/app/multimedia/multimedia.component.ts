@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
-
+import { EncoderService } from '../shared/Encoder.service';
+import * as rx  from 'rxjs';
 
 @Component({
   selector: 'app-multimedia',
@@ -10,7 +11,7 @@ import {MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 export class MultimediaComponent implements OnInit {
 
   constructor(private snackBar: MatSnackBar, private dialogRef: MatDialogRef<MultimediaComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
+              @Inject(MAT_DIALOG_DATA) public data: any, private encodeService: EncoderService) { }
 
   ngOnInit() {
   }
@@ -19,29 +20,26 @@ export class MultimediaComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  OpenImage(event: any) {
-    // The file are in this event
-    console.log(event);
-
-    // Code here
-
+  async OpenImage(event: any) {
+    // The file is in this event
+    console.log(event.target.files[0].name);
+    this.encodeService.Base64EncodeImage(event.target.files[0], event.target.files[0].name, this.data.UserId, this.data.ContactId);
     this.openSnackBar('Image Send', 'Close');
+    this.dialogRef.close();
   }
   OpenVideo(event: any) {
-    // The file are in this event
-    console.log(event);
-
-    // Code here
-
+    // The file is in this event
+    console.log(event.target.files[0].name);
+    this.encodeService.Base64EncodeVideo(event.target.files[0], event.target.files[0].name, this.data.UserId, this.data.ContactId);
     this.openSnackBar('Video file send', 'Close');
+    this.dialogRef.close();
   }
   OpenAudio(event: any) {
-    // The file are in this event
-    console.log(event);
-
-    // Code here
-
+    // The file is in this event
+    console.log(event.target.files[0].name);
+    this.encodeService.Base64EncodeAudio(event.target.files[0], event.target.files[0].name, this.data.UserId, this.data.ContactId);
     this.openSnackBar('Audio file send', 'Close');
+    this.dialogRef.close();
   }
 
   testSnackBar() {

@@ -25,6 +25,33 @@ export class FirebaseService {
         console.log('Error', err); // add toastr notification
       });
   }
-  // TODO: Sing up
-  createUser() {}
+  // TODO: Sign up
+  /*createUser(data) {
+    const usersRef = this.db.collection('users').doc(data.userId);
+    usersRef.set(data);
+  }*/
+  createUser(userId, name, password) {
+    const data = {
+      name,
+      status: 'null',
+      profilePicture: 'null',
+      onlineIcon: 'null',
+      userId,
+      password
+    };
+    const usersRef = this.db.collection('users').doc(userId);
+    usersRef.set(data);
+  }
+
+  uploadImage(userId, contactId, Base64String, Filename) {
+    // Upload Image
+  }
+
+  uploadVideo(userId, contactId, Base64String, Filename) {
+    // Upload Video
+  }
+
+  uploadAudio(userId, contactId, Base64String, Filename) {
+    // Upload Audio
+  }
 }

@@ -14,6 +14,7 @@ import { SignupComponent } from './signup/signup.component';
 import { AngularFireModule } from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
+import {EncoderService} from './shared/Encoder.service';
 import { AngularAgoraRtcModule, AgoraConfig } from 'angular-agora-rtc';
 
 const agoraConfig: AgoraConfig = {
@@ -42,7 +43,7 @@ const agoraConfig: AgoraConfig = {
     SharedModule,
     AngularAgoraRtcModule.forRoot(agoraConfig)
   ],
-  providers: [],
+  providers: [EncoderService],
   entryComponents: [
     MultimediaComponent
   ],
