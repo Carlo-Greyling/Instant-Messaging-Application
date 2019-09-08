@@ -22,7 +22,7 @@
       <div class="card-body contacts_body">
         <ul class="contacts" id="contactsUL">
           <li class="active">
-            <div class="d-flex bd-highlight" *ngFor="let i of users">
+            <div id="contactList" class="d-flex bd-highlight" *ngFor="let i of users" (click)="setActiveContact()">
               <div class="img_cont">
                 <img
                   id="profile-picture"

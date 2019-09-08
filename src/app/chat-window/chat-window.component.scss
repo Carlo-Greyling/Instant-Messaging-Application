@@ -82,7 +82,7 @@ body,html{
 }
 .contacts li{
   width: 100% !important;
-  padding: 5px 10px;
+  padding: 5px;
   margin-bottom: 15px !important;
 }
 .active{
@@ -92,7 +92,6 @@ body,html{
   height: 70px;
   width: 70px;
   border:1.5px solid #f5f6fa;
-
 }
 
 .img_cont{
@@ -274,6 +273,10 @@ body,html{
 
 .d-flex.bd-highlight {
   margin-bottom: 10px;
+}
+
+#contactList:hover {
+  background-color: grey;
 }
 
 .end-of-chat {

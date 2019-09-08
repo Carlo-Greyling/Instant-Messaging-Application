@@ -14,11 +14,21 @@ import {VideoCallingComponent} from '../video-calling/video-calling.component';
 })
 export class ChatWindowComponent implements OnInit {
   thisUserID = 1234;
-  title = 'instant-messaging-app';
+  /*title = 'instant-messaging-app';
   modal = document.getElementById('myModal') as HTMLImageElement;
   img = document.getElementById('profile-picture') as HTMLImageElement;
-  modalImg = document.getElementById('img01') as HTMLImageElement;
-  input; filter; ul; li; a; i; txtValue;
+  modalImg = document.getElementById('img01') as HTMLImageElement;*/
+
+  input;
+  filter;
+  ul;
+  li;
+  a;
+  i;
+  txtValue;
+
+  activeContact;  // variable for setting the current open contact in the chat window;
+
   newMessage: string;
   public msgTime: Date = new Date();
 
@@ -40,7 +50,13 @@ export class ChatWindowComponent implements OnInit {
   // Get the <span> element that closes the modal
   span = document.getElementsByClassName('close')[0];
 
-  constructor(private dialog: MatDialog, private snackBar: MatSnackBar) { }
+  constructor(private dialog: MatDialog, private snackBar: MatSnackBar) {
+
+  }
+
+  setActiveContact() {
+    this.activeContact = 'Set activeContact to the ID of the contact clicked on';
+  }
 
   // Just to give info the application user
   openSnackBar(message: string, action: string) {
