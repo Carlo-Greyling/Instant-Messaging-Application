@@ -1,10 +1,17 @@
 #agora_local{
-  height: 500px;
-  width: 500px;
+  position: absolute;
+  height: 250px;
+  width: 250px;
   display: inline-block;
+  top: 20px;
+  left: 20px;
 }
 
 .remote-containers div{
-  height: 250px;
-  width: 250px;
+  position: relative;
+  height: 500px;
+  width: 500px;
+  border-radius: 25px;
+  top: 0;
+  left: 0;
 }
