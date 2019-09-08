@@ -50,23 +50,7 @@ export class ChatWindowComponent implements OnInit {
   }
 
   videoCalling() {
-    // window.location.href = 'https://youtu.be/-HrPr6IQNac?t=25';
-    // window.location.href = 'https://dashboard.agora.io/invite?sign=YXBwSWQlM0RjNjdlZWZiMjFkNDk0YzE3ODdjN2ZlMjBiODNkYzViNiUyNm5hbWUlM0RHcmV5bGluZyUyNnRpbWVzdGFtcCUzRDE1Njc4NjYwOTAlMjZjaGFubmVsJTNEZGVtbyUyNnRva2VuJTNE&step=0';
-
-    console.log('Opening the Video-Calling Component');
-    // const bodyRect = document.body.getBoundingClientRect();
-    // const elemRect = document.getElementById('video-call').getBoundingClientRect();
-    // const right = bodyRect.right - elemRect.right;
-    // const top = elemRect.top - bodyRect.top;
-
-    const dialogRef = this.dialog.open(VideoCallingComponent, {
-      data: {
-        UserId: 0,
-        ContactId: 0
-      },
-      // panelClass: 'src/app/video-calling/video-calling.component.scss',
-      // position: { right: right - 350 + 'px', top: top - 120 + 'px' }
-    });
+    window.location.href = '/videoCalling';
   }
 
   /*constructor(public app: FirebaseApp) {
