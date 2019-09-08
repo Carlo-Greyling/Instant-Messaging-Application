@@ -92,7 +92,7 @@ export class ChatWindowComponent implements OnInit {
     const right = bodyRect.right - elemRect.right;
     const top = elemRect.top - bodyRect.top;
     const dialogRef = this.dialog.open(MultimediaComponent, {
-      // This is onlty if we wish to send parameters to the popup component
+      // This is only if we wish to send parameters to the popup component
       data: {
         UserId: 0,
         ContactId: 0
