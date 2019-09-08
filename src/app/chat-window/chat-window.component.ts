@@ -53,6 +53,10 @@ export class ChatWindowComponent implements OnInit {
     window.location.href = '/videoCalling';
   }
 
+  voiceCalling() {
+    window.location.href = '/voiceCalling';
+  }
+
   /*constructor(public app: FirebaseApp) {
 
   }*/

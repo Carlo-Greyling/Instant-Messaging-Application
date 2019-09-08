@@ -4,6 +4,7 @@ import {LoginComponent} from './login/login.component';
 import {SignupComponent} from './signup/signup.component';
 import {ChatWindowComponent} from './chat-window/chat-window.component';
 import { VideoCallingComponent } from './video-calling/video-calling.component';
+import {VoiceCallingComponent} from './voice-calling/voice-calling.component';
 
 
 const routes: Routes = [
@@ -11,7 +12,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'chatWindow', component: ChatWindowComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'videoCalling', component: VideoCallingComponent }
+  { path: 'videoCalling', component: VideoCallingComponent },
+  { path: 'voiceCalling', component: VoiceCallingComponent }
 ];
 
 @NgModule({

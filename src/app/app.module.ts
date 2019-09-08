@@ -16,6 +16,7 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import {EncoderService} from './shared/Encoder.service';
 import { AngularAgoraRtcModule, AgoraConfig } from 'angular-agora-rtc';
+import { VoiceCallingComponent } from './voice-calling/voice-calling.component';
 
 const agoraConfig: AgoraConfig = {
   AppID: 'c67eefb21d494c1787c7fe20b83dc5b6',
@@ -29,6 +30,7 @@ const agoraConfig: AgoraConfig = {
     ChatWindowComponent,
     LoginComponent,
     SignupComponent,
+    VoiceCallingComponent,
   ],
 
   imports: [
