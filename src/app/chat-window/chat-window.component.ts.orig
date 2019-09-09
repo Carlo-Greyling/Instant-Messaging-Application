@@ -18,7 +18,8 @@ export class ChatWindowComponent implements OnInit {
   title = 'instant-messaging-app';
   modal = document.getElementById('myModal') as HTMLImageElement;
   img = document.getElementById('profile-picture') as HTMLImageElement;
-  modalImg = document.getElementById('img01') as HTMLImageElement;
+<<<<<<< HEAD
+  modalImg = document.getElementById('img01') as HTMLImageElement;*/
 
   input;
   filter;
@@ -32,6 +33,10 @@ export class ChatWindowComponent implements OnInit {
   public activeContactName: string;
   public activeProfilePicture: string;
 
+=======
+  modalImg = document.getElementById('img01') as HTMLImageElement;
+  input; filter; ul; li; a; i; txtValue;
+>>>>>>> 1a1eec865f9d8c7ebf74e5207db4ac2d8ebddc68
   newMessage: string;
   public msgTime: Date = new Date();
   private openChatIds: string[];
@@ -59,8 +64,9 @@ export class ChatWindowComponent implements OnInit {
   span = document.getElementsByClassName('close')[0];
 
   constructor(private dialog: MatDialog, private snackBar: MatSnackBar,
-              private firebaseService: FirebaseService) { }
+              private firebaseService: FirebaseService) {
 
+<<<<<<< HEAD
   setActiveContact(userID: string) {
     if (userID !== this.activeContact) {
       this.activeContact = userID;
@@ -77,6 +83,8 @@ export class ChatWindowComponent implements OnInit {
 
     this.message = [];
     return this.activeContact;
+=======
+>>>>>>> 1a1eec865f9d8c7ebf74e5207db4ac2d8ebddc68
   }
 
   // Just to give info the application user
@@ -150,14 +158,16 @@ export class ChatWindowComponent implements OnInit {
 
   ngOnInit() {
     this.openSnackBar('Login Successful', 'close');
+<<<<<<< HEAD
+    this.activeContact = this.users[0].userID;
+    this.activeContactName = this.users[0].name;
+    this.activeProfilePicture = this.users[0].profilePicture;
+=======
     // this.openChatUserIds = this.firebaseService.getOpenChatUID(localStorage.getItem('currentUserId'));
     // this.openChatIds = this.firebaseService.openChatChatIds;
     this.users = this.firebaseService.getUserProfiles();
     this.message = this.firebaseService.getMessages(this.openChatIds);
-
-    this.activeContact = this.users[0].userID;
-    this.activeContactName = this.users[0].name;
-    this.activeProfilePicture = this.users[0].profilePicture;
+>>>>>>> 1a1eec865f9d8c7ebf74e5207db4ac2d8ebddc68
   }
 
   onGenerateNewMessage() {

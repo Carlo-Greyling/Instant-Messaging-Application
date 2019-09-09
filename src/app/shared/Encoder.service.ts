@@ -26,6 +26,18 @@ export class EncoderService {
     };
   }
 
+  // Just a Base64 Image Encoder
+  Base64Encoder(theFile: any) {
+    const reader = new FileReader();
+    reader.readAsDataURL(theFile);
+    let result;
+    reader.onload = (e) => {
+      result = reader.result;
+      console.log(result);
+      return result;
+    };
+  }
+
   // Encode Video to base64 and upload
   Base64EncodeVideo(theFile: any, fileName: any, UserId: any, ContactId: any) {
     const reader = new FileReader();
