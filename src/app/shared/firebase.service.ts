@@ -11,6 +11,7 @@ export class FirebaseService {
   public openChatUserIds: string[] = [];
   private userProfilesArr: Users[] = [];
   private messagesArr: Messages[] = [];
+  public ChatIdFinal = '';
 
   constructor(public db: AngularFirestore,
               private router: Router) {}
@@ -106,12 +107,41 @@ export class FirebaseService {
   getMessages(friendId: string): Messages[] {
     let arrTimeArray: string[] = [];
     let msgContentsArray: string[] = [];
-    let msgIdArray: number[] = [];
+    let msgIdArray: string[] = [];
     let msgTypeArray: string[] = [];
+    const ChatIDV1 = localStorage.getItem('currentUserId') + '_' + friendId;
 
-    const ChatID = localStorage.getItem('currentUserId') + '_' + friendId;
+    const chatsRef = this.db.collection('chats').doc(ChatIDV1);
+    const getDoc = chatsRef.get().toPromise()
+      .then(doc => {
+        if (!doc.exists) {
+          console.log('not found'); // add toastr notification
+          this.messagesArr = this.getMessagesWithOtherChatId(friendId);
+        } else {
+          arrTimeArray = doc.data().arrivalTime;
+          msgContentsArray = doc.data().msgContents;
+          msgIdArray = doc.data().msgId;
+          msgTypeArray = doc.data().msgType;
+          // Messages(msgID: number, msgContents: string, msgType: string, arrivalTime: string)
+          for (let i = 0; i < msgIdArray.length; i++) {
+            this.messagesArr.push(new Messages(msgIdArray[i], msgContentsArray[i], msgTypeArray[i], arrTimeArray[i]));
+          }
+        }
+      }).catch(err => {
+        console.log('Error', err); // add toastr notification
+      });
+    console.log(this.messagesArr);
+    return this.messagesArr;
+  }
 
-    const chatsRef = this.db.collection('chats').doc(ChatID);
+  getMessagesWithOtherChatId(friendId): Messages[] {
+    let arrTimeArray: string[] = [];
+    let msgContentsArray: string[] = [];
+    let msgIdArray: string[] = [];
+    let msgTypeArray: string[] = [];
+    const ChatIDV2 = friendId + '_' + localStorage.getItem('currentUserId');
+
+    const chatsRef = this.db.collection('chats').doc(ChatIDV2);
     const getDoc = chatsRef.get().toPromise()
       .then(doc => {
         if (!doc.exists) {
@@ -131,6 +161,81 @@ export class FirebaseService {
       });
     console.log(this.messagesArr);
     return this.messagesArr;
+  }
+
+  newMessage(newMessage: Messages, friendId) {
+    let arrTimeArray: string[] = [];
+    let msgContentsArray: string[] = [];
+    let msgIdArray: string[] = [];
+    let msgTypeArray: string[] = [];
+
+    const ChatIDV1 = localStorage.getItem('currentUserId') + '_' + friendId;
+    const chatRef = this.db.collection('chats').doc(ChatIDV1);
+    const getDoc = chatRef.get().toPromise()
+      .then(doc => {
+        if (!doc.exists) {
+          console.log('not found'); // add toastr notification
+          this.newMessageWithOtherChatId(newMessage, friendId);
+        } else {
+          arrTimeArray = doc.data().arrivalTime;
+          msgContentsArray = doc.data().msgContents;
+          msgIdArray = doc.data().msgId;
+          msgTypeArray = doc.data().msgType;
+
+          arrTimeArray.push(newMessage.arrivalTime);
+          msgContentsArray.push(newMessage.msgContents);
+          msgIdArray.push(newMessage.msgID);
+          msgTypeArray.push(newMessage.msgType);
+
+          const data = {
+            arrivalTime: arrTimeArray,
+            msgContents: msgContentsArray,
+            msgId: msgIdArray,
+            msgType: msgTypeArray
+          };
+
+          chatRef.set(data);
+        }
+      }).catch(err => {
+        console.log('Error', err); // add toastr notification
+      });
+  }
+
+  newMessageWithOtherChatId(newMessage: Messages, friendId) {
+    let arrTimeArray: string[] = [];
+    let msgContentsArray: string[] = [];
+    let msgIdArray: string[] = [];
+    let msgTypeArray: string[] = [];
+
+    const ChatIDV2 = friendId + '_' + localStorage.getItem('currentUserId');
+    const chatRef = this.db.collection('chats').doc(ChatIDV2);
+    const getDoc = chatRef.get().toPromise()
+      .then(doc => {
+        if (!doc.exists) {
+          console.log('not found'); // add toastr notification
+        } else {
+          arrTimeArray = doc.data().arrivalTime;
+          msgContentsArray = doc.data().msgContents;
+          msgIdArray = doc.data().msgId;
+          msgTypeArray = doc.data().msgType;
+
+          arrTimeArray.push(newMessage.arrivalTime);
+          msgContentsArray.push(newMessage.msgContents);
+          msgIdArray.push(newMessage.msgID);
+          msgTypeArray.push(newMessage.msgType);
+
+          const data = {
+            arrivalTime: arrTimeArray,
+            msgContents: msgContentsArray,
+            msgId: msgIdArray,
+            msgType: msgTypeArray
+          };
+
+          chatRef.set(data);
+        }
+      }).catch(err => {
+        console.log('Error', err); // add toastr notification
+      });
   }
 
   newOpenChat(userId) {
