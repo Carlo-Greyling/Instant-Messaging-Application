@@ -158,6 +158,7 @@ export class ChatWindowComponent implements OnInit {
     this.users = this.firebaseService.getUserProfiles();
 
     this.interval = setInterval(() => {
+      this.message.length = 0;
       this.updateMessages();
     }, 15000);
 
@@ -167,6 +168,7 @@ export class ChatWindowComponent implements OnInit {
   }
 
   updateMessages() {
+    // this.message = [];
     this.message = this.firebaseService.getMessages(this.activeContact);
   }
 
