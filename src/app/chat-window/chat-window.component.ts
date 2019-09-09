@@ -57,7 +57,11 @@ export class ChatWindowComponent implements OnInit {
   }
 
   setActiveContact(userID: string) {
-    this.activeContact = userID;
+    if (userID !== this.activeContact) {
+      this.activeContact = userID;
+    } else {
+      return;
+    }
 
     for (this.i = 0; this.i < this.users.length; this.i++) {
       if (this.users[this.i].userID === this.activeContact) {
