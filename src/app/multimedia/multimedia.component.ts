@@ -22,10 +22,11 @@ export class MultimediaComponent implements OnInit {
 
   async OpenImage(event: any) {
     // The file is in this event
-    console.log(event.target.files[0].name);
-    this.encodeService.Base64EncodeImage(event.target.files[0], event.target.files[0].name, this.data.UserId, this.data.ContactId);
-    this.openSnackBar('Image Send', 'Close');
-    this.dialogRef.close();
+    // console.log(event.target.files[0].name);
+    // this.encodeService.Base64EncodeImage(event.target.files[0], event.target.files[0].name, this.data.UserId, this.data.ContactId);
+    // this.openSnackBar('Image Send', 'Close');
+    // this.dialogRef.close();
+    this.encodeService.Base64Encoder(event.target.files[0]);
   }
   OpenVideo(event: any) {
     // The file is in this event
