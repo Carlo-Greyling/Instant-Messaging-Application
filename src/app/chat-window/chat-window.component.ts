@@ -75,7 +75,7 @@ export class ChatWindowComponent implements OnInit {
       }
     }
 
-    this.message = [];
+    this.message = this.firebaseService.getMessages(userID);
     return this.activeContact;
   }
 
@@ -153,7 +153,7 @@ export class ChatWindowComponent implements OnInit {
     // this.openChatUserIds = this.firebaseService.getOpenChatUID(localStorage.getItem('currentUserId'));
     // this.openChatIds = this.firebaseService.openChatChatIds;
     this.users = this.firebaseService.getUserProfiles();
-    this.message = this.firebaseService.getMessages(this.openChatIds);
+    // this.message = this.firebaseService.getMessages(this.openChatIds);
 
     this.activeContact = this.users[0].userID;
     this.activeContactName = this.users[0].name;

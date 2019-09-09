@@ -103,7 +103,33 @@ export class FirebaseService {
     return this.userProfilesArr;
   }
 
-  getMessages(chatId: string): Messages[] {
+  getMessages(friendId: string): Messages[] {
+    let arrTimeArray: string[] = [];
+    let msgContentsArray: string[] = [];
+    let msgIdArray: number[] = [];
+    let msgTypeArray: string[] = [];
+
+    const ChatID = localStorage.getItem('currentUserId') + '_' + friendId;
+
+    const chatsRef = this.db.collection('chats').doc(ChatID);
+    const getDoc = chatsRef.get().toPromise()
+      .then(doc => {
+        if (!doc.exists) {
+          console.log('not found'); // add toastr notification
+        } else {
+          arrTimeArray = doc.data().arrivalTime;
+          msgContentsArray = doc.data().msgContents;
+          msgIdArray = doc.data().msgId;
+          msgTypeArray = doc.data().msgType;
+          // Messages(msgID: number, msgContents: string, msgType: string, arrivalTime: string)
+          for (let i = 0; i < msgIdArray.length; i++) {
+            this.messagesArr.push(new Messages(msgIdArray[i], msgContentsArray[i], msgTypeArray[i], arrTimeArray[i]));
+          }
+        }
+      }).catch(err => {
+        console.log('Error', err); // add toastr notification
+      });
+    console.log(this.messagesArr);
     return this.messagesArr;
   }
 
