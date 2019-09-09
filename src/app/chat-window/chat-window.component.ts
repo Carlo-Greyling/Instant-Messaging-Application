@@ -7,6 +7,9 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { MultimediaComponent } from '../multimedia/multimedia.component';
 import {VideoCallingComponent} from '../video-calling/video-calling.component';
 import {FirebaseService} from '../shared/firebase.service';
+import {Observable} from 'rxjs';
+import {FormControl} from '@angular/forms';
+import {debounceTime, switchMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-chat-window',
@@ -37,6 +40,8 @@ export class ChatWindowComponent implements OnInit {
   private openChatIds: string[];
   private openChatUserIds: string[];
 
+  interval;
+
   users: Users[] = [];
   message: Messages[] = [];
 
@@ -59,7 +64,7 @@ export class ChatWindowComponent implements OnInit {
   span = document.getElementsByClassName('close')[0];
 
   constructor(private dialog: MatDialog, private snackBar: MatSnackBar,
-              private firebaseService: FirebaseService) { }
+              private firebaseService: FirebaseService) {}
 
   setActiveContact(userID: string) {
     if (userID !== this.activeContact) {
@@ -150,14 +155,19 @@ export class ChatWindowComponent implements OnInit {
 
   ngOnInit() {
     this.openSnackBar('Login Successful', 'close');
-    // this.openChatUserIds = this.firebaseService.getOpenChatUID(localStorage.getItem('currentUserId'));
-    // this.openChatIds = this.firebaseService.openChatChatIds;
     this.users = this.firebaseService.getUserProfiles();
-    // this.message = this.firebaseService.getMessages(this.openChatIds);
+
+    this.interval = setInterval(() => {
+      this.updateMessages();
+    }, 15000);
 
     this.activeContact = this.users[0].userID;
     this.activeContactName = this.users[0].name;
     this.activeProfilePicture = this.users[0].profilePicture;
+  }
+
+  updateMessages() {
+    this.message = this.firebaseService.getMessages(this.activeContact);
   }
 
   onGenerateNewMessage() {
