@@ -71,7 +71,7 @@ export class ChatWindowComponent implements OnInit {
     }
 
     this.message = [];
-    return this.activeContactName;
+    return this.activeContact;
   }
 
   // Just to give info the application user
