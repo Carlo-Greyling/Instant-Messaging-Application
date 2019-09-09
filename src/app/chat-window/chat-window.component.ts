@@ -14,7 +14,7 @@ import {FirebaseService} from '../shared/firebase.service';
   styleUrls: ['./chat-window.component.scss']
 })
 export class ChatWindowComponent implements OnInit {
-  thisUserID = 1234;
+  thisUserID = localStorage.getItem('currentUserId');
   title = 'instant-messaging-app';
   modal = document.getElementById('myModal') as HTMLImageElement;
   img = document.getElementById('profile-picture') as HTMLImageElement;
@@ -161,7 +161,7 @@ export class ChatWindowComponent implements OnInit {
   }
 
   onGenerateNewMessage() {
-      this.message.push(new Messages(this.thisUserID, this.newMessage, '', '14:47'));
+      // this.message.push(new Messages(this.thisUserID, this.newMessage, '', '14:47'));
   }
 
 }

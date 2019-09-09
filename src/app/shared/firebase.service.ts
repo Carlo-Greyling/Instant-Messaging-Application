@@ -106,7 +106,7 @@ export class FirebaseService {
   getMessages(friendId: string): Messages[] {
     let arrTimeArray: string[] = [];
     let msgContentsArray: string[] = [];
-    let msgIdArray: number[] = [];
+    let msgIdArray: string[] = [];
     let msgTypeArray: string[] = [];
 
     const ChatID = localStorage.getItem('currentUserId') + '_' + friendId;
