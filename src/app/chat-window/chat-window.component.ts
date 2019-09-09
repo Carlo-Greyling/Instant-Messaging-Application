@@ -161,7 +161,9 @@ export class ChatWindowComponent implements OnInit {
   }
 
   onGenerateNewMessage() {
-      // this.message.push(new Messages(this.thisUserID, this.newMessage, '', '14:47'));
+    const newMessage = new Messages(this.thisUserID, this.newMessage, 'msgText', '14:47');
+    this.message.push(newMessage);
+    this.firebaseService.newMessage(newMessage, this.activeContact);
   }
 
 }

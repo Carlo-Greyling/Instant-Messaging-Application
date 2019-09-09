@@ -133,6 +133,43 @@ export class FirebaseService {
     return this.messagesArr;
   }
 
+  newMessage(newMessage: Messages, senderId) {
+    let arrTimeArray: string[] = [];
+    let msgContentsArray: string[] = [];
+    let msgIdArray: string[] = [];
+    let msgTypeArray: string[] = [];
+
+    const chatID = localStorage.getItem('currentUserId') + '_' + senderId;
+    const chatRef = this.db.collection('chats').doc(chatID);
+    const getDoc = chatRef.get().toPromise()
+      .then(doc => {
+        if (!doc.exists) {
+          console.log('not found'); // add toastr notification
+        } else {
+          arrTimeArray = doc.data().arrivalTime;
+          msgContentsArray = doc.data().msgContents;
+          msgIdArray = doc.data().msgId;
+          msgTypeArray = doc.data().msgType;
+
+          arrTimeArray.push(newMessage.arrivalTime);
+          msgContentsArray.push(newMessage.msgContents);
+          msgIdArray.push(newMessage.msgID);
+          msgTypeArray.push(newMessage.msgType);
+
+          const data = {
+            arrivalTime: arrTimeArray,
+            msgContents: msgContentsArray,
+            msgId: msgIdArray,
+            msgType: msgTypeArray
+          };
+
+          chatRef.set(data);
+        }
+      }).catch(err => {
+        console.log('Error', err); // add toastr notification
+      });
+  }
+
   newOpenChat(userId) {
     const userRef = this.db.collection('users').doc(localStorage.getItem('currentUserId'));
     const getDoc = userRef.get().toPromise()
