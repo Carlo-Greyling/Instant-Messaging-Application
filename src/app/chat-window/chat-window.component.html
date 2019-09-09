@@ -22,7 +22,7 @@
       <div class="card-body contacts_body">
         <ul class="contacts" id="contactsUL">
           <li class="active">
-            <div id="contactList" class="d-flex bd-highlight" *ngFor="let i of users" (click)="setActiveContact()">
+            <div id="{{ i.userID }}" class="d-flex bd-highlight contactList" *ngFor="let i of users" (click)="setActiveContact(i.userID)">
               <div class="img_cont">
                 <img
                   id="profile-picture"
@@ -61,12 +61,12 @@
         <div class="card-header msg_head">
           <div class="d-flex bd-highlight">
             <div class="img_cont">
-              <img src="https://scontent-jnb1-1.xx.fbcdn.net/v/t1.0-9/60937380_2227964937285183_6900601698239119360_n.jpg?_nc_cat=106&_nc_oc=AQmjhYtcyLXTRQ9EjwQGp70e3OYU16x3YMCc7ODLc-uvgPqj_BBvs-T6p5EsgzeoTho&_nc_ht=scontent-jnb1-1.xx&oh=9c51d38a12ea4a82dc6aeea28465c637&oe=5E10F323" class="rounded-circle user_img">
+              <img src="{{ this.activeProfilePicture }}" class="rounded-circle user_img">
               <span class="online_icon"></span>
             </div>
             <div class="user_info">
-              <span>Chat with Keanu Jooste</span>
-              <p>7 Messages</p>
+              <span>Chat with {{ this.activeContactName }}</span>
+              <p>{{ message.length + ' messages' }}</p>
             </div>
             <div class="video_cam">
               <span><i id="video-call" class="fas fa-video" (click)="videoCalling()"></i></span>

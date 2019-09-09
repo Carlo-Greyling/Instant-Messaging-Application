@@ -27,7 +27,9 @@ export class ChatWindowComponent implements OnInit {
   i;
   txtValue;
 
-  activeContact;  // variable for setting the current open contact in the chat window;
+  public activeContact;  // variable for setting the current open contact in the chat window;
+  public activeContactName: string;
+  public activeProfilePicture: string;
 
   newMessage: string;
   public msgTime: Date = new Date();
@@ -54,8 +56,18 @@ export class ChatWindowComponent implements OnInit {
 
   }
 
-  setActiveContact() {
-    this.activeContact = 'Set activeContact to the ID of the contact clicked on';
+  setActiveContact(userID: string) {
+    this.activeContact = userID;
+
+    for (this.i = 0; this.i < this.users.length; this.i++) {
+      if (this.users[this.i].userID === this.activeContact) {
+        this.activeContactName = this.users[this.i].name;
+        this.activeProfilePicture = this.users[this.i].profilePicture;
+      }
+    }
+
+    this.message = [];
+    return this.activeContactName;
   }
 
   // Just to give info the application user
@@ -129,6 +141,9 @@ export class ChatWindowComponent implements OnInit {
 
   ngOnInit() {
     this.openSnackBar('Login Successful', 'close');
+    this.activeContact = this.users[0].userID;
+    this.activeContactName = this.users[0].name;
+    this.activeProfilePicture = this.users[0].profilePicture;
   }
 
   onGenerateNewMessage() {
