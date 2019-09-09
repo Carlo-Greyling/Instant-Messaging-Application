@@ -1,5 +1,5 @@
 <div class="main-div">
-  <form (ngSubmit)="SignUp(f)" #f="ngForm">
+  <form #f="ngForm">
     <mat-card style="text-align: center; padding: 32px;">
       <img
         class="center"
@@ -51,9 +51,11 @@
             ngModel
             required>
         </mat-form-field>
+          <button mat-raised-button (click)="null" color="primary">Upload Profile Picture</button>
       </mat-card-content>
       <mat-card-actions>
         <button
+          (click)="SignUp(f)"
           type="submit"
           style="color: white;"
           mat-raised-button color="primary">Sign Up

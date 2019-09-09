@@ -47,9 +47,7 @@ export class ChatWindowComponent implements OnInit {
   span = document.getElementsByClassName('close')[0];
 
   constructor(private dialog: MatDialog, private snackBar: MatSnackBar,
-              private firebaseService: FirebaseService) {
-
-  }
+              private firebaseService: FirebaseService) { }
 
   // Just to give info the application user
   openSnackBar(message: string, action: string) {
@@ -122,10 +120,9 @@ export class ChatWindowComponent implements OnInit {
 
   ngOnInit() {
     this.openSnackBar('Login Successful', 'close');
-    // this.openChatUserIds = this.firebaseService.getOpenChatUID(localStorage.getItem('currentUserId'));
-    // this.openChatIds = this.firebaseService.openChatChatIds;
     this.users = this.firebaseService.getUserProfiles();
-    this.message = this.firebaseService.getMessages(this.openChatIds);
+    // this.message = this.firebaseService.getMessages(this.openChatIds);
+    // TODO: on contact button click event, get messages from firebase with id and assign to messages array and reload component
   }
 
   onGenerateNewMessage() {

@@ -8,12 +8,9 @@ import { Users } from './users.model';
   providedIn: 'root'
 })
 export class FirebaseService {
-  public openChatChatIds: string[] = [];
   public openChatUserIds: string[] = [];
   private userProfilesArr: Users[] = [];
   private messagesArr: Messages[] = [];
-  private i: number;
-  private userIdArr: string[] = [];
 
   constructor(public db: AngularFirestore,
               private router: Router) {}
@@ -28,8 +25,6 @@ export class FirebaseService {
           if (doc.data().password === password) {
             this.router.navigate(['chatWindow']);
             localStorage.setItem('currentUserId', userId);
-            /*const arr = this.getOpenChats(userId);
-            console.log(arr);*/
           }
         }
       }).catch(err => {
@@ -37,11 +32,19 @@ export class FirebaseService {
       });
   }
   // TODO: Sign up
-  /*createUser(data) {
-    const usersRef = this.db.collection('users').doc(data.userId);
+  createUser(userId, name, password, base64ProPic) {
+    const data = {
+      name,
+      status: 'online',
+      profilePicture: base64ProPic,
+      onlineIcon: 'online_icon',
+      userId,
+      password
+    };
+    const usersRef = this.db.collection('users').doc(userId);
     usersRef.set(data);
-  }*/
-  createUser(userId, name, password) {
+  }
+  /*createUser(userId, name, password) {
     const data = {
       name,
       status: 'null',
@@ -52,11 +55,7 @@ export class FirebaseService {
     };
     const usersRef = this.db.collection('users').doc(userId);
     usersRef.set(data);
-  }
-
-  getMessages(openChatIds: any[]): Messages[] {
-    return this.messagesArr;
-  }
+  }*/
 
   uploadImage(userId, contactId, Base64String, Filename) {
     // Upload Image
@@ -91,11 +90,6 @@ export class FirebaseService {
                     udoc.data().status,
                     udoc.data().profilePicture,
                     udoc.data().onlineIcon));
-                  /*this.userProfilesArr[i].name = udoc.data().name;
-                  this.userProfilesArr[i].onlineIcon = udoc.data().onlineIcon;
-                  this.userProfilesArr[i].profilePicture = udoc.data().profilePicture;
-                  this.userProfilesArr[i].status = udoc.data().status;
-                  this.userProfilesArr[i].userID = udoc.data().userID;*/
                 }
               }).catch(err => {
                 console.log('Error', err); // add toastr notification
@@ -107,5 +101,26 @@ export class FirebaseService {
       });
     console.log(this.userProfilesArr);
     return this.userProfilesArr;
+  }
+
+  getMessages(chatId: string): Messages[] {
+    return this.messagesArr;
+  }
+
+  newOpenChat(userId) {
+    const userRef = this.db.collection('users').doc(localStorage.getItem('currentUserId'));
+    const getDoc = userRef.get().toPromise()
+      .then(doc => {
+        if (!doc.exists) {
+          console.log('not found'); // add toastr notification
+        } else {
+          this.openChatUserIds = doc.data().openChatUserIds;
+          this.openChatUserIds.push(userId);
+          const data = {openChatUserIds: this.openChatUserIds};
+          this.db.collection('users').doc(localStorage.getItem('currentUserId')).set(data);
+        }
+      }).catch(err => {
+        console.log('Error', err); // add toastr notification
+      });
   }
 }
