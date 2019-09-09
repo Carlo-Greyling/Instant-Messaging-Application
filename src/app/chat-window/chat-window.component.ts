@@ -14,7 +14,7 @@ import {FirebaseService} from '../shared/firebase.service';
   styleUrls: ['./chat-window.component.scss']
 })
 export class ChatWindowComponent implements OnInit {
-  thisUserID = '1234';
+  thisUserID = '0765843028';
   title = 'instant-messaging-app';
   modal = document.getElementById('myModal') as HTMLImageElement;
   img = document.getElementById('profile-picture') as HTMLImageElement;
