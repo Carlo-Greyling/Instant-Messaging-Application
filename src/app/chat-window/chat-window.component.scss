@@ -275,10 +275,14 @@ body,html{
   margin-bottom: 10px;
 }
 
-#contactList:hover {
+.contactList:hover {
   background-color: grey;
 }
 
 .end-of-chat {
   margin: 1px;
+}
+
+.fas {
+  margin-right: auto;
 }
