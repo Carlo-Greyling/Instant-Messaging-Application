@@ -1,0 +1,12 @@
+.IconStyle{
+  height: 48px;
+  width: 48px;
+  font-size: 48px;
+  margin: 10px;
+}
+
+.custom-modalbox {
+  mat-dialog-container {
+      background: gray;
+  }
+}
