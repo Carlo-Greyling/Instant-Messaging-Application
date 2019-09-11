@@ -10,6 +10,7 @@ import {FirebaseService} from '../shared/firebase.service';
 import {Observable} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {debounceTime, switchMap} from 'rxjs/operators';
+import { ViewsettingsComponent } from '../view-settings/viewsettings.component';
 
 @Component({
   selector: 'app-chat-window',
@@ -145,6 +146,28 @@ export class ChatWindowComponent implements OnInit {
       },
       panelClass: 'MultimediaCSS',
       position: { right: right - 350 + 'px', top: top - 120 + 'px' }
+    });
+
+    // If wish to apply a action after popup close
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('Multi-Media Component popup has closed');
+    });
+  }
+
+  openSettings() {
+    console.log('Opening the Multi-Media Component');
+    const bodyRect = document.body.getBoundingClientRect();
+    const elemRect = document.getElementById('settings').getBoundingClientRect();
+    const right = bodyRect.right - elemRect.right;
+    const top = elemRect.top - bodyRect.top;
+    const dialogRef = this.dialog.open(ViewsettingsComponent, {
+      // This is only if we wish to send parameters to the popup component
+      data: {
+        UserId: 0,
+        ContactId: 0
+      },
+      panelClass: 'MultimediaCSS',
+      position: { right: right + 'px', top: top + 'px' }
     });
 
     // If wish to apply a action after popup close
