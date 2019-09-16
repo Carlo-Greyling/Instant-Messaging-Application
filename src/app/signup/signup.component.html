@@ -1,0 +1,66 @@
+<div class="main-div">
+  <form #f="ngForm">
+    <mat-card style="text-align: center; padding: 32px;">
+      <img
+        class="center"
+        mat-card-image
+        src="https://imgb.apk.tools/300/d/f/7/com.futurebits.instamessage.free.png"
+        alt="app logo">
+      <mat-card-content>
+        <h4>Sign Up For InstaMessage</h4>
+        <mat-form-field>
+          <input
+            matInput
+            id="mobileNum"
+            class="form-control"
+            placeholder="Mobile Number"
+            name="userId"
+            ngModel
+            required>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            id="name"
+            class="form-control"
+            placeholder="Full Name"
+            name="name"
+            ngModel
+            required>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input
+            matInput
+            id="passwordInput"
+            class="form-control"
+            placeholder="Password"
+            type="password"
+            name="password"
+            ngModel
+            required>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input
+            matInput
+            id="confirmPwInput"
+            class="form-control"
+            placeholder="Confirm Password"
+            name="confirmPW"
+            ngModel
+            required>
+        </mat-form-field>
+          <button mat-raised-button (click)="null" color="primary">Upload Profile Picture</button>
+      </mat-card-content>
+      <mat-card-actions>
+        <button
+          (click)="SignUp(f)"
+          type="submit"
+          style="color: white;"
+          mat-raised-button color="primary">Sign Up
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

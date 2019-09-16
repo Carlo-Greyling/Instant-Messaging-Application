@@ -29,7 +29,11 @@
     "max-classes-per-file": false,
     "max-line-length": [
       true,
+<<<<<<< HEAD
+      140
+=======
       400
+>>>>>>> 43163a0b33ebc4b5babd62ae2f0a621dd64f271f
     ],
     "member-access": false,
     "member-ordering": [
@@ -89,4 +93,8 @@
   "rulesDirectory": [
     "codelyzer"
   ]
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 43163a0b33ebc4b5babd62ae2f0a621dd64f271f

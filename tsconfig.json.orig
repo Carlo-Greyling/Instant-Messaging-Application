@@ -14,10 +14,13 @@
     "typeRoots": [
       "node_modules/@types"
     ],
+<<<<<<< HEAD
+=======
     "types": [
       "node.d.ts",
       "node"
     ],
+>>>>>>> 43163a0b33ebc4b5babd62ae2f0a621dd64f271f
     "lib": [
       "es2018",
       "dom"

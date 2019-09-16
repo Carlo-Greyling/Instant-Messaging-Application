@@ -1,5 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+<<<<<<< HEAD
+
+
+const routes: Routes = [];
+=======
 import {LoginComponent} from './login/login.component';
 import {SignupComponent} from './signup/signup.component';
 import {ChatWindowComponent} from './chat-window/chat-window.component';
@@ -15,6 +20,7 @@ const routes: Routes = [
   { path: 'videoCalling', component: VideoCallingComponent },
   { path: 'voiceCalling', component: VoiceCallingComponent }
 ];
+>>>>>>> 43163a0b33ebc4b5babd62ae2f0a621dd64f271f
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -7,11 +7,16 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+<<<<<<< HEAD
+=======
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+>>>>>>> 43163a0b33ebc4b5babd62ae2f0a621dd64f271f
 </head>
 <body>
   <app-root></app-root>
 </body>
+<<<<<<< HEAD
+=======
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="/__/firebase/6.4.2/firebase-app.js"></script>
 
@@ -24,4 +29,5 @@
 <!-- Firebase site: https://instant-messaging-app-dff55.web.app/  -->
 
 <script src="http://cdn.agora.io/sdk/web/AgoraRTCSDK-2.4-latest.js"></script>
+>>>>>>> 43163a0b33ebc4b5babd62ae2f0a621dd64f271f
 </html>

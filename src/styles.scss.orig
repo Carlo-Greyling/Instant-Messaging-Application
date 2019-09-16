@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+<<<<<<< HEAD
+=======
 // @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 // Indigo pink theme commented out since a custom theme was written
 
@@ -7,3 +9,4 @@
     background: gray;
   }
 }
+>>>>>>> 43163a0b33ebc4b5babd62ae2f0a621dd64f271f

@@ -28,8 +28,11 @@
               "src/assets"
             ],
             "styles": [
+<<<<<<< HEAD
+=======
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/app-theme.scss",
+>>>>>>> 43163a0b33ebc4b5babd62ae2f0a621dd64f271f
               "src/styles.scss"
             ],
             "scripts": []
@@ -128,4 +131,8 @@
       }
     }},
   "defaultProject": "instant-messaging-app"
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 43163a0b33ebc4b5babd62ae2f0a621dd64f271f

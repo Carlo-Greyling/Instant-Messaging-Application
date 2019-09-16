@@ -6,8 +6,12 @@
   },
   "files": [
     "src/main.ts",
+<<<<<<< HEAD
+    "src/polyfills.ts"
+=======
     "src/polyfills.ts",
     "node_modules/@types/node/index.d.ts"
+>>>>>>> 43163a0b33ebc4b5babd62ae2f0a621dd64f271f
   ],
   "include": [
     "src/**/*.ts"

@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+<<<<<<< HEAD
+  title = 'instant-messaging-app';
+=======
 
+>>>>>>> 43163a0b33ebc4b5babd62ae2f0a621dd64f271f
 }

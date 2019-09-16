@@ -1,5 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+<<<<<<< HEAD
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule
+  ],
+  providers: [],
+=======
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -53,6 +68,7 @@ const agoraConfig: AgoraConfig = {
     MultimediaComponent,
     ViewsettingsComponent
   ],
+>>>>>>> 43163a0b33ebc4b5babd62ae2f0a621dd64f271f
   bootstrap: [AppComponent]
 })
 export class AppModule { }
