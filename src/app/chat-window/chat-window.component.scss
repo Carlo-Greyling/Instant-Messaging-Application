@@ -1,7 +1,11 @@
 body,html{
-  height: auto;
+  height: 100%;
   margin: 0;
-  background: black;
+  background: black no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   background: -webkit-linear-gradient(to right, gray, gray, black);
   background: linear-gradient(to right, gray, gray, black);
 }
@@ -11,7 +15,8 @@ body,html{
   margin-bottom: auto;
 }
 .card{
-  height: 657px;
+  // 657px
+  height: 100vh;
   border-radius: 15px !important;
   background-color: rgba(0,0,0,0.4) !important;
 }
