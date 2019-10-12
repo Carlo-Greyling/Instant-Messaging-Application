@@ -183,6 +183,11 @@ export class ChatWindowComponent implements OnInit {
     this.interval = setInterval(() => {
       this.message.length = 0;
       this.updateMessages();
+      /*const objDiv = document.getElementById('bodydiv');
+      const isScrolledToBottom = objDiv.scrollHeight - objDiv.clientHeight <= objDiv.scrollTop + 1;
+      if (isScrolledToBottom) {
+        objDiv.scrollTop = objDiv.scrollHeight - objDiv.clientHeight;
+      }*/
     }, 15000);
 
     this.activeContact = this.users[0].userID;
@@ -197,13 +202,13 @@ export class ChatWindowComponent implements OnInit {
 
   onGenerateNewMessage() {
     const newMessage = new Messages(this.thisUserID, this.newMessage, 'msgText', '14:47');
-    this.message.push(newMessage);
+    this.message.unshift(newMessage);
     this.firebaseService.newMessage(newMessage, this.activeContact);
   }
 
   onGenerateNewMultiMediaMessage(imageBase64String: string) {
     const newMessage = new Messages(this.thisUserID, imageBase64String, 'msgImage', '14:47');
-    this.message.push(newMessage);
+    this.message.unshift(newMessage);
     this.firebaseService.newMessage(newMessage, this.activeContact);
   }
 

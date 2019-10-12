@@ -22,7 +22,7 @@ export class EncoderService {
     reader.onload = (e) => {
       result = reader.result;
       console.log(result);
-      this.firebaseService.uploadImage(UserId, ContactId, result, fileName);
+      // this.firebaseService.uploadImage(UserId, ContactId, result, fileName);
     };
   }
 
@@ -46,7 +46,7 @@ export class EncoderService {
     reader.onload = (e) => {
       result = reader.result;
       console.log(result);
-      this.firebaseService.uploadVideo(UserId, ContactId, result, fileName);
+      // this.firebaseService.uploadVideo(UserId, ContactId, result, fileName);
     };
   }
 
@@ -58,7 +58,7 @@ export class EncoderService {
     reader.onload = (e) => {
       result = reader.result;
       console.log(result);
-      this.firebaseService.uploadAudio(UserId, ContactId, result, fileName);
+      // this.firebaseService.uploadAudio(UserId, ContactId, result, fileName);
     };
   }
 

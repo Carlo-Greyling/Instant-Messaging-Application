@@ -58,18 +58,6 @@ export class FirebaseService {
     usersRef.set(data);
   }*/
 
-  uploadImage(userId, contactId, Base64String, Filename) {
-    // Upload Image
-  }
-
-  uploadVideo(userId, contactId, Base64String, Filename) {
-    // Upload Video
-  }
-
-  uploadAudio(userId, contactId, Base64String, Filename) {
-    // Upload Audio
-  }
-
   getUserProfiles(): Users[] {
     const userRef = this.db.collection('users').doc(localStorage.getItem('currentUserId'));
     const getDoc = userRef.get().toPromise()
@@ -145,7 +133,14 @@ export class FirebaseService {
     const getDoc = chatsRef.get().toPromise()
       .then(doc => {
         if (!doc.exists) {
-          console.log('not found'); // add toastr notification
+          const data = {
+            arrivalTime: arrTimeArray,
+            msgContents: msgContentsArray,
+            msgId: msgIdArray,
+            msgType: msgTypeArray
+          };
+
+          chatsRef.set(data);
         } else {
           arrTimeArray = doc.data().arrivalTime;
           msgContentsArray = doc.data().msgContents;
@@ -182,10 +177,10 @@ export class FirebaseService {
           msgIdArray = doc.data().msgId;
           msgTypeArray = doc.data().msgType;
 
-          arrTimeArray.push(newMessage.arrivalTime);
-          msgContentsArray.push(newMessage.msgContents);
-          msgIdArray.push(newMessage.msgID);
-          msgTypeArray.push(newMessage.msgType);
+          arrTimeArray.unshift(newMessage.arrivalTime);
+          msgContentsArray.unshift(newMessage.msgContents);
+          msgIdArray.unshift(newMessage.msgID);
+          msgTypeArray.unshift(newMessage.msgType);
 
           const data = {
             arrivalTime: arrTimeArray,
@@ -212,17 +207,17 @@ export class FirebaseService {
     const getDoc = chatRef.get().toPromise()
       .then(doc => {
         if (!doc.exists) {
-          console.log('not found'); // add toastr notification
+          console.log('not found'); // TODO: Create chat id
         } else {
           arrTimeArray = doc.data().arrivalTime;
           msgContentsArray = doc.data().msgContents;
           msgIdArray = doc.data().msgId;
           msgTypeArray = doc.data().msgType;
 
-          arrTimeArray.push(newMessage.arrivalTime);
-          msgContentsArray.push(newMessage.msgContents);
-          msgIdArray.push(newMessage.msgID);
-          msgTypeArray.push(newMessage.msgType);
+          arrTimeArray.unshift(newMessage.arrivalTime);
+          msgContentsArray.unshift(newMessage.msgContents);
+          msgIdArray.unshift(newMessage.msgID);
+          msgTypeArray.unshift(newMessage.msgType);
 
           const data = {
             arrivalTime: arrTimeArray,
