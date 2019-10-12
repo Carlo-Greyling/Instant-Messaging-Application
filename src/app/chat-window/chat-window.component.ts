@@ -10,6 +10,7 @@ import {FirebaseService} from '../shared/firebase.service';
 import {Observable} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {debounceTime, switchMap} from 'rxjs/operators';
+import { ViewsettingsComponent } from '../view-settings/viewsettings.component';
 
 @Component({
   selector: 'app-chat-window',
@@ -153,6 +154,28 @@ export class ChatWindowComponent implements OnInit {
     });
   }
 
+  openSettings() {
+    console.log('Opening the Multi-Media Component');
+    const bodyRect = document.body.getBoundingClientRect();
+    const elemRect = document.getElementById('settings').getBoundingClientRect();
+    const right = bodyRect.right - elemRect.right;
+    const top = elemRect.top - bodyRect.top;
+    const dialogRef = this.dialog.open(ViewsettingsComponent, {
+      // This is only if we wish to send parameters to the popup component
+      data: {
+        UserId: 0,
+        ContactId: 0
+      },
+      panelClass: 'MultimediaCSS',
+      position: { right: right + 'px', top: top + 'px' }
+    });
+
+    // If wish to apply a action after popup close
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('Multi-Media Component popup has closed');
+    });
+  }
+
   ngOnInit() {
     this.openSnackBar('Login Successful', 'close');
     this.users = this.firebaseService.getUserProfiles();
@@ -160,6 +183,11 @@ export class ChatWindowComponent implements OnInit {
     this.interval = setInterval(() => {
       this.message.length = 0;
       this.updateMessages();
+      /*const objDiv = document.getElementById('bodydiv');
+      const isScrolledToBottom = objDiv.scrollHeight - objDiv.clientHeight <= objDiv.scrollTop + 1;
+      if (isScrolledToBottom) {
+        objDiv.scrollTop = objDiv.scrollHeight - objDiv.clientHeight;
+      }*/
     }, 15000);
 
     this.activeContact = this.users[0].userID;
@@ -174,7 +202,13 @@ export class ChatWindowComponent implements OnInit {
 
   onGenerateNewMessage() {
     const newMessage = new Messages(this.thisUserID, this.newMessage, 'msgText', '14:47');
-    this.message.push(newMessage);
+    this.message.unshift(newMessage);
+    this.firebaseService.newMessage(newMessage, this.activeContact);
+  }
+
+  onGenerateNewMultiMediaMessage(imageBase64String: string) {
+    const newMessage = new Messages(this.thisUserID, imageBase64String, 'msgImage', '14:47');
+    this.message.unshift(newMessage);
     this.firebaseService.newMessage(newMessage, this.activeContact);
   }
 

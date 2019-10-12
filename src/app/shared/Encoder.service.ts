@@ -22,7 +22,7 @@ export class EncoderService {
     reader.onload = (e) => {
       result = reader.result;
       console.log(result);
-      this.firebaseService.uploadImage(UserId, ContactId, result, fileName);
+      // this.firebaseService.uploadImage(UserId, ContactId, result, fileName);
     };
   }
 
@@ -46,7 +46,7 @@ export class EncoderService {
     reader.onload = (e) => {
       result = reader.result;
       console.log(result);
-      this.firebaseService.uploadVideo(UserId, ContactId, result, fileName);
+      // this.firebaseService.uploadVideo(UserId, ContactId, result, fileName);
     };
   }
 
@@ -58,7 +58,7 @@ export class EncoderService {
     reader.onload = (e) => {
       result = reader.result;
       console.log(result);
-      this.firebaseService.uploadAudio(UserId, ContactId, result, fileName);
+      // this.firebaseService.uploadAudio(UserId, ContactId, result, fileName);
     };
   }
 
@@ -75,4 +75,33 @@ EncryptTextMessage(message: any): any {
 DecryptTextMessage(encryptedMessage: any): any {
   return CryptoJS.AES.decrypt(encryptedMessage.trim(), this.EncryptionPassword).toString(CryptoJS.enc.Utf8);
 }
+
+// Download File using a Base64String
+DownloadBase64(b64: string) {
+  const byteCharacters = atob(b64);
+
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+
+  const byteArray = new Uint8Array(byteNumbers);
+
+  const blob = new Blob([byteArray]);
+  if (navigator.msSaveBlob) {
+      const filename = 'base64media';
+      navigator.msSaveBlob(blob, filename);
+      } else {
+      const link = document.createElement('a');
+
+      link.href = URL.createObjectURL(blob);
+
+      link.setAttribute('visibility', 'hidden');
+      link.download = 'base64media';
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+  }
+  }
 }
