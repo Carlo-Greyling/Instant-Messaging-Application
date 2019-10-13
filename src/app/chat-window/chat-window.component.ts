@@ -45,6 +45,11 @@ export class ChatWindowComponent implements OnInit {
 
   users: Users[] = [];
   message: Messages[] = [];
+  newMessageArr: Messages[] = [];
+
+  initialGetMessage = false;
+  arrDiff = 0;
+  arrDiffMessageArr: Messages[] = [];
 
   /*users: Users[] = [
     new Users('0765843028', 'Keanu Jooste', 'online', 'https://scontent-jnb1-1.xx.fbcdn.net/v/t1.0-9/60937380_2227964937285183_6900601698239119360_n.jpg?_nc_cat=106&_nc_oc=AQmjhYtcyLXTRQ9EjwQGp70e3OYU16x3YMCc7ODLc-uvgPqj_BBvs-T6p5EsgzeoTho&_nc_ht=scontent-jnb1-1.xx&oh=9c51d38a12ea4a82dc6aeea28465c637&oe=5E10F323', 'online_icon'),
@@ -182,12 +187,21 @@ export class ChatWindowComponent implements OnInit {
 
     this.interval = setInterval(() => {
       this.message.length = 0;
-      this.updateMessages();
-      /*const objDiv = document.getElementById('bodydiv');
-      const isScrolledToBottom = objDiv.scrollHeight - objDiv.clientHeight <= objDiv.scrollTop + 1;
-      if (isScrolledToBottom) {
-        objDiv.scrollTop = objDiv.scrollHeight - objDiv.clientHeight;
-      }*/
+      if (this.initialGetMessage === false) {
+        this.message = this.firebaseService.getMessages(this.activeContact);
+        this.initialGetMessage = true;
+      }
+      if (this.initialGetMessage === true) {
+        this.newMessageArr = this.updateMessages();
+        if (this.message.length < this.newMessageArr.length) {
+          this.arrDiff = this.message.length - this.newMessageArr.length;
+          for (let i = this.arrDiff; i === 0; i--) {
+            this.message.unshift(this.newMessageArr[i]);
+            this.arrDiffMessageArr.unshift(this.newMessageArr[i]);
+          }
+        }
+      }
+      this.arrDiff = 0;
     }, 15000);
 
     this.activeContact = this.users[0].userID;
@@ -196,8 +210,8 @@ export class ChatWindowComponent implements OnInit {
   }
 
   updateMessages() {
-    // this.message = [];
-    this.message = this.firebaseService.getMessages(this.activeContact);
+    // this.message = this.firebaseService.getMessages(this.activeContact);
+    return this.firebaseService.getMessages(this.activeContact);
   }
 
   onGenerateNewMessage() {
