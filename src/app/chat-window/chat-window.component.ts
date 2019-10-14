@@ -147,7 +147,8 @@ export class ChatWindowComponent implements OnInit {
       // This is only if we wish to send parameters to the popup component
       data: {
         UserId: 0,
-        ContactId: 0
+        ContactId: 0,
+        ActiveContact: this.activeContact
       },
       panelClass: 'MultimediaCSS',
       position: { right: right - 350 + 'px', top: top - 120 + 'px' }
@@ -220,10 +221,6 @@ export class ChatWindowComponent implements OnInit {
     this.firebaseService.newMessage(newMessage, this.activeContact);
   }
 
-  onGenerateNewMultiMediaMessage(imageBase64String: string) {
-    const newMessage = new Messages(this.thisUserID, imageBase64String, 'msgImage', '14:47');
-    this.message.unshift(newMessage);
-    this.firebaseService.newMessage(newMessage, this.activeContact);
-  }
+  // onGenerateNewMultiMediaMessage is moved to Encoder.service component
 
 }
