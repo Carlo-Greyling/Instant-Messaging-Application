@@ -1,17 +1,23 @@
 <?php
 /*
-* Author: Louis Scheepers
+* Author: Louis Scheepers 
 * Student Nr: 26368676
 *
 * This Script takes input with a command either being restart or shutdown
 *
 * isset($_GET[]) checks to see if input for a command is available
 */
-    if(isset($_GET['command'])){
-/*
+    if(isset($_GET['c'])){
+
+        if(isset($_GET['t'])){
+            $time = $_GET['t'];
+        }else{
+            $time = 0;
+        }
+/*      
 * if input is available save the input into the $input variable
 */
-        $input = $_GET['command'];
+        $input = $_GET['c'];
     }else{
 /*
 *  If no input or the wrong input is recieved (No Command Input) Kill the script (You can replace die() with any other functionality when no input is recieved but for now it just kills the script)
@@ -19,29 +25,45 @@
     die();
     }
 
+
+
 /*
 * When input is recieved first check the OS of the client users machine to call the relevant shutdown commands for Windows or Unix
 */
     $OS = getOS();
 
 /*
-* Check if the OS is a windows machine
+* Check if the OS is a windows machine 
 */
     if($OS == 'Windows'){
 /*
 * Check what the command is if it is restart it will restart the machine by calling restartWin()
 */
         if($input == 'restart'){
-             restartWin();
+             if($time > 0 ){
+                restartWin($time);
+            }else{
+                restartWin();
+            }
         }
 /*
 * Check what the command is if it is restart it will shutdown the machine by calling shutdownWin()
 */
         if($input == 'shutdown'){
-            shutdownWin();
+            if($time > 0 ){
+                shutdownWin($time);
+            }else{
+                shutdownWin();
+            }
+            
         }
+
+        if($input == 'sleep'){
+                hibernateWin();
+        }
+
 /*
-*
+* Check if the OS is Linux or Mac
 */
     }else if($OS == 'Linux' || 'Mac'){
 /*
@@ -56,29 +78,33 @@
         if($input == 'shutdown'){
             shutdownUnix();
         }
-    }
 
+
+    }else{
+        die();
+    }
+    
 /*
 * Gets the Client Users Operating System
 */
     function getOS(){
 
-    //Save the User Agent
+    //Save the User Agent 
     $agent = $_SERVER['HTTP_USER_AGENT'];
     //check to see what the operating system sent by the user agent is and assign acordingly
     if(preg_match('/Linux/',$agent)) $os = 'Linux';
     elseif(preg_match('/Win/',$agent)) $os = 'Windows';
     elseif(preg_match('/Mac/',$agent)) $os = 'Mac';
-    //no OS is found
+    //no OS is found 
     else $os = 'UnKnown';
 
     //return the OS
     return $os;
     }
 
-    function restartWin(){
+    function restartWin($time = 0){
         //restarts a windows machine
-       exec('shutdown -f -t 0 -r');
+       exec('shutdown -f -t ' . $time . ' -r');
     }
 
     function restartUnix(){
@@ -86,13 +112,22 @@
         system('shutdown -r');
     }
 
-    function shutdownWin(){
+    
+
+    function shutdownWin($time = 0){
+
         //shutsdown a windows machine
-       exec ('shutdown -s -t 0');
+       exec ('shutdown -s -t ' . $time);
     }
 
     function shutdownUnix(){
         //shutsdown a Linux / Mac Machine
         system('shutdown -h');
     }
+
+    function hibernateWin(){
+        system('shutdown /h');
+    }
+
+
 ?>
