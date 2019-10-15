@@ -80,7 +80,7 @@
           <div class="d-flex justify-content-start mb-4"
           *ngFor="let i of message">
             <div
-              [ngClass]="{ 'msg_container_send': i.msgID === thisUserID, 'msg_container': i.msgID !== thisUserID }">
+              [ngClass]="{ 'msg_container_send': i.msgID === thisUserID && i.msgType === 'msgText', 'msg_container': i.msgID !== thisUserID }">
               {{ i.msgContents }}
               <span
                 [ngClass]="{ 'msg_time_send': i.msgID === thisUserID, 'msg_time': i.msgID !== thisUserID }">
