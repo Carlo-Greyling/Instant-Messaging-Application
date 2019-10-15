@@ -37,7 +37,9 @@ export class ChatWindowComponent implements OnInit {
   public activeProfilePicture: string;
 
   newMessage: string;
-  public msgTime: Date = new Date();
+  public today: Date = new Date();
+  public msgMinutes;
+  public msgHours;
   private openChatIds: string[];
   private openChatUserIds: string[];
 
@@ -216,7 +218,9 @@ export class ChatWindowComponent implements OnInit {
   }
 
   onGenerateNewMessage() {
-    const newMessage = new Messages(this.thisUserID, this.newMessage, 'msgText', '14:47');
+    this.msgMinutes = this.today.getMinutes();
+    this.msgHours = this.today.getHours();
+    const newMessage = new Messages(this.thisUserID, this.newMessage, 'msgText', this.msgHours + ':' + this.msgMinutes);
     this.message.unshift(newMessage);
     this.firebaseService.newMessage(newMessage, this.activeContact);
   }
