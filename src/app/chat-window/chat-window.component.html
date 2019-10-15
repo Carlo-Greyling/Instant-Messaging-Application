@@ -79,14 +79,47 @@
 
           <div class="d-flex justify-content-start mb-4"
           *ngFor="let i of message">
-            <div
-              [ngClass]="{ 'msg_container_send': i.msgID === thisUserID && i.msgType === 'msgText', 'msg_container': i.msgID !== thisUserID }">
+
+            <!-- Plain Text -->
+              <div *ngIf="i.msgType === 'msgText'"
+                [ngClass]="{ 'msg_container_send': i.msgID === thisUserID, 'msg_container': i.msgID !== thisUserID }">
+                {{ i.msgContents }}
+                <span
+                  [ngClass]="{ 'msg_time_send': i.msgID === thisUserID, 'msg_time': i.msgID !== thisUserID }">
+                {{ i.arrivalTime }}
+              </span>
+              </div>
+
+            <!-- Images -->
+            <div *ngIf="i.msgType === 'msgImage'"
+                 [ngClass]="{ 'msg_container_send': i.msgID === thisUserID, 'msg_container': i.msgID !== thisUserID }" style="padding-left: 1px; padding-right: 1px">
+              <img src="{{ i.msgContents }}" style="width: 80%; display: block; margin-left: auto; margin-right: auto">
+              <span
+                [ngClass]="{ 'msg_time_send': i.msgID === thisUserID, 'msg_time': i.msgID !== thisUserID }">
+                {{ i.arrivalTime }}
+              </span>
+            </div>
+
+            <!-- Video -->
+            <div *ngIf="i.msgType === 'msgVideo'"
+                 [ngClass]="{ 'msg_container_send': i.msgID === thisUserID, 'msg_container': i.msgID !== thisUserID }">
               {{ i.msgContents }}
               <span
                 [ngClass]="{ 'msg_time_send': i.msgID === thisUserID, 'msg_time': i.msgID !== thisUserID }">
                 {{ i.arrivalTime }}
               </span>
             </div>
+
+            <!-- Audio -->
+            <div *ngIf="i.msgType === 'msgAudio'"
+                 [ngClass]="{ 'msg_container_send': i.msgID === thisUserID, 'msg_container': i.msgID !== thisUserID }">
+              {{ i.msgContents }}
+              <span
+                [ngClass]="{ 'msg_time_send': i.msgID === thisUserID, 'msg_time': i.msgID !== thisUserID }">
+                {{ i.arrivalTime }}
+              </span>
+            </div>
+
           </div>
         </div>
         <div class="card-footer">

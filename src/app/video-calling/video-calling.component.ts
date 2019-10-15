@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularAgoraRtcService, Stream } from 'angular-agora-rtc';
+import { AngularAgoraRtcModule } from 'angular-agora-rtc';
 
 @Component({
   selector: 'app-video-calling',
