@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { FileSystem } from '@angular/compiler-cli/src/ngtsc/file_system';
 import * as CryptoJS from 'crypto-js';
 import { FirebaseService } from './firebase.service';
+import { Messages } from './messages.model';
 
 
 
@@ -12,16 +13,22 @@ import { FirebaseService } from './firebase.service';
 // and to encrypt and decrypt anything
 export class EncoderService {
   EncryptionPassword = 'CodingWizard';
+  thisUserID = localStorage.getItem('currentUserId');
+  message: Messages[] = [];
+  public activeContact;  // variable for setting the current open contact in the chat window;
+
   constructor(private firebaseService: FirebaseService) {}
 
   // Encode Image to base64 and upload
-  Base64EncodeImage(theFile: any, fileName: any, UserId: any, ContactId: any) {
+  Base64EncodeImage(theFile: any, fileName: any, UserId: any, ContactId: any, active: any) {
+    this.activeContact = active;
     const reader = new FileReader();
     reader.readAsDataURL(theFile);
     let result;
     reader.onload = (e) => {
       result = reader.result;
       console.log(result);
+      this.onGenerateNewMultiMediaMessage(result);
       // this.firebaseService.uploadImage(UserId, ContactId, result, fileName);
     };
   }
@@ -39,25 +46,29 @@ export class EncoderService {
   }
 
   // Encode Video to base64 and upload
-  Base64EncodeVideo(theFile: any, fileName: any, UserId: any, ContactId: any) {
+  Base64EncodeVideo(theFile: any, fileName: any, UserId: any, ContactId: any, active: any) {
+    this.activeContact = active;
     const reader = new FileReader();
     reader.readAsDataURL(theFile);
     let result;
     reader.onload = (e) => {
       result = reader.result;
       console.log(result);
+      this.onGenerateNewMultiMediaMessage(result);
       // this.firebaseService.uploadVideo(UserId, ContactId, result, fileName);
     };
   }
 
   // Encode Audio to base64 and upload
-  Base64EncodeAudio(theFile: any, fileName: any, UserId: any, ContactId: any) {
+  Base64EncodeAudio(theFile: any, fileName: any, UserId: any, ContactId: any, active: any) {
+    this.activeContact = active;
     const reader = new FileReader();
     reader.readAsDataURL(theFile);
     let result;
     reader.onload = (e) => {
       result = reader.result;
       console.log(result);
+      this.onGenerateNewMultiMediaMessage(result);
       // this.firebaseService.uploadAudio(UserId, ContactId, result, fileName);
     };
   }
@@ -103,5 +114,11 @@ DownloadBase64(b64: string) {
       link.click();
       document.body.removeChild(link);
   }
+  }
+
+  onGenerateNewMultiMediaMessage(imageBase64String: string) {
+    const newMessage = new Messages(this.thisUserID, imageBase64String, 'msgImage', '14:47');
+    this.message.unshift(newMessage);
+    this.firebaseService.newMessage(newMessage, this.activeContact);
   }
 }

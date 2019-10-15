@@ -1,15 +1,9 @@
 body,html{
-  height: 100%;
+  height: auto;
   margin: 0;
-  background: black no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background: -webkit-linear-gradient(to right, #F5B7B1, #F1948A, #EC7063);
-  background: linear-gradient(to right, #F5B7B1, #F1948A, #EC7063);
-  /*background: -webkit-linear-gradient(to right, gray, gray, black);
-  background: linear-gradient(to right, gray, gray, black);*/
+  background: black;
+  background: -webkit-linear-gradient(to right, gray, gray, black);
+  background: linear-gradient(to right, gray, gray, black);
 }
 
 .chat{
@@ -206,7 +200,7 @@ body,html{
   margin-bottom: auto;
   margin-left: 10px;
   border-radius: 25px;
-  background-color: #E5E8E8;
+  background-color: #82c;
   padding: 10px;
   position: relative;
 }
@@ -215,7 +209,7 @@ body,html{
   margin-bottom: auto;
   margin-left: auto;
   border-radius: 25px;
-  background-color: #2ECC71;
+  background-color: deepskyblue;
   padding: 10px;
   position: relative;
 }
