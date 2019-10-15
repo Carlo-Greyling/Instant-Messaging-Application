@@ -92,7 +92,9 @@ DecryptTextMessage(encryptedMessage: any): any {
 
 // Download File using a Base64String
 DownloadBase64(b64: string) {
-  const base64string = this.lz.decompress(b64);
+  // Johan se compresion
+  // const base64string = this.lz.decompress(b64);
+  const base64string = b64;
   const byteCharacters = atob(base64string);
 
   const byteNumbers = new Array(byteCharacters.length);
@@ -121,7 +123,9 @@ DownloadBase64(b64: string) {
   }
 
   onGenerateNewImageMessage(imageBase64String: string) {
-    const base64string = this.lz.compress(imageBase64String);
+    // Johan se compresion
+    // const base64string = this.lz.compress(imageBase64String);
+    const base64string = imageBase64String;
     this.today  = new Date();
     this.msgMinutes = this.today.getMinutes();
     this.msgHours = this.today.getHours();
@@ -140,7 +144,9 @@ DownloadBase64(b64: string) {
   }
 
   onGenerateNewVideoMessage(imageBase64String: string) {
-    const base64string = this.lz.compress(imageBase64String);
+    // Johan se compresion
+    // const base64string = this.lz.compress(imageBase64String);
+    const base64string = imageBase64String;
     this.today  = new Date();
     this.msgMinutes = this.today.getMinutes();
     this.msgHours = this.today.getHours();
@@ -157,7 +163,9 @@ DownloadBase64(b64: string) {
     this.firebaseService.newMessage(newMessage, this.activeContact);
   }
   onGenerateNewAudioMessage(imageBase64String: string) {
-    const base64string = this.lz.compress(imageBase64String);
+    // Johan se compresion
+    // const base64string = this.lz.compress(imageBase64String);
+    const base64string = imageBase64String;
     this.today  = new Date();
     this.msgMinutes = this.today.getMinutes();
     this.msgHours = this.today.getHours();
