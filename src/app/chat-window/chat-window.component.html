@@ -75,26 +75,12 @@
           </div>
           <span id="action_menu_btn" (click)="openSettings()"><i id="settings" class="fas fa-ellipsis-v"></i></span>
         </div>
-        <div *ngIf="initialGetMessage === false" id="bodydiv" style="overflow: auto; display: flex; flex-direction: column-reverse;" class="card-body msg_card_body">
+        <div id="bodydiv" style="overflow: auto; display: flex; flex-direction: column-reverse;" class="card-body msg_card_body">
 
           <div class="d-flex justify-content-start mb-4"
           *ngFor="let i of message">
             <div
-              [ngClass]="{ 'msg_container_send': i.msgID === thisUserID, 'msg_container': i.msgID !== thisUserID }">
-              {{ i.msgContents }}
-              <span
-                [ngClass]="{ 'msg_time_send': i.msgID === thisUserID, 'msg_time': i.msgID !== thisUserID }">
-                {{ i.arrivalTime }}
-              </span>
-            </div>
-          </div>
-        </div>
-        <div *ngIf="initialGetMessage === true" id="bodydiv" style="overflow: auto; display: flex; flex-direction: column-reverse;" class="card-body msg_card_body">
-
-          <div class="d-flex justify-content-start mb-4"
-               *ngFor="let i of arrDiffMessageArr">
-            <div
-              [ngClass]="{ 'msg_container_send': i.msgID === thisUserID, 'msg_container': i.msgID !== thisUserID }">
+              [ngClass]="{ 'msg_container_send': i.msgID === thisUserID && i.msgType === 'msgText', 'msg_container': i.msgID !== thisUserID }">
               {{ i.msgContents }}
               <span
                 [ngClass]="{ 'msg_time_send': i.msgID === thisUserID, 'msg_time': i.msgID !== thisUserID }">

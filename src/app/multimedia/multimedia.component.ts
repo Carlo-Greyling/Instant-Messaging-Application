@@ -1,7 +1,8 @@
 import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { EncoderService } from '../shared/Encoder.service';
-import * as rx  from 'rxjs';
+import { Messages } from '../shared/messages.model';
+import { FirebaseService } from '../shared/firebase.service';
 
 @Component({
   selector: 'app-multimedia',
@@ -10,8 +11,13 @@ import * as rx  from 'rxjs';
 })
 export class MultimediaComponent implements OnInit {
 
+  thisUserID = localStorage.getItem('currentUserId');
+  message: Messages[] = [];
+  public activeContact;  // variable for setting the current open contact in the chat window;
+
   constructor(private snackBar: MatSnackBar, private dialogRef: MatDialogRef<MultimediaComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any, private encodeService: EncoderService) { }
+              @Inject(MAT_DIALOG_DATA) public data: any, private encodeService: EncoderService,
+              private firebaseService: FirebaseService) { }
 
   ngOnInit() {
   }
@@ -22,23 +28,23 @@ export class MultimediaComponent implements OnInit {
 
   async OpenImage(event: any) {
     // The file is in this event
-    // console.log(event.target.files[0].name);
-    // this.encodeService.Base64EncodeImage(event.target.files[0], event.target.files[0].name, this.data.UserId, this.data.ContactId);
-    // this.openSnackBar('Image Send', 'Close');
-    // this.dialogRef.close();
-    this.encodeService.Base64Encoder(event.target.files[0]);
+    console.log(event.target.files[0].name);
+    this.encodeService.Base64EncodeImage(event.target.files[0], event.target.files[0].name, this.data.UserId, this.data.ContactId, this.data.ActiveContact);
+    this.openSnackBar('Image Send', 'Close');
+    this.dialogRef.close();
+    // this.encodeService.Base64Encoder(event.target.files[0]);
   }
   OpenVideo(event: any) {
     // The file is in this event
     console.log(event.target.files[0].name);
-    this.encodeService.Base64EncodeVideo(event.target.files[0], event.target.files[0].name, this.data.UserId, this.data.ContactId);
+    this.encodeService.Base64EncodeVideo(event.target.files[0], event.target.files[0].name, this.data.UserId, this.data.ContactId, this.data.ActiveContact);
     this.openSnackBar('Video file send', 'Close');
     this.dialogRef.close();
   }
   OpenAudio(event: any) {
     // The file is in this event
     console.log(event.target.files[0].name);
-    this.encodeService.Base64EncodeAudio(event.target.files[0], event.target.files[0].name, this.data.UserId, this.data.ContactId);
+    this.encodeService.Base64EncodeAudio(event.target.files[0], event.target.files[0].name, this.data.UserId, this.data.ContactId, this.data.ActiveContact);
     this.openSnackBar('Audio file send', 'Close');
     this.dialogRef.close();
   }
@@ -53,4 +59,5 @@ export class MultimediaComponent implements OnInit {
       duration: 2000,
     });
   }
+
 }

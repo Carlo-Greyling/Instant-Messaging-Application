@@ -37,7 +37,9 @@ export class ChatWindowComponent implements OnInit {
   public activeProfilePicture: string;
 
   newMessage: string;
-  public msgTime: Date = new Date();
+  public today: Date;
+  public msgMinutes;
+  public msgHours;
   private openChatIds: string[];
   private openChatUserIds: string[];
 
@@ -147,7 +149,8 @@ export class ChatWindowComponent implements OnInit {
       // This is only if we wish to send parameters to the popup component
       data: {
         UserId: 0,
-        ContactId: 0
+        ContactId: 0,
+        ActiveContact: this.activeContact
       },
       panelClass: 'MultimediaCSS',
       position: { right: right - 350 + 'px', top: top - 120 + 'px' }
@@ -215,7 +218,18 @@ export class ChatWindowComponent implements OnInit {
   }
 
   onGenerateNewMessage() {
-    const newMessage = new Messages(this.thisUserID, this.newMessage, 'msgText', '14:47');
+    this.today  = new Date();
+    this.msgMinutes = this.today.getMinutes();
+    this.msgHours = this.today.getHours();
+    if (this.msgHours < 10) {
+      this.msgHours = '0' + this.msgHours;
+    }
+
+    if (this.msgMinutes < 10) {
+      this.msgMinutes = '0' + this.msgMinutes;
+    }
+
+    const newMessage = new Messages(this.thisUserID, this.newMessage, 'msgText', this.msgHours + ':' + this.msgMinutes);
     this.message.unshift(newMessage);
     this.firebaseService.newMessage(newMessage, this.activeContact);
   }
@@ -225,5 +239,7 @@ export class ChatWindowComponent implements OnInit {
     this.message.unshift(newMessage);
     this.firebaseService.newMessage(newMessage, this.activeContact);
   }
+
+  // onGenerateNewMultiMediaMessage is moved to Encoder.service component
 
 }
