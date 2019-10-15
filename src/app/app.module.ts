@@ -18,6 +18,7 @@ import {EncoderService} from './shared/Encoder.service';
 import { AngularAgoraRtcModule, AgoraConfig } from 'angular-agora-rtc';
 import { VoiceCallingComponent } from './voice-calling/voice-calling.component';
 import { ViewsettingsComponent } from './view-settings/viewsettings.component';
+import { LZStringModule, LZStringService } from 'ng-lz-string';
 
 const agoraConfig: AgoraConfig = {
   AppID: 'c67eefb21d494c1787c7fe20b83dc5b6',
@@ -39,6 +40,7 @@ const agoraConfig: AgoraConfig = {
   imports: [
     BrowserModule,
     FormsModule,
+    LZStringModule,
     BrowserAnimationsModule,
     MatSnackBarModule,
     AppRoutingModule,
@@ -48,7 +50,8 @@ const agoraConfig: AgoraConfig = {
     SharedModule,
     AngularAgoraRtcModule.forRoot(agoraConfig)
   ],
-  providers: [EncoderService],
+  providers: [EncoderService,
+    LZStringService],
   entryComponents: [
     MultimediaComponent,
     ViewsettingsComponent

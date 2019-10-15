@@ -3,7 +3,7 @@ import { FileSystem } from '@angular/compiler-cli/src/ngtsc/file_system';
 import * as CryptoJS from 'crypto-js';
 import { FirebaseService } from './firebase.service';
 import { Messages } from './messages.model';
-
+import {LZStringService} from 'ng-lz-string';
 
 
 @Injectable({
@@ -20,7 +20,7 @@ export class EncoderService {
   msgHours;
   public activeContact;  // variable for setting the current open contact in the chat window;
 
-  constructor(private firebaseService: FirebaseService) {}
+  constructor(private firebaseService: FirebaseService, private lz: LZStringService) {}
 
   // Encode Image to base64 and upload
   Base64EncodeImage(theFile: any, fileName: any, UserId: any, ContactId: any, active: any) {
@@ -92,7 +92,8 @@ DecryptTextMessage(encryptedMessage: any): any {
 
 // Download File using a Base64String
 DownloadBase64(b64: string) {
-  const byteCharacters = atob(b64);
+  const base64string = this.lz.decompress(b64);
+  const byteCharacters = atob(base64string);
 
   const byteNumbers = new Array(byteCharacters.length);
   for (let i = 0; i < byteCharacters.length; i++) {
@@ -120,6 +121,7 @@ DownloadBase64(b64: string) {
   }
 
   onGenerateNewImageMessage(imageBase64String: string) {
+    const base64string = this.lz.compress(imageBase64String);
     this.today  = new Date();
     this.msgMinutes = this.today.getMinutes();
     this.msgHours = this.today.getHours();
@@ -132,12 +134,13 @@ DownloadBase64(b64: string) {
       this.msgMinutes = '0' + this.msgMinutes;
     }
 
-    const newMessage = new Messages(localStorage.getItem('currentUserId'), imageBase64String, 'msgImage', this.msgHours + ':' + this.msgMinutes);
+    const newMessage = new Messages(localStorage.getItem('currentUserId'), base64string, 'msgImage', this.msgHours + ':' + this.msgMinutes);
     this.message.unshift(newMessage);
     this.firebaseService.newMessage(newMessage, this.activeContact);
   }
 
   onGenerateNewVideoMessage(imageBase64String: string) {
+    const base64string = this.lz.compress(imageBase64String);
     this.today  = new Date();
     this.msgMinutes = this.today.getMinutes();
     this.msgHours = this.today.getHours();
@@ -149,11 +152,12 @@ DownloadBase64(b64: string) {
     if (this.msgMinutes < 10) {
       this.msgMinutes = '0' + this.msgMinutes;
     }
-    const newMessage = new Messages(localStorage.getItem('currentUserId'), imageBase64String, 'msgVideo', this.msgHours + ':' + this.msgMinutes);
+    const newMessage = new Messages(localStorage.getItem('currentUserId'), base64string, 'msgVideo', this.msgHours + ':' + this.msgMinutes);
     this.message.unshift(newMessage);
     this.firebaseService.newMessage(newMessage, this.activeContact);
   }
   onGenerateNewAudioMessage(imageBase64String: string) {
+    const base64string = this.lz.compress(imageBase64String);
     this.today  = new Date();
     this.msgMinutes = this.today.getMinutes();
     this.msgHours = this.today.getHours();
@@ -165,10 +169,11 @@ DownloadBase64(b64: string) {
     if (this.msgMinutes < 10) {
       this.msgMinutes = '0' + this.msgMinutes;
     }
-    const newMessage = new Messages(localStorage.getItem('currentUserId'), imageBase64String, 'msgAudio', this.msgHours + ':' + this.msgMinutes);
+    const newMessage = new Messages(localStorage.getItem('currentUserId'), base64string, 'msgAudio', this.msgHours + ':' + this.msgMinutes);
     this.message.unshift(newMessage);
     this.firebaseService.newMessage(newMessage, this.activeContact);
   }
+
   profilePicBase64(theFile: any, fileName: any) {
     // Do Conversion
     // localStorage.setItem('base64PP', result);
