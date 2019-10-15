@@ -51,7 +51,8 @@
             ngModel
             required>
         </mat-form-field>
-          <button mat-raised-button (click)="null" color="primary">Upload Profile Picture</button>
+          <button mat-raised-button (click)="ImageFile.click()" color="primary">Upload Profile Picture</button>
+          <input hidden type="file" accept="image/gif, image/jpeg, image/png" id="Image" #ImageFile (change)="OpenImage($event)">
       </mat-card-content>
       <mat-card-actions>
         <button

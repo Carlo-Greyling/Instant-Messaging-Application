@@ -3,7 +3,7 @@ import { FileSystem } from '@angular/compiler-cli/src/ngtsc/file_system';
 import * as CryptoJS from 'crypto-js';
 import { FirebaseService } from './firebase.service';
 import { Messages } from './messages.model';
-
+import {LZStringService} from 'ng-lz-string';
 
 
 @Injectable({
@@ -15,9 +15,12 @@ export class EncoderService {
   EncryptionPassword = 'CodingWizard';
   thisUserID = localStorage.getItem('currentUserId');
   message: Messages[] = [];
+  today;
+  msgMinutes;
+  msgHours;
   public activeContact;  // variable for setting the current open contact in the chat window;
 
-  constructor(private firebaseService: FirebaseService) {}
+  constructor(private firebaseService: FirebaseService, private lz: LZStringService) {}
 
   // Encode Image to base64 and upload
   Base64EncodeImage(theFile: any, fileName: any, UserId: any, ContactId: any, active: any) {
@@ -28,7 +31,7 @@ export class EncoderService {
     reader.onload = (e) => {
       result = reader.result;
       console.log(result);
-      this.onGenerateNewMultiMediaMessage(result);
+      this.onGenerateNewImageMessage(result);
       // this.firebaseService.uploadImage(UserId, ContactId, result, fileName);
     };
   }
@@ -54,7 +57,7 @@ export class EncoderService {
     reader.onload = (e) => {
       result = reader.result;
       console.log(result);
-      this.onGenerateNewMultiMediaMessage(result);
+      this.onGenerateNewVideoMessage(result);
       // this.firebaseService.uploadVideo(UserId, ContactId, result, fileName);
     };
   }
@@ -68,7 +71,7 @@ export class EncoderService {
     reader.onload = (e) => {
       result = reader.result;
       console.log(result);
-      this.onGenerateNewMultiMediaMessage(result);
+      this.onGenerateNewAudioMessage(result);
       // this.firebaseService.uploadAudio(UserId, ContactId, result, fileName);
     };
   }
@@ -89,7 +92,8 @@ DecryptTextMessage(encryptedMessage: any): any {
 
 // Download File using a Base64String
 DownloadBase64(b64: string) {
-  const byteCharacters = atob(b64);
+  const base64string = this.lz.decompress(b64);
+  const byteCharacters = atob(base64string);
 
   const byteNumbers = new Array(byteCharacters.length);
   for (let i = 0; i < byteCharacters.length; i++) {
@@ -116,9 +120,70 @@ DownloadBase64(b64: string) {
   }
   }
 
-  onGenerateNewMultiMediaMessage(imageBase64String: string) {
-    const newMessage = new Messages(localStorage.getItem('currentUserId'), imageBase64String, 'msgImage', '14:47');
+  onGenerateNewImageMessage(imageBase64String: string) {
+    const base64string = this.lz.compress(imageBase64String);
+    this.today  = new Date();
+    this.msgMinutes = this.today.getMinutes();
+    this.msgHours = this.today.getHours();
+
+    if (this.msgHours < 10) {
+      this.msgHours = '0' + this.msgHours;
+    }
+
+    if (this.msgMinutes < 10) {
+      this.msgMinutes = '0' + this.msgMinutes;
+    }
+
+    const newMessage = new Messages(localStorage.getItem('currentUserId'), base64string, 'msgImage', this.msgHours + ':' + this.msgMinutes);
     this.message.unshift(newMessage);
     this.firebaseService.newMessage(newMessage, this.activeContact);
+  }
+
+  onGenerateNewVideoMessage(imageBase64String: string) {
+    const base64string = this.lz.compress(imageBase64String);
+    this.today  = new Date();
+    this.msgMinutes = this.today.getMinutes();
+    this.msgHours = this.today.getHours();
+
+    if (this.msgHours < 10) {
+      this.msgHours = '0' + this.msgHours;
+    }
+
+    if (this.msgMinutes < 10) {
+      this.msgMinutes = '0' + this.msgMinutes;
+    }
+    const newMessage = new Messages(localStorage.getItem('currentUserId'), base64string, 'msgVideo', this.msgHours + ':' + this.msgMinutes);
+    this.message.unshift(newMessage);
+    this.firebaseService.newMessage(newMessage, this.activeContact);
+  }
+  onGenerateNewAudioMessage(imageBase64String: string) {
+    const base64string = this.lz.compress(imageBase64String);
+    this.today  = new Date();
+    this.msgMinutes = this.today.getMinutes();
+    this.msgHours = this.today.getHours();
+
+    if (this.msgHours < 10) {
+      this.msgHours = '0' + this.msgHours;
+    }
+
+    if (this.msgMinutes < 10) {
+      this.msgMinutes = '0' + this.msgMinutes;
+    }
+    const newMessage = new Messages(localStorage.getItem('currentUserId'), base64string, 'msgAudio', this.msgHours + ':' + this.msgMinutes);
+    this.message.unshift(newMessage);
+    this.firebaseService.newMessage(newMessage, this.activeContact);
+  }
+
+  profilePicBase64(theFile: any, fileName: any) {
+    // Do Conversion
+    // localStorage.setItem('base64PP', result);
+    const reader = new FileReader();
+    reader.readAsDataURL(theFile);
+    let result;
+    reader.onload = (e) => {
+      result = reader.result;
+      console.log(result);
+      localStorage.setItem('base64PP', result);
+    };
   }
 }
