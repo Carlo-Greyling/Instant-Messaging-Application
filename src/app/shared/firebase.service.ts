@@ -239,17 +239,48 @@ export class FirebaseService {
       });
   }
 
-  newOpenChat(userId) {
+  newChat(userId) {
+    let name = '';
+    let status = '';
+    let profilePicture = '';
+    let onlineIcon = '';
+    let myUserID = '';
+    let password = '';
+    let ChatsIdArr: string[] = []; // 0123456789_9876543210
+    let openChatUserIds: string[] = []; // 0123456789
+
     const userRef = this.db.collection('users').doc(localStorage.getItem('currentUserId'));
     const getDoc = userRef.get().toPromise()
       .then(doc => {
         if (!doc.exists) {
           console.log('not found'); // add toastr notification
         } else {
-          this.openChatUserIds = doc.data().openChatUserIds;
-          this.openChatUserIds.push(userId);
-          const data = {openChatUserIds: this.openChatUserIds};
-          this.db.collection('users').doc(localStorage.getItem('currentUserId')).set(data);
+          name = doc.data().name;
+          status = doc.data().status;
+          profilePicture = doc.data().profilePicture;
+          onlineIcon = doc.data().onlineIcon;
+          myUserID = doc.data().myUserID;
+          password = doc.data().password;
+          ChatsIdArr = doc.data().ChatsIdArr;
+          openChatUserIds = doc.data().openChatUserIds;
+
+          openChatUserIds.unshift(userId);
+          const newChatID = myUserID + '_' + userId;
+          ChatsIdArr.unshift(newChatID);
+
+          const data = {
+            name,
+            status,
+            profilePicture,
+            onlineIcon,
+            myUserID,
+            password,
+            ChatsIdArr,
+            openChatUserIds,
+          };
+
+          const usersRef = this.db.collection('users').doc(myUserID);
+          usersRef.set(data);
         }
       }).catch(err => {
         console.log('Error', err); // add toastr notification
