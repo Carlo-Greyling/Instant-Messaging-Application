@@ -23,4 +23,8 @@ export class SignupComponent implements OnInit {
     const value = form.value;
     this.firebaseService.createUser(value.userId, value.name, value.password, this.base64DP);
   }
+
+  UploadProfilePicture() {
+    // this.base64dp = encoder service return base64 string
+  }
 }

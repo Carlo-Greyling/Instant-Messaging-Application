@@ -251,12 +251,6 @@ export class ChatWindowComponent implements OnInit {
     this.newMessage = '';
   }
 
-  onGenerateNewMultiMediaMessage(imageBase64String: string) {
-    const newMessage = new Messages(this.thisUserID, imageBase64String, 'msgImage', '14:47');
-    this.message.unshift(newMessage);
-    this.firebaseService.newMessage(newMessage, this.activeContact);
-  }
-
   // onGenerateNewMultiMediaMessage is moved to Encoder.service component
 
 }

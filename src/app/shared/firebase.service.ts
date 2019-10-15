@@ -34,13 +34,17 @@ export class FirebaseService {
   }
   // TODO: Sign up
   createUser(userId, name, password, base64ProPic) {
+    const ChatsIdArr: string[] = []; // 0123456789_9876543210
+    const openChatUserIds: string[] = []; // 0123456789
     const data = {
       name,
       status: 'online',
       profilePicture: base64ProPic,
       onlineIcon: 'online_icon',
       userId,
-      password
+      password,
+      ChatsIdArr,
+      openChatUserIds
     };
     const usersRef = this.db.collection('users').doc(userId);
     usersRef.set(data);
