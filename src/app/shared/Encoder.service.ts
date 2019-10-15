@@ -117,7 +117,7 @@ DownloadBase64(b64: string) {
   }
 
   onGenerateNewMultiMediaMessage(imageBase64String: string) {
-    const newMessage = new Messages(this.thisUserID, imageBase64String, 'msgImage', '14:47');
+    const newMessage = new Messages(localStorage.getItem('currentUserId'), imageBase64String, 'msgImage', '14:47');
     this.message.unshift(newMessage);
     this.firebaseService.newMessage(newMessage, this.activeContact);
   }
