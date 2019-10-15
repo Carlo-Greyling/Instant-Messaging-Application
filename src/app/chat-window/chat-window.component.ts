@@ -37,7 +37,7 @@ export class ChatWindowComponent implements OnInit {
   public activeProfilePicture: string;
 
   newMessage: string;
-  public today: Date = new Date();
+  public today: Date;
   public msgMinutes;
   public msgHours;
   private openChatIds: string[];
@@ -218,6 +218,7 @@ export class ChatWindowComponent implements OnInit {
   }
 
   onGenerateNewMessage() {
+    this.today  = new Date();
     this.msgMinutes = this.today.getMinutes();
     this.msgHours = this.today.getHours();
     const newMessage = new Messages(this.thisUserID, this.newMessage, 'msgText', this.msgHours + ':' + this.msgMinutes);
