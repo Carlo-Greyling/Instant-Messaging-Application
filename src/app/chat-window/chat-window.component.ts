@@ -232,6 +232,8 @@ export class ChatWindowComponent implements OnInit {
     const newMessage = new Messages(this.thisUserID, this.newMessage, 'msgText', this.msgHours + ':' + this.msgMinutes);
     this.message.unshift(newMessage);
     this.firebaseService.newMessage(newMessage, this.activeContact);
+
+    this.newMessage = '';
   }
 
   onGenerateNewMultiMediaMessage(imageBase64String: string) {

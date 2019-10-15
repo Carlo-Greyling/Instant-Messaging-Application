@@ -94,7 +94,7 @@
             <div class="input-group-append">
               <span class="input-group-text attach_btn"><a id="attachment" (click)="OpenMultiMedia()" class="fas fa-paperclip"></a></span>
             </div>
-            <input type="text" class="form-control type_msg" placeholder="Type your message..." [(ngModel)]="newMessage">
+            <input id="msgContainer" (keydown.enter)="onGenerateNewMessage()" type="text" class="form-control type_msg" placeholder="Type your message..." [(ngModel)]="newMessage">
             <div class="input-group-append">
               <span class="input-group-text send_btn" (click)="onGenerateNewMessage()"><i class="fas fa-location-arrow"></i></span>
             </div>
