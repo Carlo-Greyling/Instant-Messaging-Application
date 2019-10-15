@@ -216,7 +216,7 @@ export class ChatWindowComponent implements OnInit {
         }
       }
       this.arrDiff = 0;
-    }, 15000);
+    }, 10000);
 
     /*this.activeContact = this.users[0].userID;
     this.activeContactName = this.users[0].name;
