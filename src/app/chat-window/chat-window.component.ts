@@ -187,6 +187,15 @@ export class ChatWindowComponent implements OnInit {
   ngOnInit() {
     this.openSnackBar('Login Successful', 'close');
     this.users = this.firebaseService.getUserProfiles();
+    const myID = localStorage.getItem('currentUserId');
+    for (let i = 0; i < this.users.length; i++) {
+      if (this.users[i].userID === myID) {
+        this.setActiveContact(this.users[i].openChatUserIds[0]);
+      }
+    }
+    /*this.users = this.firebaseService.getUserProfiles();
+    console.log(this.users.toString());
+    this.setActiveContact(this.users[0].userID);*/
 
     this.interval = setInterval(() => {
       this.message.length = 0;
@@ -207,9 +216,14 @@ export class ChatWindowComponent implements OnInit {
       this.arrDiff = 0;
     }, 15000);
 
-    this.activeContact = this.users[0].userID;
+    /*this.activeContact = this.users[0].userID;
     this.activeContactName = this.users[0].name;
-    this.activeProfilePicture = this.users[0].profilePicture;
+    this.activeProfilePicture = this.users[0].profilePicture;*/
+    console.log(this.users);
+    // this.setActiveContact(this.users[0].userID);
+    /*this.activeContact = this.users[0].userID;
+    this.activeContactName = this.users[0].name;
+    this.activeProfilePicture = this.users[0].profilePicture;*/
   }
 
   updateMessages() {

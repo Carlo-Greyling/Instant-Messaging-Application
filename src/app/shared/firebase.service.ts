@@ -78,7 +78,8 @@ export class FirebaseService {
                     udoc.data().name,
                     udoc.data().status,
                     udoc.data().profilePicture,
-                    udoc.data().onlineIcon));
+                    udoc.data().onlineIcon,
+                    doc.data().openChatUserIds));
                 }
               }).catch(err => {
                 console.log('Error', err); // add toastr notification
@@ -133,14 +134,14 @@ export class FirebaseService {
     const getDoc = chatsRef.get().toPromise()
       .then(doc => {
         if (!doc.exists) {
-          const data = {
+          /*const data = {
             arrivalTime: arrTimeArray,
             msgContents: msgContentsArray,
             msgId: msgIdArray,
             msgType: msgTypeArray
           };
 
-          chatsRef.set(data);
+          chatsRef.set(data);*/
         } else {
           arrTimeArray = doc.data().arrivalTime;
           msgContentsArray = doc.data().msgContents;
