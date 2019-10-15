@@ -235,6 +235,7 @@ export class ChatWindowComponent implements OnInit {
     this.today  = new Date();
     this.msgMinutes = this.today.getMinutes();
     this.msgHours = this.today.getHours();
+
     if (this.msgHours < 10) {
       this.msgHours = '0' + this.msgHours;
     }
