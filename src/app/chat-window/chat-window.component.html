@@ -103,7 +103,9 @@
             <!-- Video -->
             <div *ngIf="i.msgType === 'msgVideo'"
                  [ngClass]="{ 'msg_container_send': i.msgID === thisUserID, 'msg_container': i.msgID !== thisUserID }">
-              {{ i.msgContents }}
+              <video width="80%">
+                <source src="{{ i.msgContents }}">
+              </video>
               <span
                 [ngClass]="{ 'msg_time_send': i.msgID === thisUserID, 'msg_time': i.msgID !== thisUserID }">
                 {{ i.arrivalTime }}

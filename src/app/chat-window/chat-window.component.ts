@@ -20,6 +20,7 @@ import { ViewsettingsComponent } from '../view-settings/viewsettings.component';
 export class ChatWindowComponent implements OnInit {
   thisUserID = localStorage.getItem('currentUserId');
   title = 'instant-messaging-app';
+  userOnlineStatus: string;
   modal = document.getElementById('myModal') as HTMLImageElement;
   img = document.getElementById('profile-picture') as HTMLImageElement;
   modalImg = document.getElementById('img01') as HTMLImageElement;
@@ -185,6 +186,7 @@ export class ChatWindowComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userOnlineStatus = 'online_icon';
     this.openSnackBar('Login Successful', 'close');
     this.users = this.firebaseService.getUserProfiles();
 
