@@ -221,6 +221,14 @@ export class ChatWindowComponent implements OnInit {
     this.today  = new Date();
     this.msgMinutes = this.today.getMinutes();
     this.msgHours = this.today.getHours();
+    if (this.msgHours < 10) {
+      this.msgHours = '0' + this.msgHours;
+    }
+
+    if (this.msgMinutes < 10) {
+      this.msgMinutes = '0' + this.msgMinutes;
+    }
+
     const newMessage = new Messages(this.thisUserID, this.newMessage, 'msgText', this.msgHours + ':' + this.msgMinutes);
     this.message.unshift(newMessage);
     this.firebaseService.newMessage(newMessage, this.activeContact);
