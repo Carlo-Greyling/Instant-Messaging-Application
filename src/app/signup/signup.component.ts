@@ -21,10 +21,10 @@ export class SignupComponent implements OnInit {
 
   SignUp(form: NgForm) {
     const value = form.value;
-    this.firebaseService.createUser(value.userId, value.name, value.password, this.base64DP);
+    this.firebaseService.createUser(value.userId, value.name, value.password);
   }
 
   UploadProfilePicture() {
-    // this.base64dp = encoder service return base64 string
+    // send file to this.encoder.service.profilePicBase64();
   }
 }

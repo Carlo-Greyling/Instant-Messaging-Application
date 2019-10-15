@@ -169,4 +169,8 @@ DownloadBase64(b64: string) {
     this.message.unshift(newMessage);
     this.firebaseService.newMessage(newMessage, this.activeContact);
   }
+  profilePicBase64() {
+    // Do Conversion
+    // localStorage.setItem('base64PP', result);
+  }
 }

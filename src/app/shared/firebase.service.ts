@@ -33,7 +33,8 @@ export class FirebaseService {
       });
   }
   // TODO: Sign up
-  createUser(userId, name, password, base64ProPic) {
+  createUser(userId, name, password) {
+    const base64ProPic = localStorage.getItem('base64PP');
     const ChatsIdArr: string[] = []; // 0123456789_9876543210
     const openChatUserIds: string[] = []; // 0123456789
     const data = {
