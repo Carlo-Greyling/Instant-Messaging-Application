@@ -77,6 +77,7 @@ export class ChatWindowComponent implements OnInit {
 
   setActiveContact(userID: string) {
     // this.message = [];
+    this.message.length = 0;
     if (userID !== this.activeContact) {
       this.activeContact = userID;
     } else {
@@ -191,18 +192,21 @@ export class ChatWindowComponent implements OnInit {
     this.openSnackBar('Login Successful', 'close');
     this.users = this.firebaseService.getUserProfiles();
     const myID = localStorage.getItem('currentUserId');
+    // this.setActiveContact(this.users[0].userID);
     for (let i = 0; i < this.users.length; i++) {
       if (this.users[i].userID === myID) {
         this.setActiveContact(this.users[i].openChatUserIds[0]);
       }
     }
+    this.updateMessages();
     /*this.users = this.firebaseService.getUserProfiles();
     console.log(this.users.toString());
     this.setActiveContact(this.users[0].userID);*/
 
-    this.interval = setInterval(() => {
-      this.message.length = 0;
-      this.message = this.updateMessages();
+    /*this.interval = setInterval(() => {
+      this.updateMessages();
+      // this.message.length = 0;
+      // this.message = this.updateMessages();
       /*if (this.initialGetMessage === false) {
         this.message = this.firebaseService.getMessages(this.activeContact);
         this.initialGetMessage = true;
@@ -218,6 +222,10 @@ export class ChatWindowComponent implements OnInit {
         }
       }
       this.arrDiff = 0;*/
+    // }, 15000);
+
+    this.interval = setInterval(() => {
+      this.updateMessages();
     }, 15000);
 
     /*this.activeContact = this.users[0].userID;
@@ -230,9 +238,19 @@ export class ChatWindowComponent implements OnInit {
     this.activeProfilePicture = this.users[0].profilePicture;*/
   }
 
-  updateMessages() {
+  updateMessages(): any {
+    this.newMessageArr.length = 0;
+    const currentLength = this.message.length;
+    this.newMessageArr = this.firebaseService.getMessages(this.activeContact);
+    if (this.newMessageArr.length > currentLength) {
+      const diff = this.newMessageArr.length - currentLength;
+      for (let i = diff; i === 0; i--) {
+        this.message.unshift(this.newMessageArr[i]);
+      }
+    }
+    // setTimeout(this.updateMessages(), 1000);
     // this.message = this.firebaseService.getMessages(this.activeContact);
-    return this.firebaseService.getMessages(this.activeContact);
+    // return this.firebaseService.getMessages(this.activeContact);
   }
 
   onGenerateNewMessage() {
