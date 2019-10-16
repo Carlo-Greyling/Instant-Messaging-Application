@@ -76,6 +76,7 @@ export class ChatWindowComponent implements OnInit {
               private firebaseService: FirebaseService) {}
 
   setActiveContact(userID: string) {
+    // this.message = [];
     if (userID !== this.activeContact) {
       this.activeContact = userID;
     } else {
@@ -201,7 +202,7 @@ export class ChatWindowComponent implements OnInit {
 
     this.interval = setInterval(() => {
       this.message.length = 0;
-      this.updateMessages();
+      this.message = this.updateMessages();
       /*if (this.initialGetMessage === false) {
         this.message = this.firebaseService.getMessages(this.activeContact);
         this.initialGetMessage = true;
