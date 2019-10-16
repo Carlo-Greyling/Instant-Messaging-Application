@@ -159,10 +159,24 @@ export class ChatWindowComponent implements OnInit {
     blob = blob.slice(0, blob.size, 'audio/mp3');
     // console.log(blob);
     this.encoderService.Base64EncodeAudio(blob, 'VoiceNote', '0', '0', this.activeContact);
+
+    // This is just to make it look real, the voice note are uploaded
+    (async () => {
+      // Do something before delay
+      console.log('before delay');
+      this.openSnackBar('Please Wait....', 'Close');
+      await this.delay(1500);
+      // Do something after
+      console.log('after delay');
+      this.openSnackBar('Voice Note Send', 'Close');
+     })();
   }
   sanitize(url: string) {
     // return this.domSanitizer.bypassSecurityTrustUrl(url);
     // this.encoderService.Base64EncodeAudio(this.domSanitizer.bypassSecurityTrustUrl(url), 'VoiceNote', '0', '0', this.activeContact);
+  }
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
   videoCalling() {
