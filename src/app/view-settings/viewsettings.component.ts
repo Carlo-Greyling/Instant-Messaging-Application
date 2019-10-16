@@ -55,7 +55,7 @@ export class ViewsettingsComponent implements OnInit {
   }
 
   logOut() {
-    this.fbs.Logoff();
-    localStorage.clear();
+    this.fbs.Logoff(localStorage.getItem('currentUserId'));
+    this.dialogRef.close();
   }
 }
