@@ -102,7 +102,7 @@
             <!-- Video -->
             <div *ngIf="i.msgType === 'msgVideo'"
                  [ngClass]="{ 'msg_container_send': i.msgID === thisUserID, 'msg_container': i.msgID !== thisUserID }">
-              <video width="80%">
+              <video style="max-height: 150px; width: 200px" controls="controls">
                 <source src="{{ i.msgContents }}">
               </video>
               <span
@@ -114,7 +114,9 @@
             <!-- Audio -->
             <div *ngIf="i.msgType === 'msgAudio'"
                  [ngClass]="{ 'msg_container_send': i.msgID === thisUserID, 'msg_container': i.msgID !== thisUserID }">
-              {{ i.msgContents }}
+              <audio controls="controls">
+                <source src="{{ i.msgContents }}">
+              </audio>
               <span
                 [ngClass]="{ 'msg_time_send': i.msgID === thisUserID, 'msg_time': i.msgID !== thisUserID }">
                 {{ i.arrivalTime }}
