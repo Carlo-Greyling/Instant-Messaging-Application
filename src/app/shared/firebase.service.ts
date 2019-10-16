@@ -369,4 +369,20 @@ export class FirebaseService {
         console.log('Error', err); // add toastr notification
       });
   }
+
+  getNameByID(idToSearch): string {
+    let nameOfId = '';
+    const usersRef = this.db.collection('users').doc(idToSearch);
+    const getDoc = usersRef.get().toPromise()
+      .then(doc => {
+        if (!doc.exists) {
+          console.log('not found'); // add toastr notification
+        } else {
+          nameOfId = doc.data().name;
+        }
+      }).catch(err => {
+        console.log('Error', err); // add toastr notification
+      });
+    return nameOfId;
+  }
 }

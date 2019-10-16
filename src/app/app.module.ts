@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule, DomSanitizer} from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -8,7 +8,7 @@ import { MultimediaComponent } from './multimedia/multimedia.component';
 import { ChatWindowComponent } from './chat-window/chat-window.component';
 import { SharedModule } from './shared/share.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSnackBarModule } from '@angular/material';
+import {MatIconRegistry, MatSnackBarModule} from '@angular/material';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { AngularFireModule } from '@angular/fire';
@@ -60,4 +60,10 @@ const agoraConfig: AgoraConfig = {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    iconRegistry.addSvgIcon(
+      'round-menu-24px',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/round-menu-24px.svg'));
+  }
+}

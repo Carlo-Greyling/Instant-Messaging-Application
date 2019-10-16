@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, OnDestroy} from '@angular/core';
 import {Users} from 'src/app/shared/users.model';
 import { Messages } from '../shared/messages.model';
 import { FirebaseApp } from '@angular/fire';
 import {Message} from '@angular/compiler/src/i18n/i18n_ast';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import {MatDialog, MatSidenav, MatSnackBar} from '@angular/material';
 import { MultimediaComponent } from '../multimedia/multimedia.component';
 import {VideoCallingComponent} from '../video-calling/video-calling.component';
 import {FirebaseService} from '../shared/firebase.service';
@@ -14,13 +14,14 @@ import { ViewsettingsComponent } from '../view-settings/viewsettings.component';
 import * as RecordRTC from 'recordrtc';
 import { DomSanitizer } from '@angular/platform-browser';
 import { EncoderService } from '../shared/Encoder.service';
+import {MediaMatcher} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-chat-window',
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.scss']
 })
-export class ChatWindowComponent implements OnInit {
+export class ChatWindowComponent implements OnInit, OnDestroy {
   thisUserID = localStorage.getItem('currentUserId');
   title = 'instant-messaging-app';
   userOnlineStatus: string;
@@ -83,11 +84,27 @@ export class ChatWindowComponent implements OnInit {
 
   // Get the <span> element that closes the modal
   span = document.getElementsByClassName('close')[0];
+  mobileQuery: MediaQueryList;
+
+  private mobileQueryListener: () => void;
 
   constructor(private dialog: MatDialog, private snackBar: MatSnackBar,
-              private firebaseService: FirebaseService, private domSanitizer: DomSanitizer, private encoderService: EncoderService) {}
+              private firebaseService: FirebaseService,
+              private domSanitizer: DomSanitizer,
+              private encoderService: EncoderService,
+              changeDetectorRef: ChangeDetectorRef,
+              media: MediaMatcher,) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this.mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this.mobileQueryListener);
+  }
 
-  setActiveContact(userID: string) {
+  ngOnDestroy(): void {
+    this.mobileQuery.removeListener(this.mobileQueryListener);
+  }
+
+  setActiveContact(userID: string, snav: MatSidenav) {
+    snav.toggle();
     // this.message = [];
     this.message.length = 0;
     if (userID !== this.activeContact) {
@@ -268,12 +285,13 @@ export class ChatWindowComponent implements OnInit {
   ngOnInit() {
     this.userOnlineStatus = 'online_icon';
     this.openSnackBar('Login Successful', 'close');
+    this.users.length = 0;
     this.users = this.firebaseService.getUserProfiles();
     const myID = localStorage.getItem('currentUserId');
     // this.setActiveContact(this.users[0].userID);
     for (let i = 0; i < this.users.length; i++) {
       if (this.users[i].userID === myID) {
-        this.setActiveContact(this.users[i].openChatUserIds[0]);
+        this.setActiveContact(this.users[i].openChatUserIds[0], null);
       }
     }
     this.updateMessages();
@@ -328,6 +346,15 @@ export class ChatWindowComponent implements OnInit {
         // User who sent message: this.activeContactName
         // User who sent message profile pic = this.activeContact.profilePicture
         // Message Contents = this.newMessageArr[i].msgContents
+        const userName = this.firebaseService.getNameByID(this.newMessageArr[i].msgID);
+        Notification.requestPermission(() => {
+          const options: NotificationOptions = {
+            body: this.newMessageArr[i].msgContents,
+            icon: 'https://imgb.apk.tools/300/d/f/7/com.futurebits.instamessage.free.png',
+            dir: 'auto'
+          };
+          const notif = new Notification('New Message From: ' + userName, options);
+        });
       }
     }
     // setTimeout(this.updateMessages(), 1000);
