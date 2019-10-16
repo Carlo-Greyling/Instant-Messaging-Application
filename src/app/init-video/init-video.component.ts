@@ -10,6 +10,7 @@ import {FirebaseService} from '../shared/firebase.service';
 })
 export class InitVideoComponent implements OnInit {
   channelID = '';
+  joinWithID = '';
   thisUserID = localStorage.getItem('currentUserId');
   title = 'instant-messaging-app';
   modal = document.getElementById('myModal') as HTMLImageElement;
@@ -45,7 +46,8 @@ export class InitVideoComponent implements OnInit {
   }
 
   joinChannelID() {
-
+    localStorage.setItem('channelID', this.joinWithID);
+    window.location.href = '/videoCalling';
   }
 
   cancelVideo() {
