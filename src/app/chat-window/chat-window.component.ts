@@ -346,6 +346,15 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
         // User who sent message: this.activeContactName
         // User who sent message profile pic = this.activeContact.profilePicture
         // Message Contents = this.newMessageArr[i].msgContents
+        const userName = this.firebaseService.getNameByID(this.newMessageArr[i].msgID);
+        Notification.requestPermission(() => {
+          const options: NotificationOptions = {
+            body: this.newMessageArr[i].msgContents,
+            icon: 'https://imgb.apk.tools/300/d/f/7/com.futurebits.instamessage.free.png',
+            dir: 'auto'
+          };
+          const notif = new Notification('New Message From: ' + userName, options);
+        });
       }
     }
     // setTimeout(this.updateMessages(), 1000);
