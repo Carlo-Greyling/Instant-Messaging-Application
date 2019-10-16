@@ -11,6 +11,9 @@ import {Observable} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {debounceTime, switchMap} from 'rxjs/operators';
 import { ViewsettingsComponent } from '../view-settings/viewsettings.component';
+import * as RecordRTC from 'recordrtc';
+import { DomSanitizer } from '@angular/platform-browser';
+import { EncoderService } from '../shared/Encoder.service';
 
 @Component({
   selector: 'app-chat-window',
@@ -44,6 +47,15 @@ export class ChatWindowComponent implements OnInit {
   private openChatIds: string[];
   private openChatUserIds: string[];
 
+  // Jeandre voice note recording
+  // Lets initiate Record OBJ
+  private record;
+  // Will use this flag for detect recording
+  recording = false;
+  // Url of Blob
+  voiceNoteUrl;
+  private error;
+
   interval;
 
   users: Users[] = [];
@@ -73,7 +85,7 @@ export class ChatWindowComponent implements OnInit {
   span = document.getElementsByClassName('close')[0];
 
   constructor(private dialog: MatDialog, private snackBar: MatSnackBar,
-              private firebaseService: FirebaseService) {}
+              private firebaseService: FirebaseService, private domSanitizer: DomSanitizer, private encoderService: EncoderService) {}
 
   setActiveContact(userID: string) {
     // this.message = [];
@@ -99,6 +111,57 @@ export class ChatWindowComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 2000,
     });
+  }
+
+  // Jeandre Voice Note Methods
+  initiateRecording() {
+
+    this.recording = true;
+    let mediaConstraints = {
+      video: false,
+      audio: true
+    };
+    navigator.mediaDevices
+      .getUserMedia(mediaConstraints)
+      .then(this.successCallback.bind(this), this.errorCallback.bind(this));
+  }
+  successCallback(stream) {
+    var options = {
+      mimeType: "audio/mp3",
+      numberOfAudioChannels: 1
+    };
+    //Start Actual Recording
+    var StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
+    this.record = new StereoAudioRecorder(stream, options);
+    this.record.record();
+  }
+  /**
+   * Process Error.
+   */
+  errorCallback(error) {
+    this.error = 'Can not play audio in your browser';
+  }
+  /**
+   * Stop recording.
+   */
+  stopRecording() {
+    this.recording = false;
+    this.record.stop(this.processRecording.bind(this));
+    // this.sanitize(this.voiceNoteUrl);
+  }
+  /**
+   * processRecording Do what ever you want with blob
+   * @param  {any} blob Blog
+   */
+  processRecording(blob) {
+    this.voiceNoteUrl = URL.createObjectURL(blob);
+    blob = blob.slice(0, blob.size, "audio/mp3");
+    //console.log(blob);
+    this.encoderService.Base64EncodeAudio(blob, 'VoiceNote', '0', '0', this.activeContact);
+  }
+  sanitize(url: string) {
+    //return this.domSanitizer.bypassSecurityTrustUrl(url);
+    //this.encoderService.Base64EncodeAudio(this.domSanitizer.bypassSecurityTrustUrl(url), 'VoiceNote', '0', '0', this.activeContact);
   }
 
   videoCalling() {
