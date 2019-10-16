@@ -9,7 +9,7 @@ import { AngularAgoraRtcModule } from 'angular-agora-rtc';
 })
 export class VideoCallingComponent implements OnInit {
   localStream: Stream;
-  private remoteCalls: any = [];
+  public remoteCalls: any = [];
 
   constructor(private agoraService: AngularAgoraRtcService) {
     this.agoraService.createClient();
