@@ -10,7 +10,7 @@ export class ViewsettingsComponent implements OnInit {
   theme;
 
   constructor(private snackBar: MatSnackBar, private dialogRef: MatDialogRef<ViewsettingsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private dialog: MatDialog) { }
+              @Inject(MAT_DIALOG_DATA) public data: any, private dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -50,5 +50,9 @@ export class ViewsettingsComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 2000,
     });
+  }
+
+  logOut() {
+    localStorage.clear();
   }
 }

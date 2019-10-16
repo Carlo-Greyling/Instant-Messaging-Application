@@ -20,6 +20,7 @@ import { ViewsettingsComponent } from '../view-settings/viewsettings.component';
 export class ChatWindowComponent implements OnInit {
   thisUserID = localStorage.getItem('currentUserId');
   title = 'instant-messaging-app';
+  userOnlineStatus: string;
   modal = document.getElementById('myModal') as HTMLImageElement;
   img = document.getElementById('profile-picture') as HTMLImageElement;
   modalImg = document.getElementById('img01') as HTMLImageElement;
@@ -75,6 +76,7 @@ export class ChatWindowComponent implements OnInit {
               private firebaseService: FirebaseService) {}
 
   setActiveContact(userID: string) {
+    // this.message = [];
     if (userID !== this.activeContact) {
       this.activeContact = userID;
     } else {
@@ -185,6 +187,7 @@ export class ChatWindowComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userOnlineStatus = 'online_icon';
     this.openSnackBar('Login Successful', 'close');
     this.users = this.firebaseService.getUserProfiles();
     const myID = localStorage.getItem('currentUserId');
@@ -199,7 +202,8 @@ export class ChatWindowComponent implements OnInit {
 
     this.interval = setInterval(() => {
       this.message.length = 0;
-      if (this.initialGetMessage === false) {
+      this.message = this.updateMessages();
+      /*if (this.initialGetMessage === false) {
         this.message = this.firebaseService.getMessages(this.activeContact);
         this.initialGetMessage = true;
       }
@@ -213,7 +217,7 @@ export class ChatWindowComponent implements OnInit {
           }
         }
       }
-      this.arrDiff = 0;
+      this.arrDiff = 0;*/
     }, 15000);
 
     /*this.activeContact = this.users[0].userID;
