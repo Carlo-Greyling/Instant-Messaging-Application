@@ -128,7 +128,9 @@
         <div class="card-footer">
           <div class="input-group">
             <div class="input-group-append">
-              <span class="input-group-text attach_btn"><a id="attachment" (click)="OpenMultiMedia()" class="fas fa-paperclip"></a></span>
+              <span class="input-group-text attach_btn"><a id="attachment" (click)="OpenMultiMedia()" class="fas fa-paperclip"></a>
+                <a (click)="initiateRecording()" style="margin-left: 1.2em; " class="fas" *ngIf="!recording"><mat-icon>mic</mat-icon></a>
+                <a (click)="stopRecording()" style="margin-left: 1.2em; color: red;" class="fas" *ngIf="recording"><mat-icon>mic</mat-icon></a></span>
             </div>
             <input id="msgContainer" (keydown.enter)="onGenerateNewMessage()" type="text" class="form-control type_msg" placeholder="Type your message..." [(ngModel)]="newMessage">
             <div class="input-group-append">

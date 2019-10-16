@@ -5,7 +5,7 @@ import {SignupComponent} from './signup/signup.component';
 import {ChatWindowComponent} from './chat-window/chat-window.component';
 import { VideoCallingComponent } from './video-calling/video-calling.component';
 import {VoiceCallingComponent} from './voice-calling/voice-calling.component';
-
+import { InitVideoComponent } from './init-video/init-video.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -13,7 +13,8 @@ const routes: Routes = [
   { path: 'chatWindow', component: ChatWindowComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'videoCalling', component: VideoCallingComponent },
-  { path: 'voiceCalling', component: VoiceCallingComponent }
+  { path: 'voiceCalling', component: VoiceCallingComponent },
+  { path: 'init-video', component: InitVideoComponent },
 ];
 
 @NgModule({

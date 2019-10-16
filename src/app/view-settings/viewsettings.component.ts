@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog} from '@angular/material';
+import {FirebaseService} from '../shared/firebase.service';
 
 @Component({
   selector: 'app-viewsettings',
@@ -10,7 +11,8 @@ export class ViewsettingsComponent implements OnInit {
   theme;
 
   constructor(private snackBar: MatSnackBar, private dialogRef: MatDialogRef<ViewsettingsComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any, private dialog: MatDialog) { }
+              @Inject(MAT_DIALOG_DATA) public data: any, private dialog: MatDialog,
+              private fbs: FirebaseService) { }
 
   ngOnInit() {
   }
@@ -53,6 +55,7 @@ export class ViewsettingsComponent implements OnInit {
   }
 
   logOut() {
-    localStorage.clear();
+    this.fbs.Logoff(localStorage.getItem('currentUserId'));
+    this.dialogRef.close();
   }
 }

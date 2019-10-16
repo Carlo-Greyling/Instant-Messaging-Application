@@ -11,6 +11,9 @@ import {Observable} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {debounceTime, switchMap} from 'rxjs/operators';
 import { ViewsettingsComponent } from '../view-settings/viewsettings.component';
+import * as RecordRTC from 'recordrtc';
+import { DomSanitizer } from '@angular/platform-browser';
+import { EncoderService } from '../shared/Encoder.service';
 
 @Component({
   selector: 'app-chat-window',
@@ -44,6 +47,15 @@ export class ChatWindowComponent implements OnInit {
   private openChatIds: string[];
   private openChatUserIds: string[];
 
+  // Jeandre voice note recording
+  // Lets initiate Record OBJ
+  private record;
+  // Will use this flag for detect recording
+  recording = false;
+  // Url of Blob
+  voiceNoteUrl;
+  private error;
+
   interval;
 
   users: Users[] = [];
@@ -73,10 +85,11 @@ export class ChatWindowComponent implements OnInit {
   span = document.getElementsByClassName('close')[0];
 
   constructor(private dialog: MatDialog, private snackBar: MatSnackBar,
-              private firebaseService: FirebaseService) {}
+              private firebaseService: FirebaseService, private domSanitizer: DomSanitizer, private encoderService: EncoderService) {}
 
   setActiveContact(userID: string) {
     // this.message = [];
+    this.message.length = 0;
     if (userID !== this.activeContact) {
       this.activeContact = userID;
     } else {
@@ -91,6 +104,7 @@ export class ChatWindowComponent implements OnInit {
     }
 
     this.message = this.firebaseService.getMessages(userID);
+    localStorage.setItem('activeContact', this.activeContact);
     return this.activeContact;
   }
 
@@ -101,8 +115,73 @@ export class ChatWindowComponent implements OnInit {
     });
   }
 
+  // Jeandre Voice Note Methods
+  initiateRecording() {
+
+    this.recording = true;
+    const mediaConstraints = {
+      video: false,
+      audio: true
+    };
+    navigator.mediaDevices
+      .getUserMedia(mediaConstraints)
+      .then(this.successCallback.bind(this), this.errorCallback.bind(this));
+  }
+  successCallback(stream) {
+    const options = {
+      mimeType: 'audio/mp3',
+      numberOfAudioChannels: 1
+    };
+    // Start Actual Recording
+    const StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
+    this.record = new StereoAudioRecorder(stream, options);
+    this.record.record();
+  }
+  /**
+   * Process Error.
+   */
+  errorCallback(error) {
+    this.error = 'Can not play audio in your browser';
+  }
+  /**
+   * Stop recording.
+   */
+  stopRecording() {
+    this.recording = false;
+    this.record.stop(this.processRecording.bind(this));
+    // this.sanitize(this.voiceNoteUrl);
+  }
+  /**
+   * processRecording Do what ever you want with blob
+   * @param  {any} blob Blog
+   */
+  processRecording(blob) {
+    this.voiceNoteUrl = URL.createObjectURL(blob);
+    blob = blob.slice(0, blob.size, 'audio/mp3');
+    // console.log(blob);
+    this.encoderService.Base64EncodeAudio(blob, 'VoiceNote', '0', '0', this.activeContact);
+
+    // This is just to make it look real, the voice note are uploaded
+    (async () => {
+      // Do something before delay
+      console.log('before delay');
+      this.openSnackBar('Please Wait....', 'Close');
+      await this.delay(1500);
+      // Do something after
+      console.log('after delay');
+      this.openSnackBar('Voice Note Send', 'Close');
+     })();
+  }
+  sanitize(url: string) {
+    // return this.domSanitizer.bypassSecurityTrustUrl(url);
+    // this.encoderService.Base64EncodeAudio(this.domSanitizer.bypassSecurityTrustUrl(url), 'VoiceNote', '0', '0', this.activeContact);
+  }
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
   videoCalling() {
-    window.location.href = '/videoCalling';
+    window.location.href = '/init-video';
   }
 
   voiceCalling() {
@@ -191,18 +270,21 @@ export class ChatWindowComponent implements OnInit {
     this.openSnackBar('Login Successful', 'close');
     this.users = this.firebaseService.getUserProfiles();
     const myID = localStorage.getItem('currentUserId');
+    // this.setActiveContact(this.users[0].userID);
     for (let i = 0; i < this.users.length; i++) {
       if (this.users[i].userID === myID) {
         this.setActiveContact(this.users[i].openChatUserIds[0]);
       }
     }
+    this.updateMessages();
     /*this.users = this.firebaseService.getUserProfiles();
     console.log(this.users.toString());
     this.setActiveContact(this.users[0].userID);*/
 
-    this.interval = setInterval(() => {
-      this.message.length = 0;
-      this.message = this.updateMessages();
+    /*this.interval = setInterval(() => {
+      this.updateMessages();
+      // this.message.length = 0;
+      // this.message = this.updateMessages();
       /*if (this.initialGetMessage === false) {
         this.message = this.firebaseService.getMessages(this.activeContact);
         this.initialGetMessage = true;
@@ -218,6 +300,10 @@ export class ChatWindowComponent implements OnInit {
         }
       }
       this.arrDiff = 0;*/
+    // }, 15000);
+
+    this.interval = setInterval(() => {
+      this.updateMessages();
     }, 15000);
 
     /*this.activeContact = this.users[0].userID;
@@ -230,9 +316,19 @@ export class ChatWindowComponent implements OnInit {
     this.activeProfilePicture = this.users[0].profilePicture;*/
   }
 
-  updateMessages() {
+  updateMessages(): any {
+    this.newMessageArr.length = 0;
+    const currentLength = this.message.length;
+    this.newMessageArr = this.firebaseService.getMessages(this.activeContact);
+    if (this.newMessageArr.length > currentLength) {
+      const diff = this.newMessageArr.length - currentLength;
+      for (let i = diff; i === 0; i--) {
+        this.message.unshift(this.newMessageArr[i]);
+      }
+    }
+    // setTimeout(this.updateMessages(), 1000);
     // this.message = this.firebaseService.getMessages(this.activeContact);
-    return this.firebaseService.getMessages(this.activeContact);
+    // return this.firebaseService.getMessages(this.activeContact);
   }
 
   onGenerateNewMessage() {

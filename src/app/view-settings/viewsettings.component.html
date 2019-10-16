@@ -1,5 +1,5 @@
 <!-- Not Working Yet -->
-<ul style="list-style-type: none">
+<!--ul style="list-style-type: none">
   <li>
     <a style="color: black;" href="http://localhost:4200/view-settings/system.php?c=restart"><mat-icon class="IconStyle">settings_backup_restore</mat-icon>Restart</a>
   </li>
@@ -8,8 +8,11 @@
   </li>
   <li (click)="selectTheme()">
     <a style="color: black;" href="\chatWindow"><mat-icon class="IconStyle">opacity</mat-icon>Theme</a>
-  </li>
-  <li (click)="logOut()">
+  </li-->
+  <button mat-button style="color: black;" (click)="logOut()"><mat-icon class="IconStyle">settings_backup_restore</mat-icon>Restart</button>
+  <button mat-button style="color: black;" (click)="logOut()"><mat-icon class="IconStyle">power_settings_new</mat-icon>Shutdown</button>
+  <button mat-button style="color: black;" routerLink="login" (click)="logOut()"><mat-icon class="IconStyle">exit_to_app</mat-icon>Log Out</button>
+  <!--li (click)="logOut()">
     <a style="color: black;" href=""><mat-icon class="IconStyle">exit_to_app</mat-icon>Logout</a>
-  </li>
-</ul>
+  </li-->
+<!--/ul-->
