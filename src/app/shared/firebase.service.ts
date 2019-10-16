@@ -17,6 +17,15 @@ export class FirebaseService {
               private router: Router) {}
 
   userSignIn(userId, password) {
+    let myName: string;
+    let myStatus: string;
+    let myProfilePicture: string;
+    let myOnlineIcon: string;
+    let myUserID: string;
+    let myPassword: string;
+    let myChatsIdArr: string[] = []; // 0123456789_9876543210
+    let myOpenChatUserIds: string[] = []; // 0123456789
+
     const usersRef = this.db.collection('users').doc(userId);
     const getDoc = usersRef.get().toPromise()
       .then(doc => {
@@ -24,6 +33,31 @@ export class FirebaseService {
           console.log('not found'); // add toastr notification
         } else {
           if (doc.data().password === password) {
+            myName = doc.data().name;
+            myStatus = doc.data().status;
+            myProfilePicture = doc.data().profilePicture;
+            myOnlineIcon = doc.data().onlineIcon;
+            myUserID = doc.data().userId;
+            myPassword = doc.data().password;
+            myChatsIdArr = doc.data().ChatsIdArr;
+            myOpenChatUserIds = doc.data().openChatUserIds;
+
+            myStatus = 'Online';
+            myOnlineIcon = 'online_icon';
+
+            const data = {
+              name: myName,
+              status: myStatus,
+              profilePicture: myProfilePicture,
+              onlineIcon: myOnlineIcon,
+              userId: myUserID,
+              password: myPassword,
+              ChatsIdArr: myChatsIdArr,
+              openChatUserIds: myOpenChatUserIds,
+            };
+
+            // const usersRef = this.db.collection('users').doc(myId);
+            usersRef.set(data);
             this.router.navigate(['chatWindow']);
             localStorage.setItem('currentUserId', userId);
           }
@@ -238,63 +272,65 @@ export class FirebaseService {
         console.log('Error', err); // add toastr notification
       });
   }
+  Logoff(myId) {
+    let myName: string;
+    let myStatus: string;
+    let myProfilePicture: string;
+    let myOnlineIcon: string;
+    let myUserID: string;
+    let myPassword: string;
+    let myChatsIdArr: string[] = []; // 0123456789_9876543210
+    let myOpenChatUserIds: string[] = []; // 0123456789
 
-  newChat(userId) {
-    let name = '';
-    let status = '';
-    let profilePicture = '';
-    let onlineIcon = '';
-    let myUserID = '';
-    let password = '';
-    let ChatsIdArr: string[] = []; // 0123456789_9876543210
-    let openChatUserIds: string[] = []; // 0123456789
-
-    const userRef = this.db.collection('users').doc(localStorage.getItem('currentUserId'));
+    const userRef = this.db.collection('users').doc(myId); // localStorage.getItem('currentUserId')
     const getDoc = userRef.get().toPromise()
       .then(doc => {
         if (!doc.exists) {
           console.log('not found'); // add toastr notification
         } else {
-          name = doc.data().name;
-          status = doc.data().status;
-          profilePicture = doc.data().profilePicture;
-          onlineIcon = doc.data().onlineIcon;
-          myUserID = doc.data().myUserID;
-          password = doc.data().password;
-          ChatsIdArr = doc.data().ChatsIdArr;
-          openChatUserIds = doc.data().openChatUserIds;
+          // console.log(doc.data().toString());
+          myName = doc.data().name;
+          myStatus = doc.data().status;
+          myProfilePicture = doc.data().profilePicture;
+          myOnlineIcon = doc.data().onlineIcon;
+          myUserID = doc.data().userId;
+          myPassword = doc.data().password;
+          myChatsIdArr = doc.data().ChatsIdArr;
+          myOpenChatUserIds = doc.data().openChatUserIds;
 
-          openChatUserIds.unshift(userId);
-          const newChatID = myUserID + '_' + userId;
-          ChatsIdArr.unshift(newChatID);
+          myStatus = 'offline';
+          myOnlineIcon = 'online_icon offline';
 
           const data = {
-            name,
-            status,
-            profilePicture,
-            onlineIcon,
-            myUserID,
-            password,
-            ChatsIdArr,
-            openChatUserIds,
+            name: myName,
+            status: myStatus,
+            profilePicture: myProfilePicture,
+            onlineIcon: myOnlineIcon,
+            userId: myUserID,
+            password: myPassword,
+            ChatsIdArr: myChatsIdArr,
+            openChatUserIds: myOpenChatUserIds,
           };
 
-          const usersRef = this.db.collection('users').doc(myUserID);
+          const usersRef = this.db.collection('users').doc(myId);
           usersRef.set(data);
         }
       }).catch(err => {
         console.log('Error', err); // add toastr notification
+        this.db.collection('log').doc(myId).set(err);
       });
+    localStorage.clear();
   }
-  Logoff() {
-    let name = '';
-    let status = '';
-    let profilePicture = '';
-    let onlineIcon = '';
-    let myUserID = '';
-    let password = '';
-    let ChatsIdArr: string[] = []; // 0123456789_9876543210
-    let openChatUserIds: string[] = []; // 0123456789
+
+  newChat(userId) {
+    let myName: string;
+    let myStatus: string;
+    let myProfilePicture: string;
+    let myOnlineIcon: string;
+    let myUserID: string;
+    let myPassword: string;
+    let myChatsIdArr: string[] = []; // 0123456789_9876543210
+    let myOpenChatUserIds: string[] = []; // 0123456789
 
     const userRef = this.db.collection('users').doc(localStorage.getItem('currentUserId'));
     const getDoc = userRef.get().toPromise()
@@ -302,24 +338,28 @@ export class FirebaseService {
         if (!doc.exists) {
           console.log('not found'); // add toastr notification
         } else {
-          name = doc.data().name;
-          status = 'offline';
-          profilePicture = doc.data().profilePicture;
-          onlineIcon = 'offline';
-          myUserID = doc.data().myUserID;
-          password = doc.data().password;
-          ChatsIdArr = doc.data().ChatsIdArr;
-          openChatUserIds = doc.data().openChatUserIds;
+          myName = doc.data().name;
+          myStatus = doc.data().status;
+          myProfilePicture = doc.data().profilePicture;
+          myOnlineIcon = doc.data().onlineIcon;
+          myUserID = doc.data().userId;
+          myPassword = doc.data().password;
+          myChatsIdArr = doc.data().ChatsIdArr;
+          myOpenChatUserIds = doc.data().openChatUserIds;
+
+          myOpenChatUserIds.unshift(userId);
+          const newChatID = myUserID + '_' + userId;
+          myChatsIdArr.unshift(newChatID);
 
           const data = {
-            name,
-            status,
-            profilePicture,
-            onlineIcon,
-            myUserID,
-            password,
-            ChatsIdArr,
-            openChatUserIds,
+            name: myName,
+            status: myStatus,
+            profilePicture: myProfilePicture,
+            onlineIcon: myOnlineIcon,
+            userId: myUserID,
+            password: myPassword,
+            ChatsIdArr: myChatsIdArr,
+            openChatUserIds: myOpenChatUserIds,
           };
 
           const usersRef = this.db.collection('users').doc(myUserID);
