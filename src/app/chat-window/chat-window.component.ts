@@ -324,6 +324,10 @@ export class ChatWindowComponent implements OnInit {
       const diff = this.newMessageArr.length - currentLength;
       for (let i = diff; i === 0; i--) {
         this.message.unshift(this.newMessageArr[i]);
+        // TODO: Send Notification here
+        // User who sent message: this.activeContactName
+        // User who sent message profile pic = this.activeContact.profilePicture
+        // Message Contents = this.newMessageArr[i].msgContents
       }
     }
     // setTimeout(this.updateMessages(), 1000);
