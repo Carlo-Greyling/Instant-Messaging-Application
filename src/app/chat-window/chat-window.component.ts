@@ -118,7 +118,7 @@ export class ChatWindowComponent implements OnInit {
   initiateRecording() {
 
     this.recording = true;
-    let mediaConstraints = {
+    const mediaConstraints = {
       video: false,
       audio: true
     };
@@ -127,12 +127,12 @@ export class ChatWindowComponent implements OnInit {
       .then(this.successCallback.bind(this), this.errorCallback.bind(this));
   }
   successCallback(stream) {
-    var options = {
-      mimeType: "audio/mp3",
+    const options = {
+      mimeType: 'audio/mp3',
       numberOfAudioChannels: 1
     };
-    //Start Actual Recording
-    var StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
+    // Start Actual Recording
+    const StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
     this.record = new StereoAudioRecorder(stream, options);
     this.record.record();
   }
@@ -156,13 +156,13 @@ export class ChatWindowComponent implements OnInit {
    */
   processRecording(blob) {
     this.voiceNoteUrl = URL.createObjectURL(blob);
-    blob = blob.slice(0, blob.size, "audio/mp3");
-    //console.log(blob);
+    blob = blob.slice(0, blob.size, 'audio/mp3');
+    // console.log(blob);
     this.encoderService.Base64EncodeAudio(blob, 'VoiceNote', '0', '0', this.activeContact);
   }
   sanitize(url: string) {
-    //return this.domSanitizer.bypassSecurityTrustUrl(url);
-    //this.encoderService.Base64EncodeAudio(this.domSanitizer.bypassSecurityTrustUrl(url), 'VoiceNote', '0', '0', this.activeContact);
+    // return this.domSanitizer.bypassSecurityTrustUrl(url);
+    // this.encoderService.Base64EncodeAudio(this.domSanitizer.bypassSecurityTrustUrl(url), 'VoiceNote', '0', '0', this.activeContact);
   }
 
   videoCalling() {
