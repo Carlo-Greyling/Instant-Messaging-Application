@@ -16,7 +16,7 @@ export class VideoCallingComponent implements OnInit {
   }
 
   startCall() {
-    this.agoraService.client.join(null, '1000', null, (uid) => {
+    this.agoraService.client.join(null, localStorage.getItem('channelID'), null, (uid) => {
       this.localStream = this.agoraService.createStream(uid, true, null, null, true, false);
       this.localStream.setVideoProfile('720p_3');
       this.subscribeToStreams();
@@ -95,5 +95,6 @@ export class VideoCallingComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.startCall();
   }
 }
