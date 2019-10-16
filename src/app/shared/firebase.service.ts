@@ -279,8 +279,8 @@ export class FirebaseService {
             openChatUserIds,
           };
 
-          const usersRef = this.db.collection('users').doc(myUserID);
-          usersRef.set(data);
+          // const usersRef = this.db.collection('users').doc(myUserID);
+          userRef.set(data);
         }
       }).catch(err => {
         console.log('Error', err); // add toastr notification
