@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Messages} from '../shared/messages.model';
 import {Users} from '../shared/users.model';
 import {FirebaseService} from '../shared/firebase.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-init-video',
@@ -42,12 +43,15 @@ export class InitVideoComponent implements OnInit {
   }
 
   videoCalling() {
-    window.location.href = '/videoCalling';
+    // window.location.href = '/videoCalling';
+    this.router.navigate(['videoCalling']);
   }
 
   joinChannelID() {
     localStorage.setItem('channelID', this.joinWithID);
-    window.location.href = '/videoCalling';
+    // window.location.href = '/videoCalling';
+    // this.router.navigate(['videoCalling']);
+    this.videoCalling();
   }
 
   cancelVideo() {
@@ -81,7 +85,7 @@ export class InitVideoComponent implements OnInit {
     this.newMessage = '';
   }
 
-  constructor(private firebaseService: FirebaseService) { }
+  constructor(private firebaseService: FirebaseService, private router: Router) { }
 
   ngOnInit() {
   }
