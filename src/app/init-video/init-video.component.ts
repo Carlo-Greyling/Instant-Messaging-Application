@@ -50,7 +50,8 @@ export class InitVideoComponent implements OnInit {
   joinChannelID() {
     localStorage.setItem('channelID', this.joinWithID);
     // window.location.href = '/videoCalling';
-    this.router.navigate(['videoCalling']);
+    // this.router.navigate(['videoCalling']);
+    this.videoCalling();
   }
 
   cancelVideo() {
