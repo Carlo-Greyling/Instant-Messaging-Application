@@ -286,4 +286,47 @@ export class FirebaseService {
         console.log('Error', err); // add toastr notification
       });
   }
+  Logoff() {
+    let name = '';
+    let status = '';
+    let profilePicture = '';
+    let onlineIcon = '';
+    let myUserID = '';
+    let password = '';
+    let ChatsIdArr: string[] = []; // 0123456789_9876543210
+    let openChatUserIds: string[] = []; // 0123456789
+
+    const userRef = this.db.collection('users').doc(localStorage.getItem('currentUserId'));
+    const getDoc = userRef.get().toPromise()
+      .then(doc => {
+        if (!doc.exists) {
+          console.log('not found'); // add toastr notification
+        } else {
+          name = doc.data().name;
+          status = 'offline';
+          profilePicture = doc.data().profilePicture;
+          onlineIcon = 'offline';
+          myUserID = doc.data().myUserID;
+          password = doc.data().password;
+          ChatsIdArr = doc.data().ChatsIdArr;
+          openChatUserIds = doc.data().openChatUserIds;
+
+          const data = {
+            name,
+            status,
+            profilePicture,
+            onlineIcon,
+            myUserID,
+            password,
+            ChatsIdArr,
+            openChatUserIds,
+          };
+
+          const usersRef = this.db.collection('users').doc(myUserID);
+          usersRef.set(data);
+        }
+      }).catch(err => {
+        console.log('Error', err); // add toastr notification
+      });
+  }
 }

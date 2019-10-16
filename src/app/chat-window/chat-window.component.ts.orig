@@ -7,6 +7,13 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { MultimediaComponent } from '../multimedia/multimedia.component';
 import {VideoCallingComponent} from '../video-calling/video-calling.component';
 import {FirebaseService} from '../shared/firebase.service';
+import {Observable} from 'rxjs';
+import {FormControl} from '@angular/forms';
+import {debounceTime, switchMap} from 'rxjs/operators';
+import { ViewsettingsComponent } from '../view-settings/viewsettings.component';
+import * as RecordRTC from 'recordrtc';
+import { DomSanitizer } from '@angular/platform-browser';
+import { EncoderService } from '../shared/Encoder.service';
 
 @Component({
   selector: 'app-chat-window',
@@ -14,12 +21,9 @@ import {FirebaseService} from '../shared/firebase.service';
   styleUrls: ['./chat-window.component.scss']
 })
 export class ChatWindowComponent implements OnInit {
-<<<<<<< HEAD
-  thisUserID = '0765843028';
-=======
   thisUserID = localStorage.getItem('currentUserId');
->>>>>>> 8dbe3513a65dcafa4ab7f6a47800b121a61a1967
   title = 'instant-messaging-app';
+  userOnlineStatus: string;
   modal = document.getElementById('myModal') as HTMLImageElement;
   img = document.getElementById('profile-picture') as HTMLImageElement;
   modalImg = document.getElementById('img01') as HTMLImageElement;
@@ -37,12 +41,30 @@ export class ChatWindowComponent implements OnInit {
   public activeProfilePicture: string;
 
   newMessage: string;
-  public msgTime: Date = new Date();
+  public today: Date;
+  public msgMinutes;
+  public msgHours;
   private openChatIds: string[];
   private openChatUserIds: string[];
 
+  // Jeandre voice note recording
+  // Lets initiate Record OBJ
+  private record;
+  // Will use this flag for detect recording
+  recording = false;
+  // Url of Blob
+  voiceNoteUrl;
+  private error;
+
+  interval;
+
   users: Users[] = [];
   message: Messages[] = [];
+  newMessageArr: Messages[] = [];
+
+  initialGetMessage = false;
+  arrDiff = 0;
+  arrDiffMessageArr: Messages[] = [];
 
   /*users: Users[] = [
     new Users('0765843028', 'Keanu Jooste', 'online', 'https://scontent-jnb1-1.xx.fbcdn.net/v/t1.0-9/60937380_2227964937285183_6900601698239119360_n.jpg?_nc_cat=106&_nc_oc=AQmjhYtcyLXTRQ9EjwQGp70e3OYU16x3YMCc7ODLc-uvgPqj_BBvs-T6p5EsgzeoTho&_nc_ht=scontent-jnb1-1.xx&oh=9c51d38a12ea4a82dc6aeea28465c637&oe=5E10F323', 'online_icon'),
@@ -63,9 +85,11 @@ export class ChatWindowComponent implements OnInit {
   span = document.getElementsByClassName('close')[0];
 
   constructor(private dialog: MatDialog, private snackBar: MatSnackBar,
-              private firebaseService: FirebaseService) { }
+              private firebaseService: FirebaseService, private domSanitizer: DomSanitizer, private encoderService: EncoderService) {}
 
   setActiveContact(userID: string) {
+    // this.message = [];
+    this.message.length = 0;
     if (userID !== this.activeContact) {
       this.activeContact = userID;
     } else {
@@ -88,6 +112,61 @@ export class ChatWindowComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 2000,
     });
+  }
+
+  // Jeandre Voice Note Methods
+  initiateRecording() {
+
+    this.recording = true;
+    const mediaConstraints = {
+      video: false,
+      audio: true
+    };
+    navigator.mediaDevices
+      .getUserMedia(mediaConstraints)
+      .then(this.successCallback.bind(this), this.errorCallback.bind(this));
+  }
+  successCallback(stream) {
+    const options = {
+      mimeType: 'audio/mp3',
+      numberOfAudioChannels: 1
+    };
+    // Start Actual Recording
+    const StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
+    this.record = new StereoAudioRecorder(stream, options);
+    this.record.record();
+  }
+  /**
+   * Process Error.
+   */
+  errorCallback(error) {
+    this.error = 'Can not play audio in your browser';
+  }
+  /**
+   * Stop recording.
+   */
+  stopRecording() {
+    this.recording = false;
+    this.record.stop(this.processRecording.bind(this));
+    // this.sanitize(this.voiceNoteUrl);
+  }
+  /**
+   * processRecording Do what ever you want with blob
+   * @param  {any} blob Blog
+   */
+  processRecording(blob) {
+    this.voiceNoteUrl = URL.createObjectURL(blob);
+    blob = blob.slice(0, blob.size, 'audio/mp3');
+    // console.log(blob);
+    this.encoderService.Base64EncodeAudio(blob, 'VoiceNote', '0', '0', this.activeContact);
+  }
+  sanitize(url: string) {
+    // return this.domSanitizer.bypassSecurityTrustUrl(url);
+<<<<<<< HEAD
+    // his.encoderService.Base64EncodeAudio(this.domSanitizer.bypassSecurityTrustUrl(url), 'VoiceNote', '0', '0', this.activeContact);
+=======
+    // this.encoderService.Base64EncodeAudio(this.domSanitizer.bypassSecurityTrustUrl(url), 'VoiceNote', '0', '0', this.activeContact);
+>>>>>>> 7f1cbd55538badd66ad3cb184e5139f44756f5e7
   }
 
   videoCalling() {
@@ -140,7 +219,8 @@ export class ChatWindowComponent implements OnInit {
       // This is only if we wish to send parameters to the popup component
       data: {
         UserId: 0,
-        ContactId: 0
+        ContactId: 0,
+        ActiveContact: this.activeContact
       },
       panelClass: 'MultimediaCSS',
       position: { right: right - 350 + 'px', top: top - 120 + 'px' }
@@ -152,22 +232,114 @@ export class ChatWindowComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.openSnackBar('Login Successful', 'close');
-    // this.openChatUserIds = this.firebaseService.getOpenChatUID(localStorage.getItem('currentUserId'));
-    // this.openChatIds = this.firebaseService.openChatChatIds;
-    this.users = this.firebaseService.getUserProfiles();
-    // this.message = this.firebaseService.getMessages(this.openChatIds);
+  openSettings() {
+    console.log('Opening the Multi-Media Component');
+    const bodyRect = document.body.getBoundingClientRect();
+    const elemRect = document.getElementById('settings').getBoundingClientRect();
+    const right = bodyRect.right - elemRect.right;
+    const top = elemRect.top - bodyRect.top;
+    const dialogRef = this.dialog.open(ViewsettingsComponent, {
+      // This is only if we wish to send parameters to the popup component
+      data: {
+        UserId: 0,
+        ContactId: 0
+      },
+      panelClass: 'MultimediaCSS',
+      position: { right: right + 'px', top: top + 'px' }
+    });
 
-    this.activeContact = this.users[0].userID;
+    // If wish to apply a action after popup close
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('Multi-Media Component popup has closed');
+    });
+  }
+
+  ngOnInit() {
+    this.userOnlineStatus = 'online_icon';
+    this.openSnackBar('Login Successful', 'close');
+    this.users = this.firebaseService.getUserProfiles();
+    const myID = localStorage.getItem('currentUserId');
+    // this.setActiveContact(this.users[0].userID);
+    for (let i = 0; i < this.users.length; i++) {
+      if (this.users[i].userID === myID) {
+        this.setActiveContact(this.users[i].openChatUserIds[0]);
+      }
+    }
+    this.updateMessages();
+    /*this.users = this.firebaseService.getUserProfiles();
+    console.log(this.users.toString());
+    this.setActiveContact(this.users[0].userID);*/
+
+    /*this.interval = setInterval(() => {
+      this.updateMessages();
+      // this.message.length = 0;
+      // this.message = this.updateMessages();
+      /*if (this.initialGetMessage === false) {
+        this.message = this.firebaseService.getMessages(this.activeContact);
+        this.initialGetMessage = true;
+      }
+      if (this.initialGetMessage === true) {
+        this.newMessageArr = this.updateMessages();
+        if (this.message.length < this.newMessageArr.length) {
+          this.arrDiff = this.message.length - this.newMessageArr.length;
+          for (let i = this.arrDiff; i === 0; i--) {
+            this.message.unshift(this.newMessageArr[i]);
+            this.arrDiffMessageArr.unshift(this.newMessageArr[i]);
+          }
+        }
+      }
+      this.arrDiff = 0;*/
+    // }, 15000);
+
+    this.interval = setInterval(() => {
+      this.updateMessages();
+    }, 15000);
+
+    /*this.activeContact = this.users[0].userID;
     this.activeContactName = this.users[0].name;
-    this.activeProfilePicture = this.users[0].profilePicture;
+    this.activeProfilePicture = this.users[0].profilePicture;*/
+    console.log(this.users);
+    // this.setActiveContact(this.users[0].userID);
+    /*this.activeContact = this.users[0].userID;
+    this.activeContactName = this.users[0].name;
+    this.activeProfilePicture = this.users[0].profilePicture;*/
+  }
+
+  updateMessages(): any {
+    this.newMessageArr.length = 0;
+    const currentLength = this.message.length;
+    this.newMessageArr = this.firebaseService.getMessages(this.activeContact);
+    if (this.newMessageArr.length > currentLength) {
+      const diff = this.newMessageArr.length - currentLength;
+      for (let i = diff; i === 0; i--) {
+        this.message.unshift(this.newMessageArr[i]);
+      }
+    }
+    // setTimeout(this.updateMessages(), 1000);
+    // this.message = this.firebaseService.getMessages(this.activeContact);
+    // return this.firebaseService.getMessages(this.activeContact);
   }
 
   onGenerateNewMessage() {
-    const newMessage = new Messages(this.thisUserID, this.newMessage, 'msgText', '14:47');
-    this.message.push(newMessage);
+    this.today  = new Date();
+    this.msgMinutes = this.today.getMinutes();
+    this.msgHours = this.today.getHours();
+
+    if (this.msgHours < 10) {
+      this.msgHours = '0' + this.msgHours;
+    }
+
+    if (this.msgMinutes < 10) {
+      this.msgMinutes = '0' + this.msgMinutes;
+    }
+
+    const newMessage = new Messages(this.thisUserID, this.newMessage, 'msgText', this.msgHours + ':' + this.msgMinutes);
+    this.message.unshift(newMessage);
     this.firebaseService.newMessage(newMessage, this.activeContact);
+
+    this.newMessage = '';
   }
+
+  // onGenerateNewMultiMediaMessage is moved to Encoder.service component
 
 }

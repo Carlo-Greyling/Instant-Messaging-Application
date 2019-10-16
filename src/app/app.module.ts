@@ -19,6 +19,7 @@ import { AngularAgoraRtcModule, AgoraConfig } from 'angular-agora-rtc';
 import { VoiceCallingComponent } from './voice-calling/voice-calling.component';
 import { ViewsettingsComponent } from './view-settings/viewsettings.component';
 import { LZStringModule, LZStringService } from 'ng-lz-string';
+import { InitVideoComponent } from './init-video/init-video.component';
 
 const agoraConfig: AgoraConfig = {
   AppID: 'c67eefb21d494c1787c7fe20b83dc5b6',
@@ -35,6 +36,7 @@ const agoraConfig: AgoraConfig = {
     SignupComponent,
     VoiceCallingComponent,
     ViewsettingsComponent,
+    InitVideoComponent,
   ],
 
   imports: [
