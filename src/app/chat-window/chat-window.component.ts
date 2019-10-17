@@ -28,6 +28,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
   modal = document.getElementById('myModal') as HTMLImageElement;
   img = document.getElementById('profile-picture') as HTMLImageElement;
   modalImg = document.getElementById('img01') as HTMLImageElement;
+  searchID = '';
 
   input;
   filter;
@@ -124,6 +125,10 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
     this.message = this.firebaseService.getMessages(userID);
     localStorage.setItem('activeContact', this.activeContact);
     return this.activeContact;
+  }
+
+  testingSearch() {
+    console.log(this.searchID);
   }
 
   // Just to give info the application user
