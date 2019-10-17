@@ -144,7 +144,6 @@ openSnackBar(message: string, action: string) {
         console.log('Error', err); // add toastr notification
         this.openSnackBar('Oops something went wrong', 'close');
       });
-    console.log(this.userProfilesArr);
     return this.userProfilesArr;
   }
 
@@ -176,7 +175,6 @@ openSnackBar(message: string, action: string) {
         console.log('Error', err); // add toastr notification
         this.openSnackBar('Oops something went wrong', 'close');
       });
-    console.log(this.messagesArr);
     return this.messagesArr;
   }
 
@@ -308,10 +306,8 @@ openSnackBar(message: string, action: string) {
     const getDoc = userRef.get().toPromise()
       .then(doc => {
         if (!doc.exists) {
-          console.log('not found'); // add toastr notification
 
         } else {
-          // console.log(doc.data().toString());
           myName = doc.data().name;
           myStatus = doc.data().status;
           myProfilePicture = doc.data().profilePicture;
@@ -339,9 +335,7 @@ openSnackBar(message: string, action: string) {
           usersRef.set(data);
         }
       }).catch(err => {
-        console.log('Error', err); // add toastr notification
         this.openSnackBar('Oops something went wrong', 'close');
-        this.db.collection('log').doc(myId).set(err);
       });
     localStorage.clear();
   }
@@ -360,10 +354,8 @@ openSnackBar(message: string, action: string) {
     const getDoc = userRef.get().toPromise()
       .then(doc => {
         if (!doc.exists) {
-          console.log('not found'); // add toastr notification
 
         } else {
-          // console.log(doc.data().toString());
           myName = doc.data().name;
           myStatus = doc.data().status;
           myProfilePicture = doc.data().profilePicture;
@@ -391,7 +383,6 @@ openSnackBar(message: string, action: string) {
           this.AddChatToFriend(localStorage.getItem('currentUserId'), friendUserId);
         }
       }).catch(err => {
-        console.log('Error', err); // add toastr notification
         this.openSnackBar('Oops something went wrong', 'close');
       });
   }
@@ -410,10 +401,8 @@ openSnackBar(message: string, action: string) {
     const getDoc = userRef.get().toPromise()
       .then(doc => {
         if (!doc.exists) {
-          console.log('not found'); // add toastr notification
 
         } else {
-          // console.log(doc.data().toString());
           myName = doc.data().name;
           myStatus = doc.data().status;
           myProfilePicture = doc.data().profilePicture;
@@ -436,11 +425,10 @@ openSnackBar(message: string, action: string) {
             openChatUserIds: myOpenChatUserIds,
           };
 
-          const usersRef = this.db.collection('users').doc(myUserID);
+          const usersRef = this.db.collection('users').doc(friendId);
           usersRef.set(data);
         }
       }).catch(err => {
-        console.log('Error', err); // add toastr notification
         this.openSnackBar('Oops something went wrong', 'close');
       });
   }
@@ -451,13 +439,11 @@ openSnackBar(message: string, action: string) {
     const getDoc = usersRef.get().toPromise()
       .then(doc => {
         if (!doc.exists) {
-          console.log('not found'); // add toastr notification
 
         } else {
           nameOfId = doc.data().name;
         }
       }).catch(err => {
-        console.log('Error', err); // add toastr notification
         this.openSnackBar('Oops something went wrong', 'close');
       });
     return nameOfId;
