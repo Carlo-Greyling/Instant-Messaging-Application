@@ -33,7 +33,7 @@ h4.digiag {
 
 .home-sidenav-container {
   flex: 1;
-  background: gray;
+  background: #242222;
 }
 
 .is-mobile .home-sidenav-container {
@@ -89,7 +89,7 @@ body,html{
   height: 93.52vh; //93.52vh
   // padding: 16px;
   border-radius: 15px !important;
-  background-color: #BFC9CA  !important;
+  background-color: #2b2929  !important;
 }
 .contacts_body{
   padding:  0.75rem 0 !important;
@@ -259,6 +259,7 @@ body,html{
 .user_info p{
   font-size: 10px;
   color: rgba(255,255,255,0.6);
+  // color: #242222;
 }
 .video_cam{
   margin-left: 50px;
