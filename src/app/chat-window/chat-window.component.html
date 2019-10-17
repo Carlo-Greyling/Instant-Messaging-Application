@@ -99,8 +99,7 @@
                     {{ i.msgContents }}
                     <span
                       [ngClass]="{ 'msg_time_send': i.msgID === thisUserID, 'msg_time': i.msgID !== thisUserID }">
-                <!-- {{ i.arrivalTime }} -->
-                {{executeDecrypt(i.arrivalTime)}}
+                {{ i.arrivalTime }}
               </span>
                   </div>
 
