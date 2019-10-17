@@ -389,7 +389,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
     const newMessage = new Messages(this.thisUserID, this.newMessage, 'msgText', this.msgHours + ':' + this.msgMinutes);
     this.message.unshift(newMessage);
     // this.firebaseService.newMessage(newMessage, this.activeContact);
-    this.firebaseService.newMessage(this.encoderService.EncryptTextMessage(newMessage), this.activeContact);
+    this.firebaseService.newMessage(newMessage, this.activeContact);
     this.newMessage = '';
   }
 
