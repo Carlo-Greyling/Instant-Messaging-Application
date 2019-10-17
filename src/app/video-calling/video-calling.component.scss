@@ -16,6 +16,21 @@
   left: 0;
 }
 
+button {
+  position: absolute;
+  bottom: 5%;
+  margin-left: 40%;
+  //text-align: center;
+}
+
+/*.wrapper {
+  text-align: center;
+}*/
+
+.mat-icon {
+  font-size: 50px;
+}
+
 html,body {
   margin: 0;
   height: 100% !important;

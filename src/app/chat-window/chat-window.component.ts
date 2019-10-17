@@ -28,6 +28,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
   modal = document.getElementById('myModal') as HTMLImageElement;
   img = document.getElementById('profile-picture') as HTMLImageElement;
   modalImg = document.getElementById('img01') as HTMLImageElement;
+  searchID = '';
 
   input;
   filter;
@@ -126,6 +127,10 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
     return this.activeContact;
   }
 
+  testingSearch() {
+    console.log(this.searchID);
+  }
+
   // Just to give info the application user
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
@@ -160,6 +165,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
    */
   errorCallback(error) {
     this.error = 'Can not play audio in your browser';
+    this.openSnackBar('cannot play audio in your browser','close');
   }
   /**
    * Stop recording.
@@ -187,7 +193,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
       await this.delay(1500);
       // Do something after
       console.log('after delay');
-      this.openSnackBar('Voice Note Send', 'Close');
+      this.openSnackBar('Voice Note Sent', 'Close');
      })();
   }
   sanitize(url: string) {
