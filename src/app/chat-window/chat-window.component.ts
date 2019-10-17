@@ -165,6 +165,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
    */
   errorCallback(error) {
     this.error = 'Can not play audio in your browser';
+    this.openSnackBar('cannot play audio in your browser','close');
   }
   /**
    * Stop recording.
@@ -192,7 +193,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
       await this.delay(1500);
       // Do something after
       console.log('after delay');
-      this.openSnackBar('Voice Note Send', 'Close');
+      this.openSnackBar('Voice Note Sent', 'Close');
      })();
   }
   sanitize(url: string) {
