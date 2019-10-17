@@ -30,7 +30,7 @@ export class MultimediaComponent implements OnInit {
     // The file is in this event
     console.log(event.target.files[0].name);
     this.encodeService.Base64EncodeImage(event.target.files[0], event.target.files[0].name, this.data.UserId, this.data.ContactId, this.data.ActiveContact);
-    this.openSnackBar('Image Send', 'Close');
+    this.openSnackBar('Image Sent', 'Close');
     this.dialogRef.close();
     // this.encodeService.Base64Encoder(event.target.files[0]);
   }
@@ -38,14 +38,14 @@ export class MultimediaComponent implements OnInit {
     // The file is in this event
     console.log(event.target.files[0].name);
     this.encodeService.Base64EncodeVideo(event.target.files[0], event.target.files[0].name, this.data.UserId, this.data.ContactId, this.data.ActiveContact);
-    this.openSnackBar('Video file send', 'Close');
+    this.openSnackBar('Video file sent', 'Close');
     this.dialogRef.close();
   }
   OpenAudio(event: any) {
     // The file is in this event
     console.log(event.target.files[0].name);
     this.encodeService.Base64EncodeAudio(event.target.files[0], event.target.files[0].name, this.data.UserId, this.data.ContactId, this.data.ActiveContact);
-    this.openSnackBar('Audio file send', 'Close');
+    this.openSnackBar('Audio file sent', 'Close');
     this.dialogRef.close();
   }
 
