@@ -117,6 +117,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
       if (this.users[this.i].userID === this.activeContact) {
         this.activeContactName = this.users[this.i].name;
         this.activeProfilePicture = this.users[this.i].profilePicture;
+        this.userOnlineStatus = this.users[this.i].onlineIcon;
       }
     }
 
