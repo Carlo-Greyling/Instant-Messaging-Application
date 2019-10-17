@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import { Messages } from './messages.model';
 import { Users } from './users.model';
 import { MatSnackBar } from '@angular/material';
+import * as CryptoJS from 'crypto-js';
 
 @Injectable({
   providedIn: 'root'
@@ -13,16 +14,25 @@ export class FirebaseService {
   private userProfilesArr: Users[] = [];
   private messagesArr: Messages[] = [];
   public ChatIdFinal = '';
+  EncryptionPassword = 'CodingWizard';
 
   constructor(public db: AngularFirestore, private snackBar: MatSnackBar,
               private router: Router) {}
 
+  EncryptTextMessage(message: any): any {
+    return CryptoJS.AES.encrypt(message.trim(), this.EncryptionPassword).toString();
+  }
+// Decrypt the Encrypted File
+  DecryptTextMessage(encryptedMessage: any): any {
+    return CryptoJS.AES.decrypt(encryptedMessage.trim(), this.EncryptionPassword).toString(CryptoJS.enc.Utf8);
+  }
+
 // Just to give info the application user
-openSnackBar(message: string, action: string) {
-  this.snackBar.open(message, action, {
-    duration: 2000,
-  });
-}
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
 
   userSignIn(userId, password) {
     let myName: string;
@@ -166,9 +176,19 @@ openSnackBar(message: string, action: string) {
           msgContentsArray = doc.data().msgContents;
           msgIdArray = doc.data().msgId;
           msgTypeArray = doc.data().msgType;
-          // Messages(msgID: number, msgContents: string, msgType: string, arrivalTime: string)
           for (let i = 0; i < msgIdArray.length; i++) {
-            this.messagesArr.push(new Messages(msgIdArray[i], msgContentsArray[i], msgTypeArray[i], arrTimeArray[i]));
+            // this.messagesArr.push(new Messages(msgIdArray[i], msgContentsArray[i], msgTypeArray[i], arrTimeArray[i]));
+            let id = '';
+            let contents = '';
+            let type = '';
+            let time = '';
+
+            id = this.DecryptTextMessage(msgIdArray[i]);
+            contents = this.DecryptTextMessage(msgContentsArray[i]);
+            type = this.DecryptTextMessage(msgTypeArray[i]);
+            time = this.DecryptTextMessage(arrTimeArray[i]);
+
+            this.messagesArr.push(new Messages(id, contents, type, time));
           }
         }
       }).catch(err => {
@@ -204,12 +224,23 @@ openSnackBar(message: string, action: string) {
           msgTypeArray = doc.data().msgType;
           // Messages(msgID: number, msgContents: string, msgType: string, arrivalTime: string)
           for (let i = 0; i < msgIdArray.length; i++) {
-            this.messagesArr.push(new Messages(msgIdArray[i], msgContentsArray[i], msgTypeArray[i], arrTimeArray[i]));
+            // this.messagesArr.push(new Messages(msgIdArray[i], msgContentsArray[i], msgTypeArray[i], arrTimeArray[i]));
+            let id = '';
+            let contents = '';
+            let type = '';
+            let time = '';
+
+            id = this.DecryptTextMessage(msgIdArray[i]);
+            contents = this.DecryptTextMessage(msgContentsArray[i]);
+            type = this.DecryptTextMessage(msgTypeArray[i]);
+            time = this.DecryptTextMessage(arrTimeArray[i]);
+
+            this.messagesArr.push(new Messages(id, contents, type, time));
           }
         }
       }).catch(err => {
         console.log('Error', err); // add toastr notification
-        this.openSnackBar('Oops something went wrong', 'close');
+        // this.openSnackBar('Oops something went wrong', 'close');
       });
     console.log(this.messagesArr);
     return this.messagesArr;
@@ -235,10 +266,20 @@ openSnackBar(message: string, action: string) {
           msgIdArray = doc.data().msgId;
           msgTypeArray = doc.data().msgType;
 
-          arrTimeArray.unshift(newMessage.arrivalTime);
-          msgContentsArray.unshift(newMessage.msgContents);
-          msgIdArray.unshift(newMessage.msgID);
-          msgTypeArray.unshift(newMessage.msgType);
+          let id = '';
+          let contents = '';
+          let type = '';
+          let time = '';
+
+          id = this.EncryptTextMessage(newMessage.msgID);
+          contents = this.EncryptTextMessage(newMessage.msgContents);
+          type = this.EncryptTextMessage(newMessage.msgType);
+          time = this.EncryptTextMessage(newMessage.arrivalTime);
+
+          arrTimeArray.unshift(time);
+          msgContentsArray.unshift(contents);
+          msgIdArray.unshift(id);
+          msgTypeArray.unshift(type);
 
           const data = {
             arrivalTime: arrTimeArray,
@@ -273,10 +314,20 @@ openSnackBar(message: string, action: string) {
           msgIdArray = doc.data().msgId;
           msgTypeArray = doc.data().msgType;
 
-          arrTimeArray.unshift(newMessage.arrivalTime);
-          msgContentsArray.unshift(newMessage.msgContents);
-          msgIdArray.unshift(newMessage.msgID);
-          msgTypeArray.unshift(newMessage.msgType);
+          let id = '';
+          let contents = '';
+          let type = '';
+          let time = '';
+
+          id = this.EncryptTextMessage(newMessage.msgID);
+          contents = this.EncryptTextMessage(newMessage.msgContents);
+          type = this.EncryptTextMessage(newMessage.msgType);
+          time = this.EncryptTextMessage(newMessage.arrivalTime);
+
+          arrTimeArray.unshift(time);
+          msgContentsArray.unshift(contents);
+          msgIdArray.unshift(id);
+          msgTypeArray.unshift(type);
 
           const data = {
             arrivalTime: arrTimeArray,
