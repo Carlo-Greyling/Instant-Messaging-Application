@@ -3,6 +3,7 @@ import {AngularFirestore, DocumentData} from '@angular/fire/firestore';
 import {Router} from '@angular/router';
 import { Messages } from './messages.model';
 import { Users } from './users.model';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,15 @@ export class FirebaseService {
   private messagesArr: Messages[] = [];
   public ChatIdFinal = '';
 
-  constructor(public db: AngularFirestore,
+  constructor(public db: AngularFirestore, private snackBar: MatSnackBar,
               private router: Router) {}
+
+// Just to give info the application user
+openSnackBar(message: string, action: string) {
+  this.snackBar.open(message, action, {
+    duration: 2000,
+  });
+}
 
   userSignIn(userId, password) {
     let myName: string;
@@ -25,12 +33,13 @@ export class FirebaseService {
     let myPassword: string;
     let myChatsIdArr: string[] = []; // 0123456789_9876543210
     let myOpenChatUserIds: string[] = []; // 0123456789
-
+    let logged = false;
     const usersRef = this.db.collection('users').doc(userId);
     const getDoc = usersRef.get().toPromise()
       .then(doc => {
         if (!doc.exists) {
           console.log('not found'); // add toastr notification
+          this.openSnackBar('Username or Password incorrect', 'close');
         } else {
           if (doc.data().password === password) {
             myName = doc.data().name;
@@ -60,10 +69,14 @@ export class FirebaseService {
             usersRef.set(data);
             this.router.navigate(['chatWindow']);
             localStorage.setItem('currentUserId', userId);
+            logged = true;
+          }else{
+            this.openSnackBar('Username or Password incorrect', 'close');
           }
         }
       }).catch(err => {
         console.log('Error', err); // add toastr notification
+        this.openSnackBar('Username or Password incorrect', 'close');
       });
   }
   // TODO: Sign up
@@ -111,6 +124,7 @@ export class FirebaseService {
               .then(udoc => {
                 if (!udoc.exists) {
                   console.log('not found'); // add toastr notification
+
                 } else {
                   this.userProfilesArr.push(new Users(
                     udoc.data().userId,
@@ -122,11 +136,13 @@ export class FirebaseService {
                 }
               }).catch(err => {
                 console.log('Error', err); // add toastr notification
+                this.openSnackBar('Oops something went wrong, user not found', 'close');
               });
           }
         }
       }).catch(err => {
         console.log('Error', err); // add toastr notification
+        this.openSnackBar('Oops something went wrong', 'close');
       });
     console.log(this.userProfilesArr);
     return this.userProfilesArr;
@@ -144,6 +160,7 @@ export class FirebaseService {
       .then(doc => {
         if (!doc.exists) {
           console.log('not found'); // add toastr notification
+
           this.messagesArr = this.getMessagesWithOtherChatId(friendId);
         } else {
           arrTimeArray = doc.data().arrivalTime;
@@ -157,6 +174,7 @@ export class FirebaseService {
         }
       }).catch(err => {
         console.log('Error', err); // add toastr notification
+        this.openSnackBar('Oops something went wrong', 'close');
       });
     console.log(this.messagesArr);
     return this.messagesArr;
@@ -193,6 +211,7 @@ export class FirebaseService {
         }
       }).catch(err => {
         console.log('Error', err); // add toastr notification
+        this.openSnackBar('Oops something went wrong', 'close');
       });
     console.log(this.messagesArr);
     return this.messagesArr;
@@ -210,6 +229,7 @@ export class FirebaseService {
       .then(doc => {
         if (!doc.exists) {
           console.log('not found'); // add toastr notification
+
           this.newMessageWithOtherChatId(newMessage, friendId);
         } else {
           arrTimeArray = doc.data().arrivalTime;
@@ -233,6 +253,7 @@ export class FirebaseService {
         }
       }).catch(err => {
         console.log('Error', err); // add toastr notification
+        this.openSnackBar('Oops something went wrong', 'close');
       });
   }
 
@@ -270,6 +291,7 @@ export class FirebaseService {
         }
       }).catch(err => {
         console.log('Error', err); // add toastr notification
+        this.openSnackBar('Oops something went wrong', 'close');
       });
   }
   Logoff(myId) {
@@ -287,6 +309,7 @@ export class FirebaseService {
       .then(doc => {
         if (!doc.exists) {
           console.log('not found'); // add toastr notification
+
         } else {
           // console.log(doc.data().toString());
           myName = doc.data().name;
@@ -317,6 +340,7 @@ export class FirebaseService {
         }
       }).catch(err => {
         console.log('Error', err); // add toastr notification
+        this.openSnackBar('Oops something went wrong', 'close');
         this.db.collection('log').doc(myId).set(err);
       });
     localStorage.clear();
@@ -337,6 +361,7 @@ export class FirebaseService {
       .then(doc => {
         if (!doc.exists) {
           console.log('not found'); // add toastr notification
+
         } else {
           // console.log(doc.data().toString());
           myName = doc.data().name;
@@ -367,6 +392,7 @@ export class FirebaseService {
         }
       }).catch(err => {
         console.log('Error', err); // add toastr notification
+        this.openSnackBar('Oops something went wrong', 'close');
       });
   }
 
@@ -385,6 +411,7 @@ export class FirebaseService {
       .then(doc => {
         if (!doc.exists) {
           console.log('not found'); // add toastr notification
+
         } else {
           // console.log(doc.data().toString());
           myName = doc.data().name;
@@ -414,6 +441,7 @@ export class FirebaseService {
         }
       }).catch(err => {
         console.log('Error', err); // add toastr notification
+        this.openSnackBar('Oops something went wrong', 'close');
       });
   }
 
@@ -424,11 +452,13 @@ export class FirebaseService {
       .then(doc => {
         if (!doc.exists) {
           console.log('not found'); // add toastr notification
+
         } else {
           nameOfId = doc.data().name;
         }
       }).catch(err => {
         console.log('Error', err); // add toastr notification
+        this.openSnackBar('Oops something went wrong', 'close');
       });
     return nameOfId;
   }
