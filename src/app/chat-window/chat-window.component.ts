@@ -15,6 +15,7 @@ import * as RecordRTC from 'recordrtc';
 import { DomSanitizer } from '@angular/platform-browser';
 import { EncoderService } from '../shared/Encoder.service';
 import {MediaMatcher} from '@angular/cdk/layout';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-chat-window',
@@ -94,7 +95,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
               private domSanitizer: DomSanitizer,
               private encoderService: EncoderService,
               changeDetectorRef: ChangeDetectorRef,
-              media: MediaMatcher,) {
+              media: MediaMatcher, private router: Router) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this.mobileQueryListener);
@@ -205,7 +206,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
   }
 
   videoCalling() {
-    window.location.href = '/init-video';
+    this.router.navigate(['videoCalling']);
   }
 
   voiceCalling() {

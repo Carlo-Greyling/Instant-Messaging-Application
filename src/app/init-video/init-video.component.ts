@@ -3,7 +3,6 @@ import {Messages} from '../shared/messages.model';
 import {Users} from '../shared/users.model';
 import {FirebaseService} from '../shared/firebase.service';
 import {Router} from '@angular/router';
-import {delay} from 'rxjs/operators';
 
 @Component({
   selector: 'app-init-video',
