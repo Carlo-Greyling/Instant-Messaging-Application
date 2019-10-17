@@ -25,7 +25,7 @@
           <div class="chat"><div class="card contacts_card"> <!--col-md-4 col-xl-3 // mb-sm-3 mb-md-0-->
             <div class="card-header">
               <div class="input-group">
-                <input type="text" placeholder="Search..." name="" class="form-control search" [(ngModel)]="searchID" (keydown.enter)="firebaseService.newChat(searchID)">
+                <input type="text" placeholder="Search..." name="" class="form-control search" [(ngModel)]="searchID" (keydown.enter)="onEnterClicked(searchID)">
                 <div class="input-group-prepend">
                   <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
                 </div>

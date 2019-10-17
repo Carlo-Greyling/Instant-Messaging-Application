@@ -392,4 +392,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
 
   // onGenerateNewMultiMediaMessage is moved to Encoder.service component
 
+  onEnterClicked(value) {
+    this.firebaseService.newChat(value);
+  }
 }

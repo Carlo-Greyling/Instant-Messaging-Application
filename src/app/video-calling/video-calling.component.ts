@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularAgoraRtcService, Stream } from 'angular-agora-rtc';
 import { AngularAgoraRtcModule } from 'angular-agora-rtc';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-video-calling',
@@ -11,7 +12,7 @@ export class VideoCallingComponent implements OnInit {
   localStream: Stream;
   public remoteCalls: any = [];
 
-  constructor(private agoraService: AngularAgoraRtcService) {
+  constructor(private agoraService: AngularAgoraRtcService, private router: Router) {
     this.agoraService.createClient();
   }
 
@@ -96,5 +97,9 @@ export class VideoCallingComponent implements OnInit {
 
   ngOnInit() {
     this.startCall();
+  }
+
+  endCall() {
+    this.router.navigate(['chatWindow']);
   }
 }
