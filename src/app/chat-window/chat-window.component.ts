@@ -117,6 +117,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
       if (this.users[this.i].userID === this.activeContact) {
         this.activeContactName = this.users[this.i].name;
         this.activeProfilePicture = this.users[this.i].profilePicture;
+        this.userOnlineStatus = this.users[this.i].onlineIcon;
       }
     }
 
@@ -342,6 +343,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
       const diff = this.newMessageArr.length - currentLength;
       for (let i = diff; i === 0; i--) {
         this.message.unshift(this.newMessageArr[i]);
+        localStorage.setItem('message', this.message.toString());
         // TODO: Send Notification here
         // User who sent message: this.activeContactName
         // User who sent message profile pic = this.activeContact.profilePicture

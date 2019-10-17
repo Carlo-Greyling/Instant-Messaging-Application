@@ -2,11 +2,8 @@
 
   <!-- Modal content -->
   <div class="modal-content">
-    <div class="modal-header">
-      <h2>Join or Create a Video Channel for you and your friends:</h2>
-    </div>
     <div class="modal-body">
-
+      <h2 style="text-align: center; color: white; padding-bottom: 20px">Join or Create a Video Channel for you and your friends:</h2>
       <mat-menu #createChannel="matMenu">
         <mat-list>
           <mat-list-item> Channel ID: {{ channelID }} </mat-list-item>
@@ -15,8 +12,13 @@
       </mat-menu>
 
       <mat-menu #joinChannel="matMenu">
-        <input [(ngModel)]="joinWithID" matInput placeholder="Channel ID">
-        <button mat-raised-button style="background-color: dodgerblue;" (click)="joinChannelID()">Join Channel</button>
+        <input [(ngModel)]="joinWithID" matInput placeholder="Channel ID"
+               (click)="$event.stopPropagation()"
+        style="display: block; margin-left: auto; margin-right: auto;">
+        <button mat-raised-button style="background-color: dodgerblue; display: block; margin-left: auto; margin-right: auto;"
+                (click)="joinChannelID()">Add Channel</button>
+        <button mat-raised-button style="background-color: dodgerblue; display: block; margin-left: auto; margin-right: auto;"
+                (click)="videoCalling()">Join Channel</button>
       </mat-menu>
 
       <button mat-raised-button

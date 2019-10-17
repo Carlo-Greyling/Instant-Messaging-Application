@@ -11,7 +11,7 @@ html,body {
 .modal-header {
   text-align: center;
   padding: 2px 16px;
-  background-color: #696969;
+  background-color: #2b2929;
   color: white;
 }
 
@@ -22,7 +22,7 @@ html,body {
 .modal-footer {
   text-align: center;
   padding: 2px 16px;
-  background-color: #696969;
+  background-color: #2b2929;
   color: white;
 }
 
@@ -31,8 +31,8 @@ html,body {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  background-color: #696969;
-  border: 2px solid #888;
+  background-color: #2b2929;
+  border: 2px solid #363434;
   width: 80%;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
   animation-name: animatetop;
@@ -43,4 +43,12 @@ html,body {
 @keyframes animatetop {
   from {top: -300px; opacity: 0}
   to {top: 0; opacity: 1}
+}
+
+button {
+  // padding-bottom: 10px;
+}
+
+input {
+  // padding-bottom: 10px;
 }

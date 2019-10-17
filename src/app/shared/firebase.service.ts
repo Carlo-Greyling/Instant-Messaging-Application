@@ -173,14 +173,14 @@ export class FirebaseService {
     const getDoc = chatsRef.get().toPromise()
       .then(doc => {
         if (!doc.exists) {
-          /*const data = {
+          const data = {
             arrivalTime: arrTimeArray,
             msgContents: msgContentsArray,
             msgId: msgIdArray,
             msgType: msgTypeArray
           };
 
-          chatsRef.set(data);*/
+          chatsRef.set(data);
         } else {
           arrTimeArray = doc.data().arrivalTime;
           msgContentsArray = doc.data().msgContents;
@@ -322,7 +322,7 @@ export class FirebaseService {
     localStorage.clear();
   }
 
-  newChat(userId) {
+  newChat(friendUserId) {
     let myName: string;
     let myStatus: string;
     let myProfilePicture: string;
@@ -332,12 +332,13 @@ export class FirebaseService {
     let myChatsIdArr: string[] = []; // 0123456789_9876543210
     let myOpenChatUserIds: string[] = []; // 0123456789
 
-    const userRef = this.db.collection('users').doc(localStorage.getItem('currentUserId'));
+    const userRef = this.db.collection('users').doc(localStorage.getItem('currentUserId')); // localStorage.getItem('currentUserId')
     const getDoc = userRef.get().toPromise()
       .then(doc => {
         if (!doc.exists) {
           console.log('not found'); // add toastr notification
         } else {
+          // console.log(doc.data().toString());
           myName = doc.data().name;
           myStatus = doc.data().status;
           myProfilePicture = doc.data().profilePicture;
@@ -347,9 +348,55 @@ export class FirebaseService {
           myChatsIdArr = doc.data().ChatsIdArr;
           myOpenChatUserIds = doc.data().openChatUserIds;
 
-          myOpenChatUserIds.unshift(userId);
-          const newChatID = myUserID + '_' + userId;
-          myChatsIdArr.unshift(newChatID);
+          myOpenChatUserIds.push(friendUserId);
+
+          const data = {
+            name: myName,
+            status: myStatus,
+            profilePicture: myProfilePicture,
+            onlineIcon: myOnlineIcon,
+            userId: myUserID,
+            password: myPassword,
+            ChatsIdArr: myChatsIdArr,
+            openChatUserIds: myOpenChatUserIds,
+          };
+
+          const usersRef = this.db.collection('users').doc(myUserID);
+          usersRef.set(data);
+          this.AddChatToFriend(localStorage.getItem('currentUserId'), friendUserId);
+        }
+      }).catch(err => {
+        console.log('Error', err); // add toastr notification
+      });
+  }
+
+  AddChatToFriend(myId, friendId) {
+    let myName: string;
+    let myStatus: string;
+    let myProfilePicture: string;
+    let myOnlineIcon: string;
+    let myUserID: string;
+    let myPassword: string;
+    let myChatsIdArr: string[] = []; // 0123456789_9876543210
+    let myOpenChatUserIds: string[] = []; // 0123456789
+
+    const userRef = this.db.collection('users').doc(localStorage.getItem(friendId)); // localStorage.getItem('currentUserId')
+    const getDoc = userRef.get().toPromise()
+      .then(doc => {
+        if (!doc.exists) {
+          console.log('not found'); // add toastr notification
+        } else {
+          // console.log(doc.data().toString());
+          myName = doc.data().name;
+          myStatus = doc.data().status;
+          myProfilePicture = doc.data().profilePicture;
+          myOnlineIcon = doc.data().onlineIcon;
+          myUserID = doc.data().userId;
+          myPassword = doc.data().password;
+          myChatsIdArr = doc.data().ChatsIdArr;
+          myOpenChatUserIds = doc.data().openChatUserIds;
+
+          myOpenChatUserIds.push(myId);
 
           const data = {
             name: myName,

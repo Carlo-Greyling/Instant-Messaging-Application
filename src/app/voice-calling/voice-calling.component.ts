@@ -8,7 +8,7 @@ import { AngularAgoraRtcService, Stream } from 'angular-agora-rtc';
 })
 export class VoiceCallingComponent implements OnInit {
   localStream: Stream;
-  private remoteCalls: any = [];
+  public remoteCalls: any = [];
 
   constructor(private agoraService: AngularAgoraRtcService) {
     this.agoraService.createClient();
